@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".IniciarSesion">
+    tools:context=".RegisterFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -32,9 +32,7 @@
             android:gravity="top"
             android:text="Nombre"
             android:textAppearance="@style/email"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.055"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/barraNombre"
             app:layout_constraintTop_toBottomOf="@+id/logo"
             tools:ignore="MissingConstraints" />
 
@@ -46,7 +44,6 @@
             android:layout_alignParentTop="true"
             app:layout_constraintBottom_toTopOf="@+id/email"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.402"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nombre"
             app:layout_constraintVertical_bias="1.0"
@@ -63,9 +60,7 @@
             android:text="Email"
             android:textAppearance="@style/email"
             app:layout_constraintBottom_toTopOf="@+id/barraEmail"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.051"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/barraEmail"
             app:layout_constraintTop_toBottomOf="@+id/barraNombre"
             tools:ignore="MissingConstraints" />
 
@@ -77,7 +72,6 @@
             android:layout_alignParentTop="true"
             app:layout_constraintBottom_toTopOf="@+id/contraseña"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.402"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/email"
             app:layout_constraintVertical_bias="1.0"
@@ -93,9 +87,7 @@
             android:text="Contraseña"
             android:textAppearance="@style/email"
             app:layout_constraintBottom_toTopOf="@+id/barraContraseña"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.067"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/barraContraseña"
             app:layout_constraintTop_toBottomOf="@+id/barraEmail"
             tools:ignore="MissingConstraints" />
 
@@ -106,7 +98,6 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.402"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/contraseña"
             tools:ignore="MissingConstraints" />
@@ -137,7 +128,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.533"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iniciarsesion" />
+            app:layout_constraintTop_toBottomOf="@+id/botonRegistro" />
 
         <ImageView
             android:id="@+id/iconovisible"

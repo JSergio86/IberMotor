@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -43,7 +44,9 @@ public class SignInFragment extends Fragment {
 
     NavController navController;
 
-    private Button botonIniciarSesion;
+    Button botonIniciarSesion;
+
+    TextView registrarse;
 
 
     @Override
@@ -53,6 +56,7 @@ public class SignInFragment extends Fragment {
         navController = Navigation.findNavController(view);  // <-----------------
 
         botonIniciarSesion = view.findViewById(R.id.botonIniciarSesion);
+        registrarse = view.findViewById(R.id.registrarse);
 
         botonIniciarSesion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,8 +65,20 @@ public class SignInFragment extends Fragment {
 
             }
         });
+        registrarse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(R.id.registerFragment);
+            }
+        });
+
+
+
+
 
     }
+
+
 
 
     @Override

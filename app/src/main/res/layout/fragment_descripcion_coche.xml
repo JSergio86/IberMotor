@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/volverAtras"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/iconovolver"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/compartir"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/iconocompartir"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/favorito"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:src="@drawable/iconofavoritos"
+        app:layout_constraintEnd_toStartOf="@+id/compartir"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <ScrollView
+        android:id="@+id/layoutDescripcion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/favorito">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <ImageView
+                android:id="@+id/fotoCoche"
+                android:layout_width="match_parent"
+                android:layout_height="170dp"
+                android:layout_marginTop="25dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bmw"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/nombreText"
+                android:layout_width="199dp"
+                android:layout_height="23dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="20dp"
+                android:text="BMW Serie 3 M3 E36"
+                android:textAppearance="@style/nameVistaPrincipal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fotoCoche" />
+
+            <TextView
+                android:id="@+id/horasText"
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:text="Hace 4 horas"
+                android:textAppearance="@style/styleGris"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nombreText" />
+
+            <TextView
+                android:id="@+id/precioText"
+                android:layout_width="80dp"
+                android:layout_height="22dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="13dp"
+                android:text="23.999€"
+                android:textAppearance="@style/some_id"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/horasText"
+                tools:ignore="MissingConstraints" />
+
+            <ImageView
+                android:id="@+id/ubicacion"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="25dp"
+                android:src="@drawable/iconoubicacion"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/precioText"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/nombreUbicacion"
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:layout_marginStart="1dp"
+                android:layout_marginTop="24dp"
+                android:text="Barcelona"
+                android:textAppearance="@style/styleGris"
+                app:layout_constraintStart_toEndOf="@+id/ubicacion"
+                app:layout_constraintTop_toBottomOf="@+id/precioText" />
+
+            <TextView
+                android:id="@+id/detallesVehiculo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="30dp"
+                android:text="Detalle del Vehiculo"
+                android:textAppearance="@style/nameVistaPrincipal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nombreUbicacion" />
+
+            <TextView
+                android:id="@+id/descripcionCoche"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="30dp"
+                android:text="Descripción del coche"
+                android:textAppearance="@style/nameVistaPrincipal"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/detallesVehiculo" />
+
+            <TextView
+                android:id="@+id/descripcion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp"
+                android:text="Vehículo nacional, segundo propietario coche muy mimado siempre en garaje, kilómetros reales hechos en autopista.
+                Llantas M 18, cristales traseros tintados para mayor privacidad, neumáticos como nuevos, control crucero, dos llaves, interior impecable, pantalla con navegador y bluetooth para conexión al móvil, modo eco, comfort y sport. El motor de serie suena precioso, gran capacidad de tuning para el motor.
+                \nEs un coche ideal si lo que buscas es deportividad y elegancia en un mismo vehículo.
+                \nPrecio negociable."
+                android:textAppearance="@style/styleGris"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/descripcionCoche">
+
+            </TextView>
+
+            <ImageView
+                android:id="@+id/iconoChat"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginBottom="92dp"
+                android:src="@drawable/iconochat"
+                app:layout_constraintBottom_toBottomOf="@+id/cuadroChat"
+                app:layout_constraintTop_toTopOf="@+id/cuadroChat"
+                app:layout_constraintVertical_bias="0.0"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="159dp" />
+
+            <TextView
+                android:id="@+id/chat"
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:layout_marginStart="212dp"
+                android:layout_marginTop="12dp"
+                android:text="Chat"
+                android:textAppearance="@style/styleGris"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/iconoChat" />
+
+            <Button
+                android:id="@+id/cuadroChat"
+                android:layout_width="128dp"
+                android:layout_height="37dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/cuadrochat"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/descripcion" />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

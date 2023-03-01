@@ -14,14 +14,16 @@
         <ImageView
             android:id="@+id/logo"
             android:layout_width="match_parent"
-            android:layout_height="190dp"
+            android:layout_height="150dp"
             android:scaleType="centerCrop"
             android:src="@drawable/logo_inicio"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints"></ImageView>
+            tools:ignore="MissingConstraints">
+
+        </ImageView>
 
 
         <TextView
@@ -30,13 +32,11 @@
             android:layout_height="23dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="20dp"
             android:gravity="top"
             android:text="Email"
             android:textAppearance="@style/email"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.051"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/barraEmail"
             app:layout_constraintTop_toBottomOf="@+id/logo"
             tools:ignore="MissingConstraints" />
 
@@ -48,8 +48,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/email"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/email"
             tools:ignore="MissingConstraints" />
 
@@ -63,9 +62,7 @@
             android:gravity="top"
             android:text="Contraseña"
             android:textAppearance="@style/email"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.067"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/barraContraseña"
             app:layout_constraintTop_toBottomOf="@+id/barraEmail"
             tools:ignore="MissingConstraints" />
 
@@ -75,32 +72,27 @@
             android:layout_height="24dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
+            android:layout_marginStart="3dp"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/contraseña"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/contraseña"
             tools:ignore="MissingConstraints" />
 
         <TextView
             android:id="@+id/passwordolvidada"
-            android:layout_width="137dp"
-            android:layout_height="19dp"
+            android:layout_width="169dp"
+            android:layout_height="21dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginTop="14dp"
-            android:layout_marginBottom="22dp"
             android:gravity="top"
             android:text="¿Contraseña olvidada?"
             android:textAppearance="@style/passwordolvidada"
             android:textSize="40px"
             android:translationY="-2.1sp"
-            app:layout_constraintBottom_toTopOf="@+id/iniciarsesion"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.87"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/barraContraseña"
             app:layout_constraintTop_toBottomOf="@+id/barraContraseña"
-            app:layout_constraintVertical_bias="0.0"
             tools:ignore="MissingConstraints" />
 
         <Button
@@ -109,7 +101,7 @@
             android:layout_height="55dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="15dp"
             android:background="@drawable/botoniniciarsesion"
             android:clipToOutline="true"
             android:elevation="2.21dp"
@@ -118,8 +110,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.493"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/barraContraseña">
-        </Button>
+            app:layout_constraintTop_toBottomOf="@+id/passwordolvidada"></Button>
 
         <ImageView
             android:id="@+id/iconovisible"
@@ -141,15 +132,15 @@
             android:layout_width="87dp"
             android:layout_height="58dp"
             android:layout_marginStart="48dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="4dp"
             android:layout_marginBottom="22dp"
             android:scaleType="centerCrop"
             android:src="@drawable/google"
-            app:layout_constraintBottom_toTopOf="@+id/notienescuenta"
+            app:layout_constraintBottom_toTopOf="@+id/registrarse"
             app:layout_constraintEnd_toStartOf="@+id/apple"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iniciarsesion"
+            app:layout_constraintTop_toBottomOf="@+id/botonIniciarSesion"
             tools:ignore="DuplicateIds,MissingConstraints"></ImageView>
 
         <ImageView
@@ -157,34 +148,33 @@
             android:layout_width="87dp"
             android:layout_height="58dp"
             android:layout_marginStart="1dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="44dp"
             android:layout_marginBottom="22dp"
             android:scaleType="centerCrop"
             android:src="@drawable/facebook"
-            app:layout_constraintBottom_toTopOf="@+id/notienescuenta"
+            app:layout_constraintBottom_toTopOf="@+id/registrarse"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/apple"
-            app:layout_constraintTop_toBottomOf="@+id/iniciarsesion"
+            app:layout_constraintTop_toBottomOf="@+id/botonIniciarSesion"
             tools:ignore="DuplicateIds,MissingConstraints"></ImageView>
 
         <ImageView
             android:id="@+id/apple"
             android:layout_width="87dp"
             android:layout_height="58dp"
-            android:layout_marginTop="44dp"
+            android:layout_marginTop="20dp"
             android:layout_marginBottom="22dp"
             android:scaleType="centerCrop"
             android:src="@drawable/apple"
-            app:layout_constraintBottom_toTopOf="@+id/notienescuenta"
+            app:layout_constraintBottom_toTopOf="@+id/registrarse"
             app:layout_constraintEnd_toStartOf="@+id/facebook"
             app:layout_constraintStart_toEndOf="@+id/google"
             app:layout_constraintTop_toBottomOf="@+id/botonIniciarSesion"
-            tools:ignore="DuplicateIds,MissingConstraints">
-        </ImageView>
+            tools:ignore="DuplicateIds,MissingConstraints"></ImageView>
 
         <TextView
-            android:id="@+id/notienescuenta"
+            android:id="@+id/registrarse"
             android:layout_width="216dp"
             android:layout_height="26dp"
             android:layout_alignParentLeft="true"

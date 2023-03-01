@@ -107,7 +107,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="2dp"
                 android:text="Barcelona -"
-                android:textAppearance="@style/barcelona_2" />
+                android:textAppearance="@style/styleGris" />
 
 
             <TextView
@@ -117,7 +117,7 @@
                 android:layout_marginRight="2dp"
                 android:layout_toRightOf="@id/ciudadText"
                 android:text="217.000km -"
-                android:textAppearance="@style/barcelona_2" />
+                android:textAppearance="@style/styleGris" />
 
 
             <TextView
@@ -127,7 +127,7 @@
                 android:layout_marginRight="2dp"
                 android:layout_toRightOf="@id/kilometrosText"
                 android:text="1997 -"
-                android:textAppearance="@style/barcelona_2" />
+                android:textAppearance="@style/styleGris" />
 
             <TextView
                 android:id="@+id/combustibleText"
@@ -136,7 +136,7 @@
                 android:layout_marginRight="2dp"
                 android:layout_toRightOf="@id/añosText"
                 android:text="Gasolina"
-                android:textAppearance="@style/barcelona_2" />
+                android:textAppearance="@style/styleGris" />
 
 
         </RelativeLayout>

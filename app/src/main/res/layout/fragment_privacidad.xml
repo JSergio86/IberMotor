@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="10dp">
+
+        <ImageView
+            android:id="@+id/volverAtras"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/iconovolver"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/privacidad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="16dp"
+            android:gravity="top"
+            android:text="Privacidad"
+            android:textAppearance="@style/styleAppbar"
+            app:layout_constraintStart_toEndOf="@+id/volverAtras"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <View
+            android:id="@+id/linea"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="15dp"
+            android:background="#C0C0C0"
+            app:layout_constraintTop_toBottomOf="@+id/privacidad"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="4dp" />
+
+        <TextView
+            android:id="@+id/publicidadText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="30dp"
+            android:gravity="top"
+            android:text="Publicidad personalizada"
+            android:textAppearance="@style/styleFragmentsDrawer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linea" />
+
+        <ImageView
+            android:id="@+id/switchImage"
+            android:layout_width="40dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginBottom="14dp"
+            android:src="@drawable/switchbutton"
+            app:layout_constraintBottom_toTopOf="@+id/descripcion"
+            app:layout_constraintStart_toEndOf="@+id/publicidadText"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/descripcion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="16dp"
+            android:gravity="top"
+            android:text="Se muestran anuncios personalizados a los\nusuarios en función de sus datos de navegación\nbasados en sus gustos, preferencias, necesitas\no intereses, entre otros factores demográficos"
+            android:textAppearance="@style/styleGrisNotificaciones"
+            app:layout_constraintStart_toStartOf="@+id/publicidadText"
+            app:layout_constraintTop_toBottomOf="@+id/publicidadText" />
+
+        <View
+            android:id="@+id/lineaDescripcion"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="15dp"
+            android:background="#C0C0C0"
+            app:layout_constraintTop_toBottomOf="@+id/descripcion"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="4dp" />
+
+        <TextView
+            android:id="@+id/publicidadTercerossText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="30dp"
+            android:gravity="top"
+            android:text="Publicidad de terceros"
+            android:textAppearance="@style/styleFragmentsDrawer"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/lineaDescripcion" />
+
+        <ImageView
+            android:id="@+id/switchImagePublicidadTerceros"
+            android:layout_width="40dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="52dp"
+            android:layout_marginBottom="14dp"
+            android:src="@drawable/switchbutton"
+            app:layout_constraintBottom_toTopOf="@+id/descripcionPublicidadTerceros"
+            app:layout_constraintStart_toEndOf="@+id/publicidadTercerossText"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/descripcionPublicidadTerceros"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="16dp"
+            android:gravity="top"
+            android:text="Recibir emails de empresas de terceros"
+            android:textAppearance="@style/styleGrisNotificaciones"
+            app:layout_constraintStart_toStartOf="@+id/publicidadTercerossText"
+            app:layout_constraintTop_toBottomOf="@+id/publicidadTercerossText" />
+
+        <View
+            android:id="@+id/lineaDescripcionNotificaciones"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="15dp"
+            android:background="#C0C0C0"
+            app:layout_constraintTop_toBottomOf="@+id/descripcionPublicidadTerceros"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="4dp" />
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</ScrollView>

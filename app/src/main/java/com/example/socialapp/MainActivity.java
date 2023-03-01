@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     NavController navController;
     BottomNavigationView bottomNavigationView;
     //Lista de fragments sin el bottom nav
-    List<Integer> fragmentsWithoutBottomNav = Arrays.asList(R.id.signInFragment, R.id.registerFragment);
+    List<Integer> fragmentsWithoutBottomNav = Arrays.asList(R.id.signInFragment, R.id.registerFragment, R.id.ayudaFragment, R.id.notificacionesFragment, R.id.privacidadFragment);
     FirebaseAuth mAuth;
 
     @Override
@@ -70,10 +70,10 @@ public class MainActivity extends AppCompatActivity {
                         navController.navigate(R.id.homeFragment);
                         break;
                     case R.id.chat:
-                        navController.navigate(R.id.profileFragment);
+                        navController.navigate(R.id.homeFragment);
                         break;
                     case R.id.perfil:
-                        navController.navigate(R.id.profileFragment);
+                        navController.navigate(R.id.homeFragment);
                         break;
                 }
                 return true;

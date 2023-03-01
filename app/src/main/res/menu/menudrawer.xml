@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:ignore="MissingDefaultResource">
+    <item
+        android:id="@+id/notificaciones"
+        android:title="Notificaciones" />
+    <item
+        android:id="@+id/privacidad"
+        android:title="Privacidad" />
+
+    <item
+        android:id="@+id/ayuda"
+        android:title="Ayuda" />
+
+</menu>

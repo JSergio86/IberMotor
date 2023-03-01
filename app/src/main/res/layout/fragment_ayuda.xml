@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp">
+
+        <ImageView
+            android:id="@+id/volverAtras"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/iconovolver"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/ayuda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="16dp"
+            android:gravity="top"
+            android:text="Ayuda"
+            android:textAppearance="@style/styleAppbar"
+            app:layout_constraintStart_toEndOf="@+id/volverAtras"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <View
+            android:id="@+id/linea"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="15dp"
+            android:background="#C0C0C0"
+            app:layout_constraintTop_toBottomOf="@+id/ayuda"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="4dp" />
+
+        <TextView
+            android:id="@+id/contactaConNosotros"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:text="Contacta con nosotros"
+            android:textAppearance="@style/styleContactarConNosotros"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ayuda" />
+
+        <View
+            android:id="@+id/fondo"
+            android:layout_width="211dp"
+            android:layout_height="37dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/fondorojo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/contactaConNosotros" />
+
+        <ImageView
+            android:id="@+id/iconoLlamar"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/iconollamada"
+            app:layout_constraintBottom_toBottomOf="@id/fondo"
+            app:layout_constraintStart_toStartOf="@+id/fondo"
+            app:layout_constraintTop_toTopOf="@+id/fondo"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/numero"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="35dp"
+            android:text="634657853"
+            android:textAppearance="@style/styleBlanco"
+            app:layout_constraintBottom_toBottomOf="@+id/fondo"
+            app:layout_constraintEnd_toEndOf="@+id/fondo"
+            app:layout_constraintHorizontal_bias="0.454"
+            app:layout_constraintStart_toEndOf="@+id/iconoLlamar"
+            app:layout_constraintTop_toTopOf="@+id/fondo"
+            tools:ignore="MissingConstraints" />
+
+        <View
+            android:id="@+id/fondo2"
+            android:layout_width="211dp"
+            android:layout_height="37dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/fondorojo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fondo" />
+
+        <ImageView
+            android:id="@+id/iconoEmail"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/iconoemail"
+            app:layout_constraintBottom_toBottomOf="@id/fondo2"
+            app:layout_constraintStart_toStartOf="@+id/fondo2"
+            app:layout_constraintTop_toTopOf="@+id/fondo2"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="salescars@gmail.com"
+            android:textAppearance="@style/styleBlanco"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/fondo2"
+            app:layout_constraintStart_toEndOf="@+id/iconoEmail"
+            app:layout_constraintTop_toTopOf="@+id/fondo2"
+            tools:ignore="MissingConstraints" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+</ScrollView>

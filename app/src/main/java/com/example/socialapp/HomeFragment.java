@@ -1,42 +1,27 @@
 package com.example.socialapp;
 
-import static java.security.AccessController.getContext;
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CircleCrop;
-import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
-import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.Timestamp;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FieldValue;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-
-import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Map;
+import android.widget.PopupMenu;
 
 
 public class HomeFragment extends Fragment {
     NavController navController;   // <-----------------
-    ImageView perfil;
+    ImageView perfil, menuDrawer;
+    View cuadroInfoCoche;
+    PopupMenu popupMenu;
+
 
 
     @Override
@@ -46,6 +31,12 @@ public class HomeFragment extends Fragment {
         navController = Navigation.findNavController(view);  // <-----------------
 
         perfil = view.findViewById(R.id.perfil);
+        menuDrawer = view.findViewById(R.id.menuDrawer);
+        cuadroInfoCoche = view.findViewById(R.id.cuadroInfoCoche);
+
+
+        popupMenu = new PopupMenu(getContext(), menuDrawer);
+        popupMenu.getMenuInflater().inflate(R.menu.menudrawer, popupMenu.getMenu());
 
         perfil.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +44,40 @@ public class HomeFragment extends Fragment {
                 navController.navigate(R.id.signInFragment);
             }
         });
+        menuDrawer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(getContext(), v);
+                popupMenu.inflate(R.menu.menudrawer);
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        int id = item.getItemId();
+                        switch (id) {
+                            case R.id.notificaciones:
+                                navController.navigate(R.id.notificacionesFragment);
+                                return true;
+                            case R.id.privacidad:
+                                navController.navigate(R.id.privacidadFragment);
+                                return true;
+                            case R.id.ayuda:
+                                navController.navigate(R.id.ayudaFragment);
+                                return true;
+                        }
+                        return false;
+                    }
+                });
+                popupMenu.show();
+            }
+        });
+
+        cuadroInfoCoche.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.descripcionCocheFragment);
+            }
+        });
+
 
     }
 
