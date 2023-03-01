@@ -1,17 +1,21 @@
 package com.example.socialapp;
 
 import android.os.Bundle;
-import android.view.View;
+import android.view.MenuItem;
 import android.view.Menu;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -24,76 +28,80 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.Arrays;
+import java.util.List;
 
-    private AppBarConfiguration mAppBarConfiguration;
-    private ActivityMainBinding binding;
+public class MainActivity extends AppCompatActivity {
+    ActivityMainBinding binding;
+    NavController navController;
+    BottomNavigationView bottomNavigationView;
+    //Lista de fragments sin el bottom nav
+    List<Integer> fragmentsWithoutBottomNav = Arrays.asList(R.id.signInFragment, R.id.registerFragment);
+    FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-       setSupportActionBar(binding.appBarMain.toolbar);
+        //Instancia de la autentificacion del firebase
+        mAuth = FirebaseAuth.getInstance();
 
+        navController = Navigation.findNavController(this,R.id.mainLayout);
+        bottomNavigationView = findViewById(R.id.bottomNavigation);
 
-        DrawerLayout drawer = binding.drawerLayout;
-        NavigationView navigationView = binding.navView;
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        mAppBarConfiguration = new AppBarConfiguration.Builder(R.id.homeFragment, R.id.profileFragment, R.id.signOutFragment)
-                .setOpenableLayout(drawer)
+        NavigationUI.setupWithNavController(bottomNavigationView, navController);
+
+        FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(true)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
+        FirebaseFirestore.getInstance().setFirestoreSettings(settings);
 
-        View header = navigationView.getHeaderView(0);
-        final ImageView photo = header.findViewById(R.id.photoImageView);
-        final TextView name = header.findViewById(R.id.displayNameTextView);
-        final TextView email = header.findViewById(R.id.emailTextView);
-
-        FirebaseAuth.getInstance().addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-
-            /*
-               if(user != null){
-                    Glide.with(MainActivity.this)
-                            .load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl().toString())
-                            .circleCrop()
-                            .into(photo);
-
-                    name.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
-                    email.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                //Poner bien los fragments cuando esten acabados
+                switch (item.getItemId()) {
+                    case R.id.buscar:
+                        navController.navigate(R.id.homeFragment);
+                        break;
+                    case R.id.publicar:
+                        navController.navigate(R.id.homeFragment);
+                        break;
+                    case R.id.chat:
+                        navController.navigate(R.id.profileFragment);
+                        break;
+                    case R.id.perfil:
+                        navController.navigate(R.id.profileFragment);
+                        break;
                 }
-
-            */
-
-
-
+                return true;
             }
         });
 
-        FirebaseFirestore.getInstance().setFirestoreSettings(new FirebaseFirestoreSettings.Builder()
-                .setPersistenceEnabled(false)
-                .build());
-    }
+        //Aqui solo se muestra el bottom navigation en los fragments que no hemos quitado en la lista de fragmentsWithoutBottomNav
+        navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
+            @Override
+            public void onDestinationChanged(@NonNull NavController navController, @NonNull NavDestination navDestination, @Nullable Bundle bundle) {
+                if(fragmentsWithoutBottomNav.contains(navDestination.getId())){
+                    bottomNavigationView.setVisibility(View.GONE);
+                }
+                else{
+                    bottomNavigationView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+/*
+        // Verifica que el usuario anteriormente se haya conectado e iniciar sesion directamente
+        if (mAuth.getCurrentUser() == null) {
+            navController.navigate(R.id.signInFragment);
+        }
+        else {
+            navController.navigate(R.id.homeFragment);
+        }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
+ */
 
-    @Override
-    public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-                || super.onSupportNavigateUp();
     }
 }

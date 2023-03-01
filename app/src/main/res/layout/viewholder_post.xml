@@ -6,101 +6,153 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardUseCompatPadding="true">
-    <LinearLayout
-        android:orientation="horizontal"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/rectangle"
+            android:layout_width="339dp"
+            android:layout_height="329dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="36dp"
+            android:layout_marginEnd="36dp"
+            android:background="@drawable/rectangle_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.509"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints,NotSibling" />
+
         <ImageView
-            android:id="@+id/photoImageView"
-            android:layout_width="60dp"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
-            app:srcCompat="@drawable/user" />
-        <LinearLayout
+            android:id="@+id/fotoCoche"
+            android:layout_width="340dp"
+            android:layout_height="160dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bmw"
+            app:layout_constraintEnd_toEndOf="@+id/rectangle"
+            app:layout_constraintStart_toStartOf="@+id/rectangle"
+            app:layout_constraintTop_toTopOf="@+id/rectangle"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/precioTextTitle"
+            android:layout_width="81dp"
+            android:layout_height="18dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="12dp"
+            android:gravity="top"
+            android:lineSpacingExtra="1sp"
+            android:text="Precio total"
+            android:textAppearance="@style/precio_tota"
+            android:textSize="40px"
+            android:translationY="-0.45sp"
+            app:layout_constraintStart_toStartOf="@+id/rectangle"
+            app:layout_constraintTop_toBottomOf="@+id/fotoCoche"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/precioText"
+            android:layout_width="80dp"
+            android:layout_height="22dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="14dp"
+            android:gravity="top"
+            android:lineSpacingExtra="-3sp"
+            android:text="23.999€"
+            android:textAppearance="@style/some_id"
+            app:layout_constraintStart_toStartOf="@+id/rectangle"
+            app:layout_constraintTop_toBottomOf="@id/precioTextTitle"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/nombreText"
+            android:layout_width="199dp"
+            android:layout_height="23dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="12dp"
+            android:gravity="top"
+            android:lineSpacingExtra="-1sp"
+            android:text="BMW Serie 3 M3 E36"
+            android:textAppearance="@style/nameVistaPrincipal"
+            app:layout_constraintStart_toStartOf="@+id/rectangle"
+            app:layout_constraintTop_toBottomOf="@+id/precioText" />
+
+        <RelativeLayout
+            android:id="@+id/atributosLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingStart="10dp">
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="65dp"
+            android:gravity="left|center"
+            app:layout_constraintEnd_toEndOf="@+id/rectangle"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/rectangle"
+            app:layout_constraintTop_toBottomOf="@+id/nombreText">
 
-          <LinearLayout
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:orientation="horizontal">
 
-              <TextView
-                  android:id="@+id/authorTextView"
-                  style="@style/Base.TextAppearance.AppCompat.Small"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:gravity="center_vertical"
-                  android:text="Author"/>
-
-              <TextView
-                  android:id="@+id/timeTexView"
-                  style="@style/Base.TextAppearance.AppCompat.Small"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:paddingLeft="10dp"
-                  android:gravity="center_vertical"
-                  android:text="Author"/>
-          </LinearLayout>
             <TextView
-                android:id="@+id/contentTextView"
-                android:textSize="20sp"
+                android:id="@+id/ciudadText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:text="Contenido"/>
-            <ImageView
-                android:id="@+id/mediaImage"
-                android:layout_marginTop="10dp"
-                android:layout_width="196dp"
-                android:layout_height="196dp"
-                android:adjustViewBounds="true"/>
-            <LinearLayout
-                android:id="@+id/likeLinearLayout"
-                android:layout_marginTop="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="2dp"
+                android:text="Barcelona -"
+                android:textAppearance="@style/barcelona_2" />
+
+
+            <TextView
+                android:id="@+id/kilometrosText"
+                android:layout_width="wrap_content"
+                android:layout_height="16dp"
+                android:layout_marginRight="2dp"
+                android:layout_toRightOf="@id/ciudadText"
+                android:text="217.000km -"
+                android:textAppearance="@style/barcelona_2" />
+
+
+            <TextView
+                android:id="@+id/añosText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_marginRight="2dp"
+                android:layout_toRightOf="@id/kilometrosText"
+                android:text="1997 -"
+                android:textAppearance="@style/barcelona_2" />
 
-                <ImageView
-                    android:id="@+id/likeImageView"
-                    app:srcCompat="@drawable/like_on"
-                    android:adjustViewBounds="true"
-                    android:layout_width="20dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"/>
+            <TextView
+                android:id="@+id/combustibleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:layout_toRightOf="@id/añosText"
+                android:text="Gasolina"
+                android:textAppearance="@style/barcelona_2" />
 
-                <TextView
-                    android:id="@+id/numLikesTextView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_gravity="center_vertical"
-                    android:text="200K"/>
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/forwardLinearLayout"
-                    android:layout_width="175dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    tools:ignore="ExtraText">
 
-                    <ImageView
-                        android:id="@+id/forwardImageView"
-                        android:layout_width="25dp"
-                        android:layout_height="23dp"
-                        android:layout_weight="1"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="1.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:srcCompat="@drawable/forward"
-                        tools:ignore="MissingConstraints" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
 
-            </LinearLayout>
-        </LinearLayout>
-    </LinearLayout>
+        <TextView
+            android:id="@+id/garantia"
+            android:layout_width="120dp"
+            android:layout_height="14dp"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="13dp"
+            android:gravity="top"
+            android:text="Garantia 1 año"
+            android:textAppearance="@style/garantia"
+            app:layout_constraintStart_toStartOf="@+id/rectangle"
+            app:layout_constraintTop_toBottomOf="@+id/atributosLayout" />
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    
 </androidx.cardview.widget.CardView>

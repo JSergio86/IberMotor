@@ -1,23 +1,294 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".HomeFragment">
+    tools:ignore="SpeakableTextPresentCheck">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/postsRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/gotoNewPostFragmentButton"
+    <ImageView
+        android:id="@+id/perfil"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/perfil"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+
+    <EditText
+        android:id="@+id/barraBusqueda"
+        android:layout_width="346dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/barrabusqueda"
+        android:drawableStart="@drawable/iconobuscar"
+        android:drawablePadding="10dp"
+        android:ems="10"
+        android:hint="Buscar"
+        android:paddingStart="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.571"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/perfil" />
+
+
+    <ImageButton
+        android:id="@+id/iconoFiltro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/pen" />
+        android:layout_marginRight="28dp"
+        android:background="@null"
+        android:src="@drawable/iconofiltro"
+        app:layout_constraintBottom_toBottomOf="@+id/barraBusqueda"
+        app:layout_constraintRight_toRightOf="@id/barraBusqueda"
+        app:layout_constraintTop_toTopOf="@+id/barraBusqueda"
+        app:layout_constraintVertical_bias="0.529" />
 
-</FrameLayout>
+    <RelativeLayout
+        android:id="@+id/iconosAutomoviles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="65dp"
+        android:gravity="left|center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/barraBusqueda">
+
+        <ImageView
+            android:id="@+id/iconoCoche"
+            android:layout_width="38dp"
+            android:layout_height="25dp"
+            android:src="@drawable/iconitocoche" />
+
+
+        <ImageView
+            android:id="@+id/iconoFurgoneta"
+            android:layout_width="38dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@id/iconoCoche"
+            android:layout_alignTop="@id/iconoCoche"
+            android:src="@drawable/iconitofurgoneta"/>
+
+        <ImageView
+            android:id="@+id/iconoCamion"
+            android:layout_width="38dp"
+            android:layout_height="27dp"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@id/iconoFurgoneta"
+            android:layout_alignTop="@id/iconoFurgoneta"
+            android:src="@drawable/iconitocamion"/>
+
+    </RelativeLayout>
+
+
+    <ImageView
+        android:id="@+id/iconoVista"
+        android:layout_width="37dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="24dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/cambiarvista"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/barraBusqueda"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/menuDrawer"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/iconodrawer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iconosAutomoviles"
+        tools:ignore="SpeakableTextPresentCheck">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="20dp">
+                <View
+                    android:id="@+id/rectangle"
+                    android:layout_width="339dp"
+                    android:layout_height="329dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="36dp"
+                    android:layout_marginEnd="36dp"
+                    android:background="@drawable/rectangle_1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.509"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="MissingConstraints,NotSibling" />
+
+                <ImageView
+                    android:id="@+id/fotoCoche"
+                    android:layout_width="340dp"
+                    android:layout_height="160dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/bmw"
+                    app:layout_constraintEnd_toEndOf="@+id/rectangle"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/rectangle"
+                    app:layout_constraintTop_toTopOf="@+id/rectangle"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/precioTextTitle"
+                    android:layout_width="81dp"
+                    android:layout_height="18dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="12dp"
+                    android:gravity="top"
+                    android:lineSpacingExtra="1sp"
+                    android:text="Precio total"
+                    android:textAppearance="@style/precio_tota"
+                    android:textSize="40px"
+                    android:translationY="-0.45sp"
+                    app:layout_constraintStart_toStartOf="@+id/rectangle"
+                    app:layout_constraintTop_toBottomOf="@+id/fotoCoche"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/precioText"
+                    android:layout_width="80dp"
+                    android:layout_height="22dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="14dp"
+                    android:gravity="top"
+                    android:lineSpacingExtra="-3sp"
+                    android:text="23.999€"
+                    android:textAppearance="@style/some_id"
+                    app:layout_constraintStart_toStartOf="@+id/rectangle"
+                    app:layout_constraintTop_toBottomOf="@id/precioTextTitle"
+                    tools:ignore="MissingConstraints" />
+
+                <TextView
+                    android:id="@+id/nombreText"
+                    android:layout_width="199dp"
+                    android:layout_height="23dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="12dp"
+                    android:gravity="top"
+                    android:lineSpacingExtra="-1sp"
+                    android:text="BMW Serie 3 M3 E36"
+                    android:textAppearance="@style/nameVistaPrincipal"
+                    app:layout_constraintStart_toStartOf="@+id/rectangle"
+                    app:layout_constraintTop_toBottomOf="@+id/precioText" />
+
+                <RelativeLayout
+                    android:id="@+id/atributosLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginEnd="65dp"
+                    android:gravity="left|center"
+                    app:layout_constraintEnd_toEndOf="@+id/rectangle"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="@+id/rectangle"
+                    app:layout_constraintTop_toBottomOf="@+id/nombreText">
+
+
+                    <TextView
+                        android:id="@+id/ciudadText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="2dp"
+                        android:text="Barcelona -"
+                        android:textAppearance="@style/barcelona_2" />
+
+
+                    <TextView
+                        android:id="@+id/kilometrosText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="16dp"
+                        android:layout_marginRight="2dp"
+                        android:layout_toRightOf="@id/ciudadText"
+                        android:text="217.000km -"
+                        android:textAppearance="@style/barcelona_2" />
+
+
+                    <TextView
+                        android:id="@+id/añosText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="2dp"
+                        android:layout_toRightOf="@id/kilometrosText"
+                        android:text="1997 -"
+                        android:textAppearance="@style/barcelona_2" />
+
+                    <TextView
+                        android:id="@+id/combustibleText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="2dp"
+                        android:layout_toRightOf="@id/añosText"
+                        android:text="Gasolina"
+                        android:textAppearance="@style/barcelona_2" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/garantia"
+                    android:layout_width="120dp"
+                    android:layout_height="14dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="14dp"
+                    android:layout_marginTop="13dp"
+                    android:layout_marginEnd="205dp"
+                    android:gravity="top"
+                    android:lineSpacingExtra="-5sp"
+                    android:text="Garantia 1 año"
+                    android:textAppearance="@style/garantia"
+                    app:layout_constraintEnd_toEndOf="@+id/rectangle"
+                    app:layout_constraintStart_toStartOf="@+id/rectangle"
+                    app:layout_constraintTop_toBottomOf="@+id/atributosLayout" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

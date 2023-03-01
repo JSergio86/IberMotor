@@ -26,9 +26,8 @@ import com.google.firebase.auth.FirebaseUser;
 public class RegisterFragment extends Fragment {
 
     NavController navController;   // <-----------------
-    private EditText emailEditText, passwordEditText;
-    private Button registerButton;
-    private FirebaseAuth mAuth;
+    private Button botonRegistro;
+
 
 
     @Override
@@ -37,70 +36,16 @@ public class RegisterFragment extends Fragment {
 
         navController = Navigation.findNavController(view);  // <-----------------
 
-        emailEditText = view.findViewById(R.id.emailEditText);
-        passwordEditText = view.findViewById(R.id.passwordEditText);
+        botonRegistro = view.findViewById(R.id.botonRegistro);
 
-        registerButton = view.findViewById(R.id.registerButton);
-
-        registerButton.setOnClickListener(new View.OnClickListener() {
+        botonRegistro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                crearCuenta();
+                navController.navigate(R.id.homeFragment);
+
             }
         });
 
-        mAuth = FirebaseAuth.getInstance();
-
-
-    }
-
-    private void crearCuenta() {
-        if (!validarFormulario()) {
-            return;
-        }
-
-        registerButton.setEnabled(false);
-
-        mAuth.createUserWithEmailAndPassword(emailEditText.getText().toString(), passwordEditText.getText().toString())
-                .addOnCompleteListener(requireActivity(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            actualizarUI(mAuth.getCurrentUser());
-                        } else {
-                            Snackbar.make(requireView(), "Error: " + task.getException(), Snackbar.LENGTH_LONG).show();
-
-                        }
-                        registerButton.setEnabled(true);
-                    }
-                });
-
-    }
-
-    private void actualizarUI(FirebaseUser currentUser) {
-        if(currentUser != null){
-            navController.navigate(R.id.homeFragment);
-        }
-    }
-
-    private boolean validarFormulario() {
-        boolean valid = true;
-
-        if (TextUtils.isEmpty(emailEditText.getText().toString())) {
-            emailEditText.setError("Required.");
-            valid = false;
-        } else {
-            emailEditText.setError(null);
-        }
-
-        if (TextUtils.isEmpty(passwordEditText.getText().toString())) {
-            passwordEditText.setError("Required.");
-            valid = false;
-        } else {
-            passwordEditText.setError(null);
-        }
-
-        return valid;
     }
 
     @Override

@@ -35,150 +35,25 @@ import java.util.Map;
 
 
 public class HomeFragment extends Fragment {
-
     NavController navController;   // <-----------------
-    public AppViewModel appViewModel;
-    FirebaseUser user;
+    ImageView perfil;
+
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         navController = Navigation.findNavController(view);  // <-----------------
 
-        appViewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
+        perfil = view.findViewById(R.id.perfil);
 
-        view.findViewById(R.id.gotoNewPostFragmentButton).setOnClickListener(new View.OnClickListener() {
+        perfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigate(R.id.newPostFragment);
+                navController.navigate(R.id.signInFragment);
             }
         });
 
-        RecyclerView postsRecyclerView = view.findViewById(R.id.postsRecyclerView);
-
-        Query query = FirebaseFirestore.getInstance().collection("posts").limit(50).orderBy("date", Query.Direction.DESCENDING);
-
-        FirestoreRecyclerOptions<Post> options = new FirestoreRecyclerOptions.Builder<Post>()
-                .setQuery(query, Post.class)
-                .setLifecycleOwner(this)
-                .build();
-
-        postsRecyclerView.setAdapter(new PostsAdapter(options));
-
-        user = FirebaseAuth.getInstance().getCurrentUser();
-
-    }
-
-    class PostsAdapter extends FirestoreRecyclerAdapter<Post, PostsAdapter.PostViewHolder> {
-        public PostsAdapter(@NonNull FirestoreRecyclerOptions<Post> options) {super(options);}
-
-        @NonNull
-        @Override
-        public PostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            return new PostViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_post, parent, false));
-        }
-
-        @Override
-        protected void onBindViewHolder(@NonNull PostViewHolder holder, int position, @NonNull final Post post) {
-            if(post.author == null){
-                holder.authorTextView.setText("Usuario");
-                Glide.with(requireView())
-                        .load(R.drawable.anonymo)
-                        .transform(new CircleCrop())
-                        .into(holder.authorPhotoImageView);
-            }
-
-            else {
-                Glide.with(getContext()).load(post.authorPhotoUrl).circleCrop().into(holder.authorPhotoImageView);
-                holder.authorTextView.setText(post.author);
-            }
-
-            holder.contentTextView.setText(post.content);
-            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm - dd MMM");
-            String formattedDate = dateFormat.format(post.date);
-            holder.timeTextView.setText(formattedDate);
-
-            final String postKey = getSnapshots().getSnapshot(position).getId();
-            final String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            if(post.likes.containsKey(uid))
-                holder.likeImageView.setImageResource(R.drawable.like_on);
-            else
-                holder.likeImageView.setImageResource(R.drawable.like);
-            holder.numLikesTextView.setText(String.valueOf(post.likes.size()));
-            holder.likeImageView.setOnClickListener(view -> {
-                FirebaseFirestore.getInstance().collection("posts")
-                        .document(postKey)
-                        .update("likes."+uid, post.likes.containsKey(uid) ?
-                                FieldValue.delete() : true);
-            });
-
-            holder.forwardImageView.setOnClickListener(view -> {
-                Map<String, Object> newPost = new HashMap<>();
-                newPost.put("content", post.content);
-                if(user.getPhotoUrl() == null){
-                    newPost.put("author", "prueba");
-                    newPost.put("authorPhotoUrl", "usuario");
-                }
-
-                else{
-                    newPost.put("author", FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
-                    newPost.put("authorPhotoUrl", FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl().toString());
-                }
-
-                newPost.put("date", Timestamp.now());
-                newPost.put("originalPostId", postKey);
-                newPost.put("uid", uid);
-                newPost.put("forward", true);
-
-                FirebaseFirestore.getInstance().collection("posts").add(newPost);
-            });
-
-            // Miniatura de media
-            if (post.mediaUrl != null) {
-                holder.mediaImageView.setVisibility(View.VISIBLE);
-                if ("audio".equals(post.mediaType)) {
-                    Glide.with(requireView()).load(R.drawable.audio).centerCrop().into(holder.mediaImageView);
-                } else {
-                    Glide.with(requireView()).load(post.mediaUrl).centerCrop().into(holder.mediaImageView);
-                }
-                holder.mediaImageView.setOnClickListener(view -> {
-                    appViewModel.postSeleccionado.setValue(post);
-                    navController.navigate(R.id.mediaFragment);
-                });
-            } else {
-                holder.mediaImageView.setVisibility(View.GONE);
-            }
-
-            holder.authorPhotoImageView.setOnClickListener(view -> {
-                if(post.uid.equals(FirebaseAuth.getInstance().getUid())){
-                    navController.navigate(R.id.profileFragment);
-                }
-                else{
-                    appViewModel.postSeleccionado.setValue(post);
-                    navController.navigate(R.id.perfilUsers);
-                }
-            });
-
-        }
-
-        class PostViewHolder extends RecyclerView.ViewHolder {
-            ImageView authorPhotoImageView, likeImageView, mediaImageView,forwardImageView;
-            TextView authorTextView, contentTextView, numLikesTextView, timeTextView;
-
-            PostViewHolder(@NonNull View itemView) {
-                super(itemView);
-
-                authorPhotoImageView = itemView.findViewById(R.id.photoImageView);
-                authorTextView = itemView.findViewById(R.id.authorTextView);
-                contentTextView = itemView.findViewById(R.id.contentTextView);
-                likeImageView = itemView.findViewById(R.id.likeImageView);
-                numLikesTextView = itemView.findViewById(R.id.numLikesTextView);
-                mediaImageView = itemView.findViewById(R.id.mediaImage);
-                timeTextView = itemView.findViewById(R.id.timeTexView);
-                forwardImageView = itemView.findViewById(R.id.forwardImageView);
-            }
-
-        }
     }
 
     @Override
