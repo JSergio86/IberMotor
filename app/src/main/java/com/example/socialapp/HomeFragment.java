@@ -14,6 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.Toast;
+
+import io.github.muddz.styleabletoast.StyleableToast;
 
 
 public class HomeFragment extends Fragment {
@@ -41,9 +44,12 @@ public class HomeFragment extends Fragment {
         perfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigate(R.id.signInFragment);
+                StyleableToast.makeText(getContext(), "Hello World!", Toast.LENGTH_LONG, R.style.mytoast).show();
+
             }
         });
+
+
         menuDrawer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,6 +86,8 @@ public class HomeFragment extends Fragment {
 
 
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
