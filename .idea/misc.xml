@@ -5,6 +5,7 @@
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/email.xml" value="0.2815" />
+        <entry key="app/src/main/res/drawable/fondochatconversaciones.xml" value="0.3565" />
         <entry key="app/src/main/res/drawable/ic_baseline_delete_24.xml" value="0.1515" />
         <entry key="app/src/main/res/drawable/lapiz.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/like.xml" value="0.1" />
@@ -13,10 +14,13 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.35625" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.35625" />
+        <entry key="app/src/main/res/layout/fragment_conversaciones.xml" value="0.3619047619047619" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_home_v2.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_media.xml" value="0.2115036231884058" />
         <entry key="app/src/main/res/layout/fragment_new_post.xml" value="0.2" />
         <entry key="app/src/main/res/layout/fragment_notificaciones.xml" value="0.35625" />
+        <entry key="app/src/main/res/layout/fragment_perfil.xml" value="0.2" />
         <entry key="app/src/main/res/layout/fragment_perfil_users.xml" value="0.35625" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_register.xml" value="0.35625" />

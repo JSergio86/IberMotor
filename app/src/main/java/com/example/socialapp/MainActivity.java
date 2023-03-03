@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                         navController.navigate(R.id.homeFragment);
                         break;
                     case R.id.chat:
-                        navController.navigate(R.id.homeFragment);
+                        navController.navigate(R.id.conversacionesFragment);
                         break;
                     case R.id.perfil:
                         navController.navigate(R.id.perfilFragment);

@@ -46,7 +46,8 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 navController.navigate(R.id.perfilFragment);
-                StyleableToast.makeText(getContext(), "Hello World!", Toast.LENGTH_LONG, R.style.mytoast).show();
+                getActivity().findViewById(R.id.bottomNavigation).findViewById(R.id.perfil).performClick();
+               // StyleableToast.makeText(getContext(), "Hello World!", Toast.LENGTH_LONG, R.style.mytoast).show();
 
             }
         });

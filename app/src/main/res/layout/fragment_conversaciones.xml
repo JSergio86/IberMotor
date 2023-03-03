@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ConversacionesFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/conversacionesText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="30dp"
+            android:text="Conversaciones"
+            android:textAppearance="@style/styleTituloConversaciones"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/barraBusqueda"
+            android:layout_width="320dp"
+            android:layout_height="42dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/barrabusqueda"
+            android:drawableStart="@drawable/iconobuscar"
+            android:drawablePadding="10dp"
+            android:ems="10"
+            android:hint="Buscar"
+            android:paddingStart="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/conversacionesText" />
+
+        <TextView
+            android:id="@+id/chatText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:text="Chat"
+            android:textColor="#000000"
+            android:textSize="21sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/barraBusqueda" />
+
+        <View
+            android:id="@+id/fondoChatPaco"
+            android:layout_width="300dp"
+            android:layout_height="80dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/fondochatconversaciones"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chatText" />
+
+        <ImageView
+            android:id="@+id/usuarioPaco"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/iconoperfilchat"
+            app:layout_constraintBottom_toBottomOf="@+id/fondoChatPaco"
+            app:layout_constraintStart_toStartOf="@+id/fondoChatPaco"
+            app:layout_constraintTop_toTopOf="@+id/fondoChatPaco" />
+
+        <TextView
+            android:id="@+id/nombrePacoText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Paco"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/usuarioPaco"
+            app:layout_constraintTop_toTopOf="@+id/fondoChatPaco" />
+
+        <TextView
+            android:id="@+id/mensajePacoText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="3dp"
+            android:text="Lorem ipsum dolor sit amet,\nconsec..."
+            android:textColor="#000000"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/usuarioPaco"
+            app:layout_constraintTop_toBottomOf="@+id/nombrePacoText" />
+
+        <ImageView
+            android:id="@+id/iconocheckChat"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"
+            android:src="@drawable/iconocheckchat"
+            app:layout_constraintBottom_toBottomOf="@+id/fondoChatPaco"
+            app:layout_constraintEnd_toEndOf="@+id/fondoChatPaco" />
+
+        <View
+            android:id="@+id/fondoChatJuan"
+            android:layout_width="300dp"
+            android:layout_height="80dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/fondochatconversaciones"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fondoChatPaco" />
+
+        <ImageView
+            android:id="@+id/usuarioJuan"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/iconoperfilchat"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/fondoChatJuan"
+            app:layout_constraintTop_toTopOf="@+id/fondoChatJuan" />
+
+        <TextView
+            android:id="@+id/nombreJuanText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:text="Juan"
+            android:textColor="#000000"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@+id/usuarioJuan"
+            app:layout_constraintTop_toTopOf="@+id/fondoChatJuan" />
+
+        <TextView
+            android:id="@+id/mensajeJuanText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="3dp"
+            android:text="Lorem ipsum dolor sit amet,\nconsec..."
+            android:textColor="#000000"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/usuarioJuan"
+            app:layout_constraintTop_toBottomOf="@+id/nombreJuanText" />
+
+        <ImageView
+            android:id="@+id/iconocheckChatJuan"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"
+            android:src="@drawable/iconocheckchat"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/fondoChatJuan" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>
