@@ -19,7 +19,8 @@ import android.widget.Toast;
 import io.github.muddz.styleabletoast.StyleableToast;
 
 
-public class HomeFragment extends Fragment {
+public class HomeFragmentV2 extends Fragment {
+
     NavController navController;   // <-----------------
     ImageView perfil, menuDrawer, iconoVista;
     View cuadroInfoCoche;
@@ -54,11 +55,10 @@ public class HomeFragment extends Fragment {
         iconoVista.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigate(R.id.homeFragmentV2);
+                navController.navigate(R.id.homeFragment);
 
             }
         });
-
 
         menuDrawer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,12 +97,10 @@ public class HomeFragment extends Fragment {
 
     }
 
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.fragment_home_v2, container, false);
     }
 }

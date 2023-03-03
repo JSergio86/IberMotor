@@ -94,7 +94,7 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="8dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/cambiarvista"
+        android:src="@drawable/cambiarvistagrande"
         app:layout_constraintStart_toEndOf="@+id/iconosAutomoviles"
         app:layout_constraintTop_toBottomOf="@+id/barraBusqueda"
         tools:ignore="MissingConstraints" />
@@ -112,49 +112,43 @@
         tools:ignore="MissingConstraints" />
 
 
-
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iconosAutomoviles"
-        tools:ignore="SpeakableTextPresentCheck">
+        app:layout_constraintTop_toBottomOf="@+id/iconoVista">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="20dp">
+            android:layout_marginBottom="20dp"
+            android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingBottom="20dp">
+
                 <View
                     android:id="@+id/cuadroInfoCoche"
-                    android:layout_width="339dp"
-                    android:layout_height="329dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
-                    android:layout_marginStart="36dp"
-                    android:layout_marginEnd="36dp"
-                    android:background="@drawable/rectangle_1"
+                    android:background="@drawable/fondo"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.509"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="MissingConstraints,NotSibling" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/fotoCoche"
-                    android:layout_width="340dp"
-                    android:layout_height="160dp"
+                    android:layout_width="151dp"
+                    android:layout_height="109dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/bmw"
                     app:layout_constraintEnd_toEndOf="@+id/cuadroInfoCoche"
@@ -163,120 +157,102 @@
                     app:layout_constraintTop_toTopOf="@+id/cuadroInfoCoche"
                     tools:ignore="MissingConstraints" />
 
-                <LinearLayout
-                    android:id="@id/preciolinear"
+                <TextView
+                    android:id="@+id/nombreText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical"
+                    android:layout_marginStart="10dp"
+                    android:text="BMW Serie 3 M3 E36"
+                    android:textAppearance="@style/nameVistaSecundaria"
+                    app:layout_constraintBottom_toTopOf="@+id/atributosLayout"
+                    app:layout_constraintStart_toEndOf="@+id/fotoCoche"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                    app:layout_constraintStart_toStartOf="@id/cuadroInfoCoche"
-                    app:layout_constraintTop_toBottomOf="@+id/fotoCoche">
-
-                    <TextView
-                        android:id="@+id/precioTextTitle"
-                        android:layout_width="81dp"
-                        android:layout_height="18dp"
-                        android:text="Precio total"
-                        android:textAppearance="@style/precio_tota"
-                        android:textSize="40px" />
-
-                    <TextView
-                        android:id="@+id/precioText"
-                        android:layout_width="80dp"
-                        android:layout_height="22dp"
-                        android:text="23.999€"
-                        android:textAppearance="@style/some_id" />
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:id="@id/nombreInfolinear"
+                <RelativeLayout
+                    android:id="@+id/atributosLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="10dp"
-                    android:orientation="vertical"
-                    app:layout_constraintStart_toStartOf="@id/cuadroInfoCoche"
-                    app:layout_constraintTop_toBottomOf="@+id/preciolinear">
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="9dp"
+                    android:gravity="left|center"
+                    app:layout_constraintStart_toEndOf="@+id/fotoCoche"
+                    app:layout_constraintTop_toBottomOf="@+id/nombreText"
+                    tools:ignore="MissingConstraints">
+
 
                     <TextView
-                        android:id="@+id/nombreText"
-                        android:layout_width="199dp"
-                        android:layout_height="23dp"
-                        android:text="BMW Serie 3 M3 E36"
-                        android:textAppearance="@style/nameVistaPrincipal"
-                        app:layout_constraintStart_toStartOf="@+id/cuadroInfoCoche"
-                        app:layout_constraintTop_toBottomOf="@+id/preciolinear" />
-
-                    <RelativeLayout
-                        android:id="@+id/atributosLayout"
+                        android:id="@+id/ciudadText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="left|center">
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="2dp"
+                        android:text="Barcelona -"
+                        android:textAppearance="@style/styleGris" />
 
 
-                        <TextView
-                            android:id="@+id/ciudadText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentTop="true"
-                            android:layout_marginRight="2dp"
-                            android:text="Barcelona -"
-                            android:textAppearance="@style/styleGris" />
+                    <TextView
+                        android:id="@+id/kilometrosText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="16dp"
+                        android:layout_marginRight="2dp"
+                        android:layout_toRightOf="@id/ciudadText"
+                        android:text="217.000km"
+                        android:textAppearance="@style/styleGris" />
+                </RelativeLayout>
 
+                <RelativeLayout
+                    android:id="@+id/atributosLayoutAbajo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="2dp"
+                    android:gravity="left|center"
+                    app:layout_constraintStart_toEndOf="@+id/fotoCoche"
+                    app:layout_constraintTop_toBottomOf="@+id/atributosLayout">
 
-                        <TextView
-                            android:id="@+id/kilometrosText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="16dp"
-                            android:layout_marginRight="2dp"
-                            android:layout_toRightOf="@id/ciudadText"
-                            android:text="217.000km -"
-                            android:textAppearance="@style/styleGris" />
+                    <TextView
+                        android:id="@+id/añosText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="2dp"
+                        android:text="1997 -"
+                        android:textAppearance="@style/styleGris" />
 
-
-                        <TextView
-                            android:id="@+id/añosText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="2dp"
-                            android:layout_toRightOf="@id/kilometrosText"
-                            android:text="1997 -"
-                            android:textAppearance="@style/styleGris" />
-
-                        <TextView
-                            android:id="@+id/combustibleText"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="2dp"
-                            android:layout_toRightOf="@id/añosText"
-                            android:text="Gasolina"
-                            android:textAppearance="@style/styleGris" />
-
-                    </RelativeLayout>
-                </LinearLayout>
-
+                    <TextView
+                        android:id="@+id/combustibleText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="2dp"
+                        android:layout_toRightOf="@id/añosText"
+                        android:text="Gasolina"
+                        android:textAppearance="@style/styleGris" />
+                </RelativeLayout>
 
                 <TextView
                     android:id="@+id/garantia"
-                    android:layout_width="120dp"
-                    android:layout_height="14dp"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="13dp"
-                    android:layout_marginEnd="205dp"
-                    android:gravity="top"
-                    android:lineSpacingExtra="-5sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
                     android:text="Garantia 1 año"
                     android:textAppearance="@style/garantia"
-                    app:layout_constraintEnd_toEndOf="@+id/cuadroInfoCoche"
-                    app:layout_constraintStart_toStartOf="@+id/cuadroInfoCoche"
-                    app:layout_constraintTop_toBottomOf="@+id/nombreInfolinear" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/atributosLayoutAbajo"
+                    tools:ignore="MissingConstraints" />
 
+                <TextView
+                    android:id="@+id/precioText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="22dp"
+                    android:layout_marginEnd="10dp"
+                    android:text="23.999€"
+                    android:textStyle="bold"
+                    android:textAppearance="@style/precioVista2"
+                    app:layout_constraintBottom_toBottomOf="@+id/cuadroInfoCoche"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/garantia"
+                    app:layout_constraintVertical_bias="0.0"
+                    tools:ignore="MissingConstraints" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 

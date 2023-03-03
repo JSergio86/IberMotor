@@ -41,6 +41,16 @@
         android:name="com.example.socialapp.PrivacidadFragment"
         android:label="fragment_privacidad"
         tools:layout="@layout/fragment_privacidad" />
+    <fragment
+        android:id="@+id/perfilFragment"
+        android:name="com.example.socialapp.PerfilFragment"
+        android:label="fragment_perfil"
+        tools:layout="@layout/fragment_perfil" />
+    <fragment
+        android:id="@+id/homeFragmentV2"
+        android:name="com.example.socialapp.HomeFragmentV2"
+        android:label="fragment_home_v2"
+        tools:layout="@layout/fragment_home_v2" />
 
 </navigation>
 

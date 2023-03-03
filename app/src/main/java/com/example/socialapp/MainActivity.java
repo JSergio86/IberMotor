@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                         navController.navigate(R.id.homeFragment);
                         break;
                     case R.id.perfil:
-                        navController.navigate(R.id.homeFragment);
+                        navController.navigate(R.id.perfilFragment);
                         break;
                 }
                 return true;
@@ -83,12 +83,18 @@ public class MainActivity extends AppCompatActivity {
         //Aqui solo se muestra el bottom navigation en los fragments que no hemos quitado en la lista de fragmentsWithoutBottomNav
         navController.addOnDestinationChangedListener(new NavController.OnDestinationChangedListener() {
             @Override
-            public void onDestinationChanged(@NonNull NavController navController, @NonNull NavDestination navDestination, @Nullable Bundle bundle) {
-                if(fragmentsWithoutBottomNav.contains(navDestination.getId())){
+            public void onDestinationChanged(@NonNull NavController controller, @NonNull NavDestination destination, @Nullable Bundle arguments) {
+                // verifica si el ID del fragmento actual está en la lista de fragmentos sin BottomNavigationView
+                if (fragmentsWithoutBottomNav.contains(destination.getId())) {
                     bottomNavigationView.setVisibility(View.GONE);
-                }
-                else{
+                } else {
                     bottomNavigationView.setVisibility(View.VISIBLE);
+
+                    // verifica si el fragmento actual pertenece a un elemento del BottomNavigationView
+                    MenuItem item = bottomNavigationView.getMenu().findItem(destination.getId());
+                    if (item != null) {
+                        bottomNavigationView.setSelectedItemId(item.getItemId());
+                    }
                 }
             }
         });
