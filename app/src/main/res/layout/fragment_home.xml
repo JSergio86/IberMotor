@@ -186,6 +186,7 @@
                         android:id="@+id/precioText"
                         android:layout_width="80dp"
                         android:layout_height="22dp"
+                        android:textStyle="bold"
                         android:text="23.999€"
                         android:textAppearance="@style/some_id" />
                 </LinearLayout>

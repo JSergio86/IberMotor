@@ -14,11 +14,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 
-public class ConversacionesFragment extends Fragment {
+public class ChatPacoFragment extends Fragment {
 
-    View fondoChatPaco, fondoChatJuan;
     NavController navController;   // <-----------------
-
+    ImageView volver;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -26,32 +25,21 @@ public class ConversacionesFragment extends Fragment {
 
         navController = Navigation.findNavController(view);  // <-----------------
 
-        fondoChatPaco = view.findViewById(R.id.fondoChatPaco);
-        fondoChatJuan = view.findViewById(R.id.fondoChatJuan);
+        volver = view.findViewById(R.id.volverAtras);
 
-
-        fondoChatPaco.setOnClickListener(new View.OnClickListener() {
+        volver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navController.navigate(R.id.chatPacoFragment);
-
-            }
-        });
-
-        fondoChatJuan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                navController.navigate(R.id.chatJuanFragment);
+                navController.navigate(R.id.conversacionesFragment);
 
             }
         });
 
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_conversaciones, container, false);
+        return inflater.inflate(R.layout.fragment_chat_paco, container, false);
     }
 }

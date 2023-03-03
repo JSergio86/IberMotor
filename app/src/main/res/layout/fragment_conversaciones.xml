@@ -14,11 +14,11 @@
             android:id="@+id/conversacionesText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
             android:layout_marginTop="30dp"
             android:text="Conversaciones"
             android:textAppearance="@style/styleTituloConversaciones"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/barraBusqueda"
             app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
@@ -40,33 +40,30 @@
             android:id="@+id/chatText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:text="Chat"
             android:textColor="#000000"
             android:textSize="21sp"
-            app:layout_constraintStart_toStartOf="parent"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/barraBusqueda"
             app:layout_constraintTop_toBottomOf="@+id/barraBusqueda" />
 
         <View
             android:id="@+id/fondoChatPaco"
             android:layout_width="300dp"
             android:layout_height="80dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
             android:layout_marginTop="20dp"
             android:background="@drawable/fondochatconversaciones"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/chatText"
             app:layout_constraintTop_toBottomOf="@+id/chatText" />
 
         <ImageView
             android:id="@+id/usuarioPaco"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginStart="10dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/iconoperfilchat"
+            android:src="@drawable/iconoperfiluserchat"
             app:layout_constraintBottom_toBottomOf="@+id/fondoChatPaco"
             app:layout_constraintStart_toStartOf="@+id/fondoChatPaco"
             app:layout_constraintTop_toTopOf="@+id/fondoChatPaco" />
@@ -113,17 +110,16 @@
             android:layout_alignParentTop="true"
             android:layout_marginTop="15dp"
             android:background="@drawable/fondochatconversaciones"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/fondoChatPaco"
             app:layout_constraintTop_toBottomOf="@+id/fondoChatPaco" />
 
         <ImageView
             android:id="@+id/usuarioJuan"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginStart="10dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/iconoperfilchat"
+            android:src="@drawable/iconoperfiluserchat"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/fondoChatJuan"
             app:layout_constraintTop_toTopOf="@+id/fondoChatJuan" />

@@ -56,6 +56,16 @@
         android:name="com.example.socialapp.ConversacionesFragment"
         android:label="fragment_conversaciones"
         tools:layout="@layout/fragment_conversaciones" />
+    <fragment
+        android:id="@+id/chatPacoFragment"
+        android:name="com.example.socialapp.ChatPacoFragment"
+        android:label="fragment_chat_paco"
+        tools:layout="@layout/fragment_chat_paco" />
+    <fragment
+        android:id="@+id/chatJuanFragment"
+        android:name="com.example.socialapp.ChatJuanFragment"
+        android:label="fragment_chat_juan"
+        tools:layout="@layout/fragment_chat_juan" />
 
 </navigation>
 
