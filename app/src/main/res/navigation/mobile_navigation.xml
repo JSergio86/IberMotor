@@ -66,6 +66,26 @@
         android:name="com.example.socialapp.ChatJuanFragment"
         android:label="fragment_chat_juan"
         tools:layout="@layout/fragment_chat_juan" />
+    <fragment
+        android:id="@+id/filtrosFragment"
+        android:name="com.example.socialapp.FiltrosFragment"
+        android:label="fragment_filtros"
+        tools:layout="@layout/fragment_filtros" />
+    <fragment
+        android:id="@+id/publicarAnuncioFragment"
+        android:name="com.example.socialapp.PublicarAnuncioFragment"
+        android:label="fragment_publicar_anuncio"
+        tools:layout="@layout/fragment_publicar_anuncio" />
+    <fragment
+        android:id="@+id/editarPerfilFragment"
+        android:name="com.example.socialapp.EditarPerfilFragment"
+        android:label="fragment_editar_perfil"
+        tools:layout="@layout/fragment_editar_perfil" />
+    <fragment
+        android:id="@+id/pacoPerfilFragment"
+        android:name="com.example.socialapp.PacoPerfilFragment"
+        android:label="fragment_paco_perfil"
+        tools:layout="@layout/fragment_paco_perfil" />
 
 </navigation>
 

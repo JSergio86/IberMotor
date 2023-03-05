@@ -11,12 +11,14 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 
 public class PerfilFragment extends Fragment {
     NavController navController;   // <-----------------
     ImageView volver;
+    Button botonEditarPerfil;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -25,11 +27,20 @@ public class PerfilFragment extends Fragment {
         navController = Navigation.findNavController(view);  // <-----------------
 
         volver = view.findViewById(R.id.volverAtras);
+        botonEditarPerfil = view.findViewById(R.id.botonEditarPerfil);
 
         volver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 navController.navigate(R.id.homeFragment);
+
+            }
+        });
+
+        botonEditarPerfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(R.id.editarPerfilFragment);
 
             }
         });

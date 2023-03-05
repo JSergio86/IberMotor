@@ -11,13 +11,14 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 
-public class ChatPacoFragment extends Fragment {
+public class EditarPerfilFragment extends Fragment {
 
     NavController navController;   // <-----------------
-    ImageView volver, iconoUser;
+    ImageView volver;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -26,30 +27,20 @@ public class ChatPacoFragment extends Fragment {
         navController = Navigation.findNavController(view);  // <-----------------
 
         volver = view.findViewById(R.id.volverAtras);
-        iconoUser = view.findViewById(R.id.iconoUser);
-
 
         volver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navController.navigate(R.id.conversacionesFragment);
+                navController.navigate(R.id.perfilFragment);
 
             }
         });
-
-        iconoUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                navController.navigate(R.id.pacoPerfilFragment);
-
-            }
-        });
-
     }
-    @Override
+
+        @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chat_paco, container, false);
+        return inflater.inflate(R.layout.fragment_editar_perfil, container, false);
     }
 }

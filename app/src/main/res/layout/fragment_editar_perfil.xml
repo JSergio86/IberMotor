@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PerfilFragment"
+    android:scrollbars="none"
+    android:layout_marginBottom="20dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp">
+
+        <View
+            android:id="@+id/fondoPerfil"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/fondoperfil"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <ImageView
+            android:id="@+id/volverAtras"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="25dp"
+            android:src="@drawable/volveratrasperfil"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/perfilText"
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="32dp"
+            android:gravity="top"
+            android:text="Perfil"
+            android:textSize="20dp"
+            android:textAppearance="@style/perfil"
+            app:layout_constraintEnd_toEndOf="@+id/fondoPerfil"
+            app:layout_constraintStart_toStartOf="@+id/fondoPerfil"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/campanita"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/iconocampanita"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <ImageView
+            android:id="@+id/perfil"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="35dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/perfil"
+            app:layout_constraintEnd_toEndOf="@+id/fondoPerfil"
+            app:layout_constraintStart_toStartOf="@+id/fondoPerfil"
+            app:layout_constraintTop_toBottomOf="@+id/perfilText"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/cambiarFoto"
+            android:layout_width="130dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:background="#FFFFFF"
+            android:text="Cambiar foto"
+            android:textColor="#000000"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/perfil" />
+
+        <LinearLayout
+            android:id="@+id/editarLinear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cambiarFoto"
+            android:orientation="vertical">
+            <EditText
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/forget"
+                android:text="Nombre"
+                android:textSize="14dp"
+                />
+
+            <EditText
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/forget"
+                android:text="Email"
+                android:textSize="14dp"
+                />
+
+            <EditText
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/forget"
+                android:text="Telefono"
+                android:textSize="14dp"
+                />
+
+            <EditText
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/forget"
+                android:text="Contraseña"
+                android:textSize="14dp"
+
+                />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/actualizar"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="30dp"
+            android:background="#000000"
+            android:text="Actualizar"
+            android:textColor="#FFFFFF"
+            android:textSize="14dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editarLinear" />
+
+
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

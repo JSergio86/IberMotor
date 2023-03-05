@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".FiltrosFragment">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/volverAtras"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/iconovolver"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/publicarAnuncioText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="16dp"
+            android:textStyle="bold"
+            android:text="Publicar anuncio"
+            android:textAppearance="@style/styleAppbar"
+            app:layout_constraintStart_toEndOf="@+id/volverAtras"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <View
+            android:id="@+id/linea"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="15dp"
+            android:background="#C0C0C0"
+            app:layout_constraintTop_toBottomOf="@+id/publicarAnuncioText"
+            tools:layout_editor_absoluteX="4dp" />
+
+
+        <LinearLayout
+            android:id="@+id/marcaLinear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linea">
+
+            <TextView
+                android:id="@+id/marca"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="Marca"
+                android:textAppearance="@style/styleAppbar" />
+
+
+            <com.jaredrummler.materialspinner.MaterialSpinner
+                android:id="@+id/spinner"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                app:ms_background_color="#D9D9D9"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/modeloLinear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/marcaLinear">
+
+            <TextView
+                android:id="@+id/modelo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="Modelo"
+                android:textAppearance="@style/styleAppbar" />
+
+
+            <com.jaredrummler.materialspinner.MaterialSpinner
+                android:id="@+id/spinnerModelo"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                app:ms_background_color="#D9D9D9"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/carroceriaLinear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/modeloLinear">
+
+            <TextView
+                android:id="@+id/carroceria"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="Carroceria"
+                android:textAppearance="@style/styleAppbar" />
+
+
+            <com.jaredrummler.materialspinner.MaterialSpinner
+                android:id="@+id/spinnerCarroceria"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                app:ms_background_color="#D9D9D9"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/combustibleLinear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/carroceriaLinear">
+
+            <TextView
+                android:id="@+id/combustible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="Combustible"
+                android:textAppearance="@style/styleAppbar" />
+
+
+            <com.jaredrummler.materialspinner.MaterialSpinner
+                android:id="@+id/spinnerCombustible"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                app:ms_background_color="#D9D9D9"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/añoLinear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/combustibleLinear">
+
+            <TextView
+                android:id="@+id/año"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="Año"
+                android:textAppearance="@style/styleAppbar" />
+
+
+            <com.jaredrummler.materialspinner.MaterialSpinner
+                android:id="@+id/spinnerAño"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                app:ms_background_color="#D9D9D9"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/colorLinear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/añoLinear">
+
+
+            <TextView
+                android:id="@+id/color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="Color"
+                android:textAppearance="@style/styleAppbar" />
+
+
+            <com.jaredrummler.materialspinner.MaterialSpinner
+                android:id="@+id/spinnerColor"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                app:ms_background_color="#D9D9D9"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/kilometrajeLinear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/colorLinear">
+
+
+            <TextView
+                android:id="@+id/kilometraje"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="Kilometros"
+                android:textAppearance="@style/styleAppbar" />
+
+
+            <com.jaredrummler.materialspinner.MaterialSpinner
+                android:id="@+id/spinnerKilometraje"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                app:ms_background_color="#D9D9D9"/>
+
+        </LinearLayout>
+
+
+        <Button
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="#002196"
+            android:text="Subir anuncio"
+            android:textColor="#ffffff"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/kilometrajeLinear" />
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</ScrollView>

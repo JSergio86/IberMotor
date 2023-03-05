@@ -29,7 +29,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="30dp"
             android:layout_marginTop="16dp"
-            android:gravity="top"
+            android:textStyle="bold"
             android:text="Ayuda"
             android:textAppearance="@style/styleAppbar"
             app:layout_constraintStart_toEndOf="@+id/volverAtras"

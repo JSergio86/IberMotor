@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PerfilFragment"
+    android:scrollbars="none"
+    android:layout_marginBottom="20dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp">
+
+        <View
+            android:id="@+id/fondoPerfil"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:background="#961900"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <ImageView
+            android:id="@+id/volverAtras"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="25dp"
+            android:src="@drawable/volveratrasperfil"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/perfilText"
+            android:layout_width="wrap_content"
+            android:layout_height="23dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="32dp"
+            android:gravity="top"
+            android:text="Perfil"
+            android:textSize="20dp"
+            android:textAppearance="@style/perfil"
+            app:layout_constraintEnd_toEndOf="@+id/fondoPerfil"
+            app:layout_constraintStart_toStartOf="@+id/fondoPerfil"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/campanita"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/iconocampanita"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <ImageView
+            android:id="@+id/perfil"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="35dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/iconoperfiluserchat"
+            app:layout_constraintEnd_toEndOf="@+id/fondoPerfil"
+            app:layout_constraintStart_toStartOf="@+id/fondoPerfil"
+            app:layout_constraintTop_toBottomOf="@+id/perfilText"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/nombrePaco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Paco"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/perfil" />
+
+        <ImageView
+            android:id="@+id/ubicacionImage"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/iconoubicacion"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/nombrePaco" />
+
+        <TextView
+            android:id="@+id/ubicacionText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="20dp"
+            android:text="08924, Santa Coloma de Gramenet,\nBarcelona"
+            android:textColor="#000000"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/ubicacionImage"
+            app:layout_constraintTop_toBottomOf="@+id/nombrePaco" />
+
+        <ImageView
+            android:id="@+id/calendario"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/iconocalendario"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ubicacionImage" />
+
+        <TextView
+            android:id="@+id/calendarioText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="13dp"
+            android:text="Se unio en 2020"
+            android:textColor="#000000"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@+id/calendario"
+            app:layout_constraintTop_toBottomOf="@+id/ubicacionText" />
+
+
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

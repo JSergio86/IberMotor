@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignInFragment">
+    tools:context=".SignInFragment"
+    >
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -40,9 +41,10 @@
             app:layout_constraintTop_toBottomOf="@+id/logo"
             tools:ignore="MissingConstraints" />
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:id="@+id/barraEmail"
             android:layout_width="319.01dp"
+            android:focusable="false"
             android:layout_height="24dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
@@ -66,7 +68,7 @@
             app:layout_constraintTop_toBottomOf="@+id/barraEmail"
             tools:ignore="MissingConstraints" />
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:id="@+id/barraContraseña"
             android:layout_width="319.01dp"
             android:layout_height="24dp"
@@ -74,7 +76,9 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="3dp"
             android:layout_marginTop="16dp"
+            android:focusable="false"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/contraseña"
             tools:ignore="MissingConstraints" />

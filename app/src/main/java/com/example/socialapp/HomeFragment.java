@@ -16,12 +16,15 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+import com.jaredrummler.materialspinner.MaterialSpinner;
+
 import io.github.muddz.styleabletoast.StyleableToast;
 
 
 public class HomeFragment extends Fragment {
     NavController navController;   // <-----------------
-    ImageView perfil, menuDrawer, iconoVista;
+    ImageView perfil, menuDrawer, iconoVista,iconoFiltro;
     View cuadroInfoCoche;
     PopupMenu popupMenu;
 
@@ -37,6 +40,7 @@ public class HomeFragment extends Fragment {
         menuDrawer = view.findViewById(R.id.menuDrawer);
         cuadroInfoCoche = view.findViewById(R.id.cuadroInfoCoche);
         iconoVista = view.findViewById(R.id.iconoVista);
+        iconoFiltro = view.findViewById(R.id.iconoFiltro);
 
 
         popupMenu = new PopupMenu(getContext(), menuDrawer);
@@ -49,6 +53,13 @@ public class HomeFragment extends Fragment {
                 getActivity().findViewById(R.id.bottomNavigation).findViewById(R.id.perfil).performClick();
                // StyleableToast.makeText(getContext(), "Hello World!", Toast.LENGTH_LONG, R.style.mytoast).show();
 
+            }
+        });
+
+        iconoFiltro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.filtrosFragment);
             }
         });
 
