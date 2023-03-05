@@ -75,14 +75,6 @@
             android:layout_toEndOf="@id/iconoCoche"
             android:src="@drawable/iconitofurgoneta" />
 
-        <ImageView
-            android:id="@+id/iconoCamion"
-            android:layout_width="38dp"
-            android:layout_height="27dp"
-            android:layout_alignTop="@id/iconoFurgoneta"
-            android:layout_marginStart="20dp"
-            android:layout_toEndOf="@id/iconoFurgoneta"
-            android:src="@drawable/iconitocamion" />
 
     </RelativeLayout>
 

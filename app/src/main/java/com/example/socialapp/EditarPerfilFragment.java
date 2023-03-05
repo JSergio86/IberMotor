@@ -14,11 +14,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.pranavpandey.android.dynamic.toasts.DynamicToast;
+
 
 public class EditarPerfilFragment extends Fragment {
 
     NavController navController;   // <-----------------
     ImageView volver;
+    Button actualizar;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -27,10 +30,21 @@ public class EditarPerfilFragment extends Fragment {
         navController = Navigation.findNavController(view);  // <-----------------
 
         volver = view.findViewById(R.id.volverAtras);
+        actualizar = view.findViewById(R.id.actualizar);
+
 
         volver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                navController.navigate(R.id.perfilFragment);
+
+            }
+        });
+
+        actualizar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DynamicToast.makeError(getContext(), "Error no se pudo editar el perfil").show();
                 navController.navigate(R.id.perfilFragment);
 
             }

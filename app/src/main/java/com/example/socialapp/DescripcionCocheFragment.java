@@ -14,12 +14,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.github.nikartm.button.FitButton;
+
 
 public class DescripcionCocheFragment extends Fragment {
 
     NavController navController;   // <-----------------
     ImageView volver;
-    Button botonChatPaco;
+    FitButton botonChatPaco;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

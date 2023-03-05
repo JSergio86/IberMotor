@@ -22,8 +22,8 @@ import io.github.muddz.styleabletoast.StyleableToast;
 public class HomeFragmentV2 extends Fragment {
 
     NavController navController;   // <-----------------
-    ImageView perfil, menuDrawer, iconoVista;
-    View cuadroInfoCoche;
+    ImageView perfil, menuDrawer, iconoVista, iconoFiltro;
+    View cuadroInfoCoche , cuadroInfoCocheDodge;
     PopupMenu popupMenu;
 
 
@@ -37,7 +37,10 @@ public class HomeFragmentV2 extends Fragment {
         perfil = view.findViewById(R.id.perfil);
         menuDrawer = view.findViewById(R.id.menuDrawer);
         cuadroInfoCoche = view.findViewById(R.id.cuadroInfoCoche);
+        cuadroInfoCocheDodge = view.findViewById(R.id.cuadroInfoCoche_dodge);
         iconoVista = view.findViewById(R.id.iconoVista);
+        iconoFiltro = view.findViewById(R.id.iconoFiltro);
+
 
 
         popupMenu = new PopupMenu(getContext(), menuDrawer);
@@ -48,6 +51,21 @@ public class HomeFragmentV2 extends Fragment {
             public void onClick(View v) {
                 navController.navigate(R.id.perfilFragment);
                 StyleableToast.makeText(getContext(), "Hello World!", Toast.LENGTH_LONG, R.style.mytoast).show();
+
+            }
+        });
+
+        iconoFiltro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.filtrosFragment);
+            }
+        });
+
+        cuadroInfoCocheDodge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.dodgeDescripcionFragment);
 
             }
         });

@@ -13,13 +13,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.github.nikartm.button.FitButton;
 import com.jaredrummler.materialspinner.MaterialSpinner;
+import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 
 
 public class PublicarAnuncioFragment extends Fragment {
 
     NavController navController;   // <-----------------
     ImageView volver;
+    FitButton subiranuncio;
 
 
     @Override
@@ -29,10 +32,22 @@ public class PublicarAnuncioFragment extends Fragment {
         navController = Navigation.findNavController(view);  // <-----------------
 
         volver = view.findViewById(R.id.volverAtras);
+        subiranuncio = view.findViewById(R.id.subiranuncio);
 
         volver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                getActivity().findViewById(R.id.bottomNavigation).findViewById(R.id.buscar).performClick();
+                navController.navigate(R.id.homeFragment);
+
+            }
+        });
+
+        subiranuncio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DynamicToast.make(getContext(), "Subido correctamente", R.drawable.iconocheckchat).show();
+                getActivity().findViewById(R.id.bottomNavigation).findViewById(R.id.buscar).performClick();
                 navController.navigate(R.id.homeFragment);
 
             }

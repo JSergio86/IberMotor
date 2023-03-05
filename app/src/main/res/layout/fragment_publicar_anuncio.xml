@@ -243,18 +243,58 @@
         </LinearLayout>
 
 
-        <Button
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="#002196"
-            android:text="Subir anuncio"
-            android:textColor="#ffffff"
+
+
+        <com.github.nikartm.button.FitButton
+            android:id="@+id/fbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="65dp"
+            android:layout_margin="35dp"
+            android:enabled="true"
+            android:gravity="center_vertical"
+            app:fb_cornerRadius="2dp"
+            app:fb_shape="circle"
+            app:fb_divColor="#fff"
+            app:fb_divWidth="1dp"
+            app:fb_divHeight="40dp"
+            app:fb_rippleColor="#FBE9E7"
+            app:fb_iconWidth="28dp"
+            app:fb_iconHeight="28dp"
+            app:fb_iconPosition="left"
+            app:fb_iconMarginStart="20dp"
+            app:fb_iconMarginEnd="16dp"
+            app:fb_icon="@drawable/iconogaleria"
+            app:fb_iconColor="#FFF"
+            app:fb_textPaddingStart="16dp"
+            app:fb_textColor="#FFF"
+            app:fb_text="Like Me"
+            app:fb_backgroundColor="#FF7043"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/kilometrajeLinear" />
+            app:layout_constraintTop_toBottomOf="@+id/kilometrajeLinear"/>
 
 
+
+        <com.github.nikartm.button.FitButton
+            android:id="@+id/subiranuncio"
+            android:layout_width="130dp"
+            android:layout_height="40dp"
+            android:layout_margin="32dp"
+            android:enabled="true"
+            android:gravity="center"
+            app:fb_cornerRadius="12dp"
+            app:fb_shape="rectangle"
+            app:fb_divColor="#fff"
+            app:fb_divWidth="1dp"
+            app:fb_divHeight="40dp"
+            app:fb_rippleColor="#FBE9E7"
+            app:fb_iconColor="#FFF"
+            app:fb_textColor="#FFF"
+            app:fb_text="Subir anuncio"
+            app:fb_backgroundColor="#002196"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fbtn"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

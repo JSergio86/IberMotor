@@ -238,29 +238,40 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="35dp"
-                android:background="@drawable/cuadrochat"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/descripcion" />
 
-            <Button
+
+
+            <com.github.nikartm.button.FitButton
                 android:id="@+id/botonChatPaco"
-                android:layout_width="150dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:background="#075480"
-                android:text="Chat"
-                android:textColor="#FFFFFF"
-                android:textSize="14sp"
-                android:paddingStart="30dp"
-                android:drawableLeft="@drawable/iconochat"
-                android:drawablePadding="12dp"
-                android:gravity="center_vertical"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
+                android:layout_width="140dp"
+                android:layout_height="40dp"
+                android:layout_margin="32dp"
+                android:enabled="true"
+                android:gravity="center"
+                app:fb_cornerRadius="12dp"
+                app:fb_shape="rectangle"
+                app:fb_divColor="#fff"
+                app:fb_divHeight="40dp"
+                app:fb_rippleColor="#FBE9E7"
+                app:fb_iconColor="#FFF"
+                app:fb_textColor="#FFF"
+                app:fb_iconWidth="20dp"
+                app:fb_iconHeight="20dp"
+                app:fb_iconPosition="left"
+                app:fb_iconMarginStart="10dp"
+                app:fb_iconMarginEnd="10dp"
+                app:fb_icon="@drawable/iconochat"
+                app:fb_text="Chat"
+                app:fb_backgroundColor="#002196"
+                app:fb_textSize="14dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/descripcion" />
+                app:layout_constraintTop_toBottomOf="@+id/descripcion"/>
+
+
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

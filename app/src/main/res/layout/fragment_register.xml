@@ -130,21 +130,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/botonRegistro" />
 
-        <ImageView
-            android:id="@+id/iconovisible"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginRight="16dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/iconovisible"
-            app:layout_constraintBottom_toBottomOf="@+id/barraContraseña"
-            app:layout_constraintRight_toRightOf="@id/barraContraseña"
-            app:layout_constraintTop_toTopOf="@+id/barraContraseña"
-            app:layout_constraintVertical_bias="0.0"
-            tools:ignore="MissingConstraints">
 
 
-        </ImageView>
 
         <ImageView
             android:id="@+id/google"

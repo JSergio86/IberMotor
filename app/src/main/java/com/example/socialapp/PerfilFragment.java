@@ -32,6 +32,7 @@ public class PerfilFragment extends Fragment {
         volver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                getActivity().findViewById(R.id.bottomNavigation).findViewById(R.id.buscar).performClick();
                 navController.navigate(R.id.homeFragment);
 
             }
