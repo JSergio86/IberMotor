@@ -11,13 +11,15 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 
-public class ChatJuanFragment extends Fragment {
+public class DodgeDescripcionFragment extends Fragment {
 
     NavController navController;   // <-----------------
-    ImageView volver, iconoUser;
+    ImageView volver;
+    Button botonChatJuan;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -26,32 +28,30 @@ public class ChatJuanFragment extends Fragment {
         navController = Navigation.findNavController(view);  // <-----------------
 
         volver = view.findViewById(R.id.volverAtras);
-        iconoUser = view.findViewById(R.id.iconoUser);
+        botonChatJuan = view.findViewById(R.id.botonChatJuan);
 
 
         volver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().findViewById(R.id.bottomNavigation).findViewById(R.id.chat).performClick();
-                navController.navigate(R.id.conversacionesFragment);
+                navController.navigate(R.id.homeFragment);
 
             }
         });
 
-        iconoUser.setOnClickListener(new View.OnClickListener() {
+        botonChatJuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navController.navigate(R.id.juanPerfilFragment);
+                navController.navigate(R.id.chatJuanFragment);
 
             }
         });
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chat_juan, container, false);
+        return inflater.inflate(R.layout.fragment_dodge_descripcion, container, false);
     }
 }

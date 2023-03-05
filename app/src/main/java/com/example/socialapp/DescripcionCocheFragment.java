@@ -11,6 +11,7 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 
@@ -18,6 +19,7 @@ public class DescripcionCocheFragment extends Fragment {
 
     NavController navController;   // <-----------------
     ImageView volver;
+    Button botonChatPaco;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -26,6 +28,8 @@ public class DescripcionCocheFragment extends Fragment {
         navController = Navigation.findNavController(view);  // <-----------------
 
         volver = view.findViewById(R.id.volverAtras);
+        botonChatPaco = view.findViewById(R.id.botonChatPaco);
+
 
         volver.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -35,6 +39,13 @@ public class DescripcionCocheFragment extends Fragment {
             }
         });
 
+        botonChatPaco.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(R.id.chatPacoFragment);
+
+            }
+        });
     }
 
     @Override

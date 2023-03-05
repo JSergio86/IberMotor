@@ -32,6 +32,7 @@ public class ChatPacoFragment extends Fragment {
         volver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                getActivity().findViewById(R.id.bottomNavigation).findViewById(R.id.chat).performClick();
                 navController.navigate(R.id.conversacionesFragment);
 
             }

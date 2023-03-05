@@ -25,7 +25,7 @@ import io.github.muddz.styleabletoast.StyleableToast;
 public class HomeFragment extends Fragment {
     NavController navController;   // <-----------------
     ImageView perfil, menuDrawer, iconoVista,iconoFiltro;
-    View cuadroInfoCoche;
+    View cuadroInfoCoche, cuadroInfoCocheDodge;
     PopupMenu popupMenu;
 
 
@@ -39,8 +39,10 @@ public class HomeFragment extends Fragment {
         perfil = view.findViewById(R.id.perfil);
         menuDrawer = view.findViewById(R.id.menuDrawer);
         cuadroInfoCoche = view.findViewById(R.id.cuadroInfoCoche);
+        cuadroInfoCocheDodge = view.findViewById(R.id.cuadroInfoCocheDodge);
         iconoVista = view.findViewById(R.id.iconoVista);
         iconoFiltro = view.findViewById(R.id.iconoFiltro);
+
 
 
         popupMenu = new PopupMenu(getContext(), menuDrawer);
@@ -103,6 +105,13 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 navController.navigate(R.id.descripcionCocheFragment);
+            }
+        });
+
+        cuadroInfoCocheDodge.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.dodgeDescripcionFragment);
             }
         });
 

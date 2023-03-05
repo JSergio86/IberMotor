@@ -19,10 +19,9 @@
             android:layout_height="150dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:background="#961900"
+            android:background="#1F9D00"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteX="0dp" />
+            tools:ignore="MissingConstraints" />
 
         <ImageView
             android:id="@+id/volverAtras"
@@ -74,10 +73,10 @@
             tools:ignore="MissingConstraints" />
 
         <TextView
-            android:id="@+id/nombrePaco"
+            android:id="@+id/nombreJuan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Paco"
+            android:text="Juan"
             android:textColor="#000000"
             android:textSize="20sp"
             android:textStyle="bold"
@@ -93,7 +92,7 @@
             android:layout_marginTop="20dp"
             android:src="@drawable/iconoubicacion"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/nombrePaco" />
+            app:layout_constraintTop_toBottomOf="@+id/nombreJuan" />
 
         <TextView
             android:id="@+id/ubicacionText"
@@ -101,18 +100,18 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="20dp"
-            android:text="08924, Santa Coloma de Gramenet,\nBarcelona"
+            android:text="08911, Badalona, Barcelona"
             android:textColor="#000000"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/ubicacionImage"
-            app:layout_constraintTop_toBottomOf="@+id/nombrePaco" />
+            app:layout_constraintTop_toBottomOf="@+id/nombreJuan" />
 
         <ImageView
             android:id="@+id/calendario"
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="15dp"
             android:src="@drawable/iconocalendario"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/ubicacionImage" />
@@ -123,7 +122,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp"
             android:layout_marginTop="13dp"
-            android:text="Se unio en 2020"
+            android:text="Se unio en 2018"
             android:textColor="#000000"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/calendario"
@@ -133,7 +132,7 @@
             android:id="@+id/anuncions"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:text="Anuncios"
             android:textColor="#000000"
             android:textSize="20sp"
@@ -151,7 +150,7 @@
             app:layout_constraintTop_toBottomOf="@+id/anuncions">
 
             <View
-                android:id="@+id/cuadroInfoCoche"
+                android:id="@+id/cuadroInfoCoche_dodge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -162,36 +161,36 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/fotoCoche"
+                android:id="@+id/fotoCoche_dodge"
                 android:layout_width="160dp"
                 android:layout_height="109dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/bmw"
-                app:layout_constraintEnd_toEndOf="@+id/cuadroInfoCoche"
+                android:src="@drawable/dodge"
+                app:layout_constraintEnd_toEndOf="@+id/cuadroInfoCoche_dodge"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/cuadroInfoCoche"
-                app:layout_constraintTop_toTopOf="@+id/cuadroInfoCoche"
+                app:layout_constraintStart_toStartOf="@+id/cuadroInfoCoche_dodge"
+                app:layout_constraintTop_toTopOf="@+id/cuadroInfoCoche_dodge"
                 tools:ignore="MissingConstraints" />
 
             <LinearLayout
-                android:id="@+id/nombreInfolinear"
+                android:id="@+id/nombreInfolinear_dodge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:orientation="vertical"
-                app:layout_constraintStart_toEndOf="@+id/fotoCoche"
+                app:layout_constraintStart_toEndOf="@+id/fotoCoche_dodge"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/nombreText"
+                    android:id="@+id/nombreText_dodge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="BMW Serie 3 M3 E36"
+                    android:text="Dodge Challenger"
                     android:textAppearance="@style/nameVistaSecundaria" />
 
                 <RelativeLayout
-                    android:id="@+id/atributosLayout"
+                    android:id="@+id/atributosLayout_dodge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -199,48 +198,48 @@
 
 
                     <TextView
-                        android:id="@+id/ciudadText"
+                        android:id="@+id/ciudadText_dodge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentTop="true"
                         android:layout_marginRight="2dp"
-                        android:text="Barcelona -"
+                        android:text="Badalona -"
                         android:textAppearance="@style/styleGris" />
 
 
                     <TextView
-                        android:id="@+id/kilometrosText"
+                        android:id="@+id/kilometrosText_dodge"
                         android:layout_width="wrap_content"
                         android:layout_height="16dp"
                         android:layout_marginRight="2dp"
-                        android:layout_toRightOf="@id/ciudadText"
-                        android:text="217.000km"
+                        android:layout_toRightOf="@id/ciudadText_dodge"
+                        android:text="93.000km"
                         android:textAppearance="@style/styleGris" />
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/atributosLayoutAbajo"
+                    android:id="@+id/atributosLayoutAbajoDodge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="left|center"
-                    app:layout_constraintStart_toEndOf="@+id/fotoCoche"
-                    app:layout_constraintTop_toBottomOf="@+id/atributosLayout">
+                    app:layout_constraintStart_toEndOf="@+id/fotoCocheDodge"
+                    app:layout_constraintTop_toBottomOf="@+id/atributosLayoutDodge">
 
                     <TextView
-                        android:id="@+id/añosText"
+                        android:id="@+id/añosTextDodge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="2dp"
-                        android:text="1997 -"
+                        android:text="2016 -"
                         android:textAppearance="@style/styleGris" />
 
                     <TextView
-                        android:id="@+id/combustibleText"
+                        android:id="@+id/combustibleTextDodge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="2dp"
-                        android:layout_toRightOf="@id/añosText"
+                        android:layout_toRightOf="@id/añosTextDodge"
                         android:text="Gasolina"
                         android:textAppearance="@style/styleGris" />
                 </RelativeLayout>
@@ -248,7 +247,7 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/precioGarantiaLinear"
+                android:id="@+id/precioGarantiaLinearDodge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="5dp"
@@ -258,17 +257,17 @@
                 app:layout_constraintEnd_toEndOf="parent">
 
                 <TextView
-                    android:id="@+id/garantia"
+                    android:id="@+id/garantiaDodge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Garantia 1 año"
                     android:textAppearance="@style/garantia" />
 
                 <TextView
-                    android:id="@+id/precioText"
+                    android:id="@+id/precioTextDodge"
                     android:layout_width="wrap_content"
                     android:layout_height="22dp"
-                    android:text="23.999€"
+                    android:text="42.999€"
                     android:textAppearance="@style/precioVista2"
                     android:textStyle="bold" />
             </LinearLayout>

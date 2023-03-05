@@ -86,6 +86,16 @@
         android:name="com.example.socialapp.PacoPerfilFragment"
         android:label="fragment_paco_perfil"
         tools:layout="@layout/fragment_paco_perfil" />
+    <fragment
+        android:id="@+id/dodgeDescripcionFragment"
+        android:name="com.example.socialapp.DodgeDescripcionFragment"
+        android:label="fragment_dodge_descripcion"
+        tools:layout="@layout/fragment_dodge_descripcion" />
+    <fragment
+        android:id="@+id/juanPerfilFragment"
+        android:name="com.example.socialapp.JuanPerfilFragment"
+        android:label="fragment_juan_perfil"
+        tools:layout="@layout/fragment_juan_perfil" />
 
 </navigation>
 
