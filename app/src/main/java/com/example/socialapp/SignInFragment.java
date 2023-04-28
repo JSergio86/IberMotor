@@ -10,11 +10,14 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,41 +47,141 @@ public class SignInFragment extends Fragment {
 
     NavController navController;
 
-    Button botonIniciarSesion;
-
-    TextView registrarse;
-
+    private SignInButton googleSignInButton;
+    private ActivityResultLauncher<Intent> activityResultLauncher;
+    private EditText emailEditText, passwordEditText;
+    private Button emailSignInButton;
+    private ConstraintLayout signInForm;
+    private ProgressBar signInProgressBar;
+    private FirebaseAuth mAuth;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        navController = Navigation.findNavController(view);  // <-----------------
+        navController = Navigation.findNavController(view);
 
-        botonIniciarSesion = view.findViewById(R.id.botonIniciarSesion);
-        registrarse = view.findViewById(R.id.registrarse);
-
-        botonIniciarSesion.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                navController.navigate(R.id.homeFragment);
-
-            }
-        });
-        registrarse.setOnClickListener(new View.OnClickListener() {
+        view.findViewById(R.id.gotoCreateAccountTextView).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 navController.navigate(R.id.registerFragment);
             }
         });
 
+        emailEditText = view.findViewById(R.id.emailEditText);
+        passwordEditText = view.findViewById(R.id.passwordEditText);
+        emailSignInButton = view.findViewById(R.id.emailSignInButton);
+        signInForm = view.findViewById(R.id.constraint);
 
+        mAuth = FirebaseAuth.getInstance();
 
-
-
+        emailSignInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accederConEmail();
+            }
+        });
+        googleSignInButton = view.findViewById(R.id.googleSignInButton);
+        activityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+// There are no request codes
+                            Intent data = result.getData();
+                            try {
+                                firebaseAuthWithGoogle(GoogleSignIn.getSignedInAccountFromIntent(data).getResult(ApiException.class));
+                            } catch (ApiException e) {
+                                Log.e("ABCD", "signInResult:failed code=" +
+                                        e.getStatusCode());
+                            }
+                        }
+                    }
+                });
+        googleSignInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accederConGoogle();
+            }
+        });
     }
 
+    private void accederConGoogle() {
+        GoogleSignInClient googleSignInClient =
+                GoogleSignIn.getClient(requireActivity(), new
+                        GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestIdToken(getString(R.string.default_web_client_id))
+                        .requestEmail()
+                        .build());
+        activityResultLauncher.launch(googleSignInClient.getSignInIntent());
+    }
 
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        if(acct == null) return;
+//        signInProgressBar.setVisibility(View.VISIBLE);
+        signInForm.setVisibility(View.GONE);
+        mAuth.signInWithCredential(GoogleAuthProvider.getCredential(acct.getIdToken(
+                ), null))
+                .addOnCompleteListener(requireActivity(), new
+                        OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    Log.e("ABCD", "signInWithCredential:success");
+                                    actualizarUI(mAuth.getCurrentUser());
+                                } else {
+                                    Log.e("ABCD", "signInWithCredential:failure",
+                                            task.getException());
+                                    signInProgressBar.setVisibility(View.GONE);
+                                    signInForm.setVisibility(View.VISIBLE);
+                                }
+                            }
+                        });
+    }
+
+    private void actualizarUI(FirebaseUser currentUser) {
+        if(currentUser != null){
+            requireActivity().startActivity(new Intent(requireActivity(), GoogleMaps.class));
+            navController.navigate(R.id.homeFragment);
+        }
+    }
+
+    private void accederConEmail() {
+        String email = emailEditText.getText().toString().trim();
+        String password = passwordEditText.getText().toString().trim();
+        if (TextUtils.isEmpty(email)) {
+            emailEditText.setError("Ingresa tu correo electrónico");
+            return;
+        }
+        if (TextUtils.isEmpty(password)) {
+            passwordEditText.setError("Ingresa tu contraseña");
+            return;
+        }
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            emailEditText.setError("Introduce una dirección de correo electrónico válida");
+            return;
+        }
+
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(requireActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
+                            signInForm.setVisibility(View.VISIBLE);
+                            return;
+                        }
+
+                        if (task.isSuccessful()) {
+                            actualizarUI(mAuth.getCurrentUser());
+                        } else {
+                            signInForm.setVisibility(View.VISIBLE);
+                            Snackbar.make(requireView(), "Credenciales incorrectas. Inténtalo de nuevo.", Snackbar.LENGTH_LONG).show();
+                        }
+
+                    }
+                });
+    }
 
 
     @Override

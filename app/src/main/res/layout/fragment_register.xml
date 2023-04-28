@@ -36,7 +36,7 @@
             app:layout_constraintTop_toBottomOf="@+id/logo"
             tools:ignore="MissingConstraints" />
 
-        <com.google.android.material.textfield.TextInputEditText
+        <EditText
             android:id="@+id/barraNombre"
             android:layout_width="318dp"
             android:layout_height="38dp"
@@ -59,13 +59,13 @@
             android:gravity="top"
             android:text="Email"
             android:textAppearance="@style/email"
-            app:layout_constraintBottom_toTopOf="@+id/barraEmail"
-            app:layout_constraintStart_toStartOf="@+id/barraEmail"
+            app:layout_constraintBottom_toTopOf="@+id/emailEditText"
+            app:layout_constraintStart_toStartOf="@+id/emailEditText"
             app:layout_constraintTop_toBottomOf="@+id/barraNombre"
             tools:ignore="MissingConstraints" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/barraEmail"
+        <EditText
+            android:id="@+id/emailEditText"
             android:layout_width="317dp"
             android:layout_height="38dp"
             android:layout_alignParentLeft="true"
@@ -86,13 +86,13 @@
             android:gravity="top"
             android:text="Contraseña"
             android:textAppearance="@style/email"
-            app:layout_constraintBottom_toTopOf="@+id/barraContraseña"
-            app:layout_constraintStart_toStartOf="@+id/barraContraseña"
-            app:layout_constraintTop_toBottomOf="@+id/barraEmail"
+            app:layout_constraintBottom_toTopOf="@+id/passwordEditText"
+            app:layout_constraintStart_toStartOf="@+id/passwordEditText"
+            app:layout_constraintTop_toBottomOf="@+id/emailEditText"
             tools:ignore="MissingConstraints" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/barraContraseña"
+        <EditText
+            android:id="@+id/passwordEditText"
             android:layout_width="320dp"
             android:layout_height="37dp"
             android:layout_alignParentLeft="true"
@@ -103,7 +103,7 @@
             tools:ignore="MissingConstraints" />
 
         <Button
-            android:id="@+id/botonRegistro"
+            android:id="@+id/registerButton"
             android:layout_width="336dp"
             android:layout_height="55dp"
             android:layout_alignParentLeft="true"
@@ -117,7 +117,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.493"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/barraContraseña"></Button>
+            app:layout_constraintTop_toBottomOf="@+id/passwordEditText"></Button>
 
         <TextView
             android:id="@+id/textView"
@@ -128,7 +128,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.533"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/botonRegistro" />
+            app:layout_constraintTop_toBottomOf="@+id/registerButton" />
 
 
 

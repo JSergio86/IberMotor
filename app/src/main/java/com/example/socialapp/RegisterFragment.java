@@ -1,5 +1,6 @@
 package com.example.socialapp;
 
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,11 +10,13 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -27,10 +30,10 @@ import com.google.firebase.auth.FirebaseUser;
 public class RegisterFragment extends Fragment {
 
     NavController navController;   // <-----------------
-    Button botonRegistro;
-
-    TextView notienescuenta;
-
+    private EditText emailEditText, passwordEditText;
+    private Button registerButton;
+    private FirebaseAuth mAuth;
+    ImageView facebook;
 
 
     @Override
@@ -39,26 +42,83 @@ public class RegisterFragment extends Fragment {
 
         navController = Navigation.findNavController(view);  // <-----------------
 
-        botonRegistro = view.findViewById(R.id.botonRegistro);
-        notienescuenta = view.findViewById(R.id.notienescuenta);
+        emailEditText = view.findViewById(R.id.emailEditText);
+        passwordEditText = view.findViewById(R.id.passwordEditText);
+        facebook = view.findViewById(R.id.facebook);
 
-        botonRegistro.setOnClickListener(new View.OnClickListener() {
+
+        registerButton = view.findViewById(R.id.registerButton);
+
+        registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navController.navigate(R.id.homeFragment);
-
+                crearCuenta();
             }
         });
 
-        notienescuenta.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                navController.navigate(R.id.signInFragment);
-
-            }
-        });
+        mAuth = FirebaseAuth.getInstance();
 
     }
+
+    private void crearCuenta() {
+        if (!validarFormulario()) {
+            return;
+        }
+
+        registerButton.setEnabled(false);
+
+        mAuth.createUserWithEmailAndPassword(emailEditText.getText().toString(), passwordEditText.getText().toString())
+                .addOnCompleteListener(requireActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            actualizarUI(mAuth.getCurrentUser());
+                        } else {
+                            Snackbar.make(requireView(), "Error: " + task.getException(), Snackbar.LENGTH_LONG).show();
+
+                        }
+                        registerButton.setEnabled(true);
+                    }
+                });
+
+    }
+
+    private void actualizarUI(FirebaseUser currentUser) {
+        if(currentUser != null){
+            navController.navigate(R.id.homeFragment);
+        }
+    }
+
+    private boolean validarFormulario() {
+        boolean valid = true;
+
+        // Validar correo electrónico
+        String email = emailEditText.getText().toString().trim();
+        if (TextUtils.isEmpty(email)) {
+            emailEditText.setError("Required.");
+            valid = false;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            emailEditText.setError("Invalid email format.");
+            valid = false;
+        } else {
+            emailEditText.setError(null);
+        }
+
+        // Validar contraseña
+        String password = passwordEditText.getText().toString().trim();
+        if (TextUtils.isEmpty(password)) {
+            passwordEditText.setError("Required.");
+            valid = false;
+        } else if (password.length() < 8) {
+            passwordEditText.setError("Password must be at least 8 characters long.");
+            valid = false;
+        } else {
+            passwordEditText.setError(null);
+        }
+
+        return valid;
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

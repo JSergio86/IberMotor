@@ -6,11 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".SignInFragment"
     >
-
-
+    
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/constraint">
 
         <ImageView
             android:id="@+id/logo"
@@ -37,15 +37,14 @@
             android:gravity="top"
             android:text="Email"
             android:textAppearance="@style/email"
-            app:layout_constraintStart_toStartOf="@+id/barraEmail"
+            app:layout_constraintStart_toStartOf="@+id/emailEditText"
             app:layout_constraintTop_toBottomOf="@+id/logo"
             tools:ignore="MissingConstraints" />
 
         <EditText
-            android:id="@+id/barraEmail"
+            android:id="@+id/emailEditText"
             android:layout_width="319.01dp"
-            android:focusable="false"
-            android:layout_height="24dp"
+            android:layout_height="40dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginTop="16dp"
@@ -64,19 +63,18 @@
             android:gravity="top"
             android:text="Contraseña"
             android:textAppearance="@style/email"
-            app:layout_constraintStart_toStartOf="@+id/barraContraseña"
-            app:layout_constraintTop_toBottomOf="@+id/barraEmail"
+            app:layout_constraintStart_toStartOf="@+id/passwordEditText"
+            app:layout_constraintTop_toBottomOf="@+id/emailEditText"
             tools:ignore="MissingConstraints" />
 
         <EditText
-            android:id="@+id/barraContraseña"
+            android:id="@+id/passwordEditText"
             android:layout_width="319.01dp"
-            android:layout_height="24dp"
+            android:layout_height="40dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginStart="3dp"
             android:layout_marginTop="16dp"
-            android:focusable="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.505"
             app:layout_constraintStart_toStartOf="parent"
@@ -95,12 +93,12 @@
             android:textAppearance="@style/passwordolvidada"
             android:textSize="40px"
             android:translationY="-2.1sp"
-            app:layout_constraintEnd_toEndOf="@+id/barraContraseña"
-            app:layout_constraintTop_toBottomOf="@+id/barraContraseña"
+            app:layout_constraintEnd_toEndOf="@+id/passwordEditText"
+            app:layout_constraintTop_toBottomOf="@+id/passwordEditText"
             tools:ignore="MissingConstraints" />
 
         <Button
-            android:id="@+id/botonIniciarSesion"
+            android:id="@+id/emailSignInButton"
             android:layout_width="336dp"
             android:layout_height="55dp"
             android:layout_alignParentLeft="true"
@@ -125,27 +123,23 @@
             android:layout_marginBottom="15dp"
             android:scaleType="centerCrop"
             android:src="@drawable/iconovisible"
-            app:layout_constraintBottom_toBottomOf="@+id/barraContraseña"
-            app:layout_constraintRight_toRightOf="@id/barraContraseña"
-            app:layout_constraintTop_toTopOf="@+id/barraContraseña"
+            app:layout_constraintBottom_toBottomOf="@+id/passwordEditText"
+            app:layout_constraintRight_toRightOf="@id/passwordEditText"
+            app:layout_constraintTop_toTopOf="@+id/passwordEditText"
             app:layout_constraintVertical_bias="0.887"
             tools:ignore="MissingConstraints"></ImageView>
 
-        <ImageView
-            android:id="@+id/google"
-            android:layout_width="87dp"
-            android:layout_height="58dp"
-            android:layout_marginStart="48dp"
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/googleSignInButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
             android:layout_marginTop="20dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginBottom="22dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/google"
-            app:layout_constraintBottom_toTopOf="@+id/registrarse"
+            app:layout_constraintBottom_toTopOf="@+id/gotoCreateAccountTextView"
             app:layout_constraintEnd_toStartOf="@+id/apple"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/botonIniciarSesion"
-            tools:ignore="DuplicateIds,MissingConstraints"></ImageView>
+            app:layout_constraintTop_toBottomOf="@+id/emailSignInButton">
+        </com.google.android.gms.common.SignInButton>
 
         <ImageView
             android:id="@+id/facebook"
@@ -157,10 +151,10 @@
             android:layout_marginBottom="22dp"
             android:scaleType="centerCrop"
             android:src="@drawable/facebook"
-            app:layout_constraintBottom_toTopOf="@+id/registrarse"
+            app:layout_constraintBottom_toTopOf="@+id/gotoCreateAccountTextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/apple"
-            app:layout_constraintTop_toBottomOf="@+id/botonIniciarSesion"
+            app:layout_constraintTop_toBottomOf="@+id/emailSignInButton"
             tools:ignore="DuplicateIds,MissingConstraints"></ImageView>
 
         <ImageView
@@ -171,14 +165,14 @@
             android:layout_marginBottom="22dp"
             android:scaleType="centerCrop"
             android:src="@drawable/apple"
-            app:layout_constraintBottom_toTopOf="@+id/registrarse"
+            app:layout_constraintBottom_toTopOf="@+id/gotoCreateAccountTextView"
             app:layout_constraintEnd_toStartOf="@+id/facebook"
-            app:layout_constraintStart_toEndOf="@+id/google"
-            app:layout_constraintTop_toBottomOf="@+id/botonIniciarSesion"
+            app:layout_constraintStart_toEndOf="@+id/googleSignInButton"
+            app:layout_constraintTop_toBottomOf="@+id/emailSignInButton"
             tools:ignore="DuplicateIds,MissingConstraints"></ImageView>
 
         <TextView
-            android:id="@+id/registrarse"
+            android:id="@+id/gotoCreateAccountTextView"
             android:layout_width="216dp"
             android:layout_height="26dp"
             android:layout_alignParentLeft="true"

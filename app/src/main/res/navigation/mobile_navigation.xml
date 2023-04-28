@@ -96,6 +96,11 @@
         android:name="com.example.socialapp.JuanPerfilFragment"
         android:label="fragment_juan_perfil"
         tools:layout="@layout/fragment_juan_perfil" />
+    <fragment
+        android:id="@+id/googleMaps"
+        android:name="com.example.socialapp.GoogleMaps"
+        android:label="fragment_google_maps"
+        tools:layout="@layout/fragment_google_maps" />
 
 </navigation>
 
