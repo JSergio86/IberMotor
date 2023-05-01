@@ -44,17 +44,13 @@ import java.util.List;
 import android.widget.SearchView;
 
 public class GoogleMaps extends FragmentActivity implements OnMapReadyCallback {
-
     private GoogleMap mMap;
     private FragmentGoogleMapsBinding binding;
-
     private double currentLatitude;
     private double currentLongitude;
     private Circle circle;
-
     // variable para determinar si la cámara se ha movido manualmente
     private boolean cameraMoved = false;
-
     private FirebaseFirestore db;
 
     @Override
