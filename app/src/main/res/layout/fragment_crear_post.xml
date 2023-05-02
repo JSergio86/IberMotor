@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CrearPost">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/publishButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Publish"
+            android:layout_gravity="end"/>
+        <ImageView
+            android:id="@+id/previsualizacion"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <Button
+                    android:id="@+id/imagen_galeria"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_marginLeft="8dp"
+                    android:background="@drawable/image" />
+            </LinearLayout>
+            <EditText
+                android:id="@+id/precioTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Precio total" />
+
+            <EditText
+                android:id="@+id/precioText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Precio" />
+
+            <EditText
+                android:id="@+id/nombreText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre" />
+
+            <EditText
+                android:id="@+id/ciudadText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ciudad" />
+
+            <EditText
+                android:id="@+id/kilometrosText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Kilómetros" />
+
+            <EditText
+                android:id="@+id/añosText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Años" />
+
+            <EditText
+                android:id="@+id/combustibleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Combustible" />
+
+            <EditText
+                android:id="@+id/garantia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Garantía" />
+
+        </LinearLayout>
+    </LinearLayout>
+</FrameLayout>

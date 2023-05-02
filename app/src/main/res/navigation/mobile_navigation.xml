@@ -100,7 +100,16 @@
         android:id="@+id/googleMaps"
         android:name="com.example.socialapp.GoogleMaps"
         android:label="fragment_google_maps"
-        tools:layout="@layout/fragment_google_maps" />
+        tools:layout="@layout/fragment_google_maps" >
+        <action
+            android:id="@+id/action_googleMaps_self"
+            app:destination="@id/googleMaps" />
+    </fragment>
+    <fragment
+        android:id="@+id/crearPost"
+        android:name="com.example.socialapp.CrearPost"
+        android:label="fragment_crear_post"
+        tools:layout="@layout/fragment_crear_post" />
 
 </navigation>
 
