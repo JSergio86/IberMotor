@@ -45,42 +45,6 @@
                 android:layout_height="wrap_content"
                 android:text="Precio" />
 
-            <EditText
-                android:id="@+id/nombreText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nombre" />
-
-            <EditText
-                android:id="@+id/ciudadText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ciudad" />
-
-            <EditText
-                android:id="@+id/kilometrosText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Kilómetros" />
-
-            <EditText
-                android:id="@+id/añosText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Años" />
-
-            <EditText
-                android:id="@+id/combustibleText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Combustible" />
-
-            <EditText
-                android:id="@+id/garantia"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Garantía" />
-
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

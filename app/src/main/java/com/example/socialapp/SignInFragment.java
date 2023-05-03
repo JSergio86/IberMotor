@@ -142,8 +142,8 @@ public class SignInFragment extends Fragment {
 
     private void actualizarUI(FirebaseUser currentUser) {
         if(currentUser != null){
-            requireActivity().startActivity(new Intent(requireActivity(), GoogleMaps.class));
-            navController.navigate(R.id.homeFragment);
+            //requireActivity().startActivity(new Intent(requireActivity(), GoogleMaps.class));
+            navController.navigate(R.id.crearPost);
         }
     }
 

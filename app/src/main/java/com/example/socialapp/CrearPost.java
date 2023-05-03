@@ -41,27 +41,21 @@ import java.util.UUID;
 
 public class CrearPost extends Fragment {
 
-    //poner los edittext viewfind y ponerlos en el pujarfirestore
     Button publishButton;
-    EditText postConentEditText;
+    EditText precioTotal, precioText;
     NavController navController;   // <-----------------
     public AppViewModel appViewModel;
     String mediaTipo;
     Uri mediaUri;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_crear_post, container, false);
-    }
-
-    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         publishButton = view.findViewById(R.id.publishButton);
-        navController = Navigation.findNavController(view);  // <-----------------
+        navController = Navigation.findNavController(view);
+        precioTotal = view.findViewById(R.id.precioTotal);
+        precioText = view.findViewById(R.id.precioText);
 
         publishButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,26 +76,22 @@ public class CrearPost extends Fragment {
     }
 
     private void publicar() {
-        String postContent = postConentEditText.getText().toString();
-        if(TextUtils.isEmpty(postContent)){
-            postConentEditText.setError("Required");
-            return;
-        }
+        String precioTotalString = precioTotal.getText().toString();
+        String precioString = precioText.getText().toString();
+
         publishButton.setEnabled(false);
         if (mediaTipo == null) {
-            guardarEnFirestore(postContent, null);
+            guardarEnFirestore(precioTotalString, precioString, null);
         }
         else {
-            pujaIguardarEnFirestore(postContent);
+            pujaIguardarEnFirestore(precioTotalString, precioString);
         }
     }
-    private void guardarEnFirestore(String postContent, String mediaUrl) {
+    private void guardarEnFirestore(String precioTotalString, String precioString, String mediaUrl) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        Date date = new Date();
-        Post post = new Post(user.getUid(), user.getDisplayName(),
-                (user.getPhotoUrl() != null ? user.getPhotoUrl().toString() :
-                        "R.drawable.user"), postContent, mediaUrl, mediaTipo, date);
+        Post post = new Post(user.getUid(), mediaUrl, mediaTipo, precioTotalString, precioString);
+        post.setPrecioTotal(precioTotalString);
+        post.setPrecioText(precioString);
         FirebaseFirestore.getInstance().collection("posts")
                 .add(post)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -113,38 +103,27 @@ public class CrearPost extends Fragment {
                     }
                 });
     }
-    private void pujaIguardarEnFirestore(final String postText) {
-        FirebaseStorage.getInstance().getReference(mediaTipo + "/" +
-                        UUID.randomUUID())
+    private void pujaIguardarEnFirestore(final String precioTotalString, final String precioString) {
+        FirebaseStorage.getInstance().getReference(mediaTipo + "/" + UUID.randomUUID())
                 .putFile(mediaUri)
-                .continueWithTask(task ->
-                        task.getResult().getStorage().getDownloadUrl())
-                .addOnSuccessListener(url -> guardarEnFirestore(postText,
-                        url.toString()));
+                .continueWithTask(task -> task.getResult().getStorage().getDownloadUrl())
+                .addOnSuccessListener(url -> guardarEnFirestore(precioTotalString,precioString, url.toString()));
     }
 
     private final ActivityResultLauncher<String> galeria =
             registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
                 appViewModel.setMediaSeleccionado(uri, mediaTipo);
             });
-    private final ActivityResultLauncher<Uri> camaraFotos =
-            registerForActivityResult(new ActivityResultContracts.TakePicture(),
-                    isSuccess -> {
-                        appViewModel.setMediaSeleccionado(mediaUri, "image");
-                    });
 
     private void seleccionarImagen() {
         mediaTipo = "image";
         galeria.launch("image/*");
     }
 
-    private void tomarFoto() {
-        try {
-            mediaUri = FileProvider.getUriForFile(requireContext(),
-                    BuildConfig.APPLICATION_ID + ".fileprovider", File.createTempFile("img",
-                            ".jpg",
-                            requireContext().getExternalFilesDir(Environment.DIRECTORY_PICTURES)));
-            camaraFotos.launch(mediaUri);
-        } catch (IOException e) {}
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_crear_post, container, false);
     }
 }
