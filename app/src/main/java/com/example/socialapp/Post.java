@@ -7,8 +7,7 @@ import java.util.Map;
 public class Post {
     public String uid;
     public String mediaUrl;
-    String fotoCoche;
-    String precioTotal, precioText, nombreText, ciudadText, kilometrosText, añosText, combustibleText, garantia;
+    String fotoCoche,precioTotal, precioText, nombreText, ciudadText, kilometrosText, añosText, combustibleText, garantia;
 
     // Constructor vacio requerido por Firestore
     public Post() {}

@@ -25,6 +25,7 @@
         <entry key="app/src/main/res/layout/fragment_perfil.xml" value="0.2" />
         <entry key="app/src/main/res/layout/fragment_perfil_users.xml" value="0.35625" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/fragment_publicar_anuncio.xml" value="0.35625" />
         <entry key="app/src/main/res/layout/fragment_register.xml" value="0.5" />
         <entry key="app/src/main/res/layout/fragment_sign_in.xml" value="0.48841354723707664" />
         <entry key="app/src/main/res/layout/fragment_sign_out.xml" value="0.18177083333333333" />
