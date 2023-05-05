@@ -110,6 +110,11 @@
         android:name="com.example.socialapp.CrearPost"
         android:label="fragment_crear_post"
         tools:layout="@layout/fragment_crear_post" />
+    <fragment
+        android:id="@+id/antesDeComenzar"
+        android:name="com.example.socialapp.AntesDeComenzar"
+        android:label="fragment_antes_de_comenzar"
+        tools:layout="@layout/fragment_antes_de_comenzar" />
 
 </navigation>
 

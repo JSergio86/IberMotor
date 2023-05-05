@@ -43,7 +43,7 @@ public class CrearPost extends Fragment {
 
     Button publishButton;
     EditText precioTotal, precioText;
-    NavController navController;   // <-----------------
+    NavController navController;
     public AppViewModel appViewModel;
     String mediaTipo;
     Uri mediaUri;

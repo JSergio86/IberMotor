@@ -101,12 +101,12 @@ public class HomeFragment extends Fragment {
                     appViewModel.postSeleccionado.setValue(post);
                     navController.navigate(R.id.fotoCoche);
                 });
+
             } else {
                 holder.fotoCoche.setVisibility(View.GONE);
             }
             holder.precioTotal.setText(post.precioTotal);
             holder.precioText.setText(post.precioText);
-
         }
 
         class PostViewHolder extends RecyclerView.ViewHolder {
@@ -115,7 +115,6 @@ public class HomeFragment extends Fragment {
 
             PostViewHolder(@NonNull View itemView) {
                 super(itemView);
-
                 fotoCoche = itemView.findViewById(R.id.fotoCoche);
                 precioTotal = itemView.findViewById(R.id.precioTotal);
                 precioText = itemView.findViewById(R.id.precioText);
