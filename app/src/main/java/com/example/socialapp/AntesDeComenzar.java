@@ -1,5 +1,6 @@
 package com.example.socialapp;
 
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -31,8 +34,10 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Circle;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.example.googlemaps.databinding.ActivityMapsBinding;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -40,20 +45,21 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import android.Manifest;
 import android.util.Log;
+import android.widget.Button;
+import android.widget.Toast;
 
 public class AntesDeComenzar extends FragmentActivity implements OnMapReadyCallback {
-
     private GoogleMap mMap;
     private FragmentAntesDeComenzarBinding binding;
-
     private double currentLatitude;
     private double currentLongitude;
-    private Circle circle;
+    private Marker currentMarker;
 
     // variable para determinar si la cámara se ha movido manualmente
     private boolean cameraMoved = false;
 
     private FirebaseFirestore db;
+    private Usuario currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,11 +68,57 @@ public class AntesDeComenzar extends FragmentActivity implements OnMapReadyCallb
         binding = FragmentAntesDeComenzarBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Obtener el objeto Usuario actual
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            String uid = user.getUid();
+            String nombre = user.getDisplayName();
+            String correo = user.getEmail();
+            Uri fotoPerfilUri = user.getPhotoUrl();
+            String fotoPerfil = fotoPerfilUri != null ? fotoPerfilUri.toString() : null;
+            currentUser = new Usuario(uid, fotoPerfil, nombre, correo, null, null, false);
+        }
+
+        // Establecer el OnClickListener del botón "Continuar"
+        Button continueButton = findViewById(R.id.continue_button);
+        continueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                subirLatLongFirebase();
+            }
+        });
+
+        // Check location permission
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        }
+    }
+    private void subirLatLongFirebase() {
+        // Actualizar la latitud y longitud del usuario actual en Firebase
+        if (currentUser != null) {
+            currentUser.latitud = String.valueOf(currentLatitude);
+            currentUser.longitud = String.valueOf(currentLongitude);
+            FirebaseFirestore.getInstance().collection("usuarios").document(currentUser.uid).update("latitud", currentUser.latitud, "longitud", currentUser.longitud, "registrado", true);
+        }
+
+        // Navegar al HomeFragment
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.mainLayout);
+        NavController navController = navHostFragment.getNavController();
+        navController.navigate(R.id.homeFragment);
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            initializeMap();
+        }
+    }
+
+    private void initializeMap() {
         db = FirebaseFirestore.getInstance();
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
@@ -76,10 +128,7 @@ public class AntesDeComenzar extends FragmentActivity implements OnMapReadyCallb
 
         // Check location permission
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            mMap.setMyLocationEnabled(false);
-        } else {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+            mMap.setMyLocationEnabled(true);
         }
 
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -93,22 +142,16 @@ public class AntesDeComenzar extends FragmentActivity implements OnMapReadyCallb
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15)); // mueve la camara a la ubicacion actual
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
-        CircleOptions circleOptions = new CircleOptions()
-                .center(currentLocation)
-                .radius(500) // radio en metros
-                .strokeColor(Color.RED)
-                .strokeWidth(2)
-                .fillColor(Color.parseColor("#80FF0000")); // transparencia y color de relleno
-        circle = mMap.addCircle(circleOptions);
 
-        System.out.println("Latitud: "+currentLatitude+" Longitud: "+ currentLongitude);
+
+        System.out.println("Latitud: " + currentLatitude + " Longitud: " + currentLongitude);
 
         // establece la variable cameraMoved a true cuando la cámara se mueve manualmente
         mMap.setOnCameraMoveListener(() -> {
             cameraMoved = true;
         });
 
-        // consulta los datos de ubicaciones en Firebase
+       /* // consulta los datos de ubicaciones en Firebase
         db.collection("ubicaciones")
                 .get()
                 .addOnCompleteListener(task -> {
@@ -124,13 +167,29 @@ public class AntesDeComenzar extends FragmentActivity implements OnMapReadyCallb
                         Log.d(TAG, "Error getting documents: ", task.getException());
                     }
                 });
+
+        */
     }
+
     private final LocationListener locationListener = new LocationListener() {
         @Override
         public void onLocationChanged(Location location) {
             currentLatitude = location.getLatitude();
             currentLongitude = location.getLongitude();
             LatLng currentLocation = new LatLng(currentLatitude, currentLongitude);
+
+            if (currentMarker != null) {
+                currentMarker.remove(); // Elimina el marcador anterior
+            }
+
+            MarkerOptions markerOptions = new MarkerOptions()
+                    .position(currentLocation)
+                    .title("Ubicación Actual");
+            currentMarker = mMap.addMarker(markerOptions); // Asigna la referencia al nuevo marcador
+
+            if (!cameraMoved) {
+                mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
+            }
 
             /*FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference myRef = database.getReference("ubicaciones");
@@ -139,12 +198,6 @@ public class AntesDeComenzar extends FragmentActivity implements OnMapReadyCallb
 
             FirebaseFirestore.getInstance().collection("ubicaciones").add(ubicacion);
              */
-
-
-            if (!cameraMoved) { // solo mueve la cámara si no se ha movido manualmente
-                mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
-            }
-            circle.setCenter(currentLocation);
         }
 
         @Override
@@ -160,34 +213,14 @@ public class AntesDeComenzar extends FragmentActivity implements OnMapReadyCallb
         }
     };
 
-
-
     @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
         if (requestCode == 1) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
-                    return;
-                }
-                mMap.setMyLocationEnabled(true);
+                initializeMap();
             }
         }
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_antes_de_comenzar, container, false);
-    }
 }

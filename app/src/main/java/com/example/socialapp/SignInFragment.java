@@ -46,6 +46,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 
@@ -139,7 +141,7 @@ public class SignInFragment extends Fragment {
                                 String fotoPerfil = fotoPerfilUri != null ? fotoPerfilUri.toString() : null;
 
                                 // Crea el objeto Usuario
-                                Usuario usuario = new Usuario(uid,fotoPerfil, nombre, correo, null, null);
+                                Usuario usuario = new Usuario(uid,fotoPerfil, nombre, correo, null, null,false);
 
                                 // Guarda el objeto Usuario en Firestore
                                 FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -148,18 +150,23 @@ public class SignInFragment extends Fragment {
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
-                                                SharedPreferences sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE);
-                                                boolean isFirstTime = sharedPreferences.getBoolean("is_first_time", true);
-                                                if (isFirstTime) {
-                                                    // Es la primera vez que el usuario inicia sesión con Google, navega a la pantalla de bienvenida
-                                                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                                                    editor.putBoolean("is_first_time", false);
-                                                    editor.apply();
-                                                    navController.navigate(R.id.antesDeComenzar);
-                                                } else {
-                                                    // No es la primera vez que el usuario inicia sesión con Google, navega a la pantalla de inicio
-                                                    navController.navigate(R.id.homeFragment);
-                                                }
+                                                DocumentReference docRef = db.collection("usuarios").document(user.getUid());
+                                                docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                        if (documentSnapshot.exists()) {
+                                                            // Si el documento existe, obtiene el valor del campo registrado
+                                                            boolean registrado = documentSnapshot.getBoolean("registrado");
+                                                            if (registrado) {
+                                                                // Si está registrado, navega a la pantalla de inicio
+                                                                navController.navigate(R.id.homeFragment);
+                                                            } else {
+                                                                // Si no está registrado, navega a la pantalla de registro
+                                                                requireActivity().startActivity(new Intent(requireActivity(), AntesDeComenzar.class));
+                                                            }
+                                                        }
+                                                    }
+                                                });
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {
