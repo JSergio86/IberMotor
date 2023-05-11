@@ -1,7 +1,10 @@
 package com.example.socialapp;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResult;
@@ -35,24 +38,25 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public class SignInFragment extends Fragment {
 
     NavController navController;
-
     private SignInButton googleSignInButton;
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private EditText emailEditText, passwordEditText;
     private Button emailSignInButton;
     private ConstraintLayout signInForm;
-    private ProgressBar signInProgressBar;
     private FirebaseAuth mAuth;
 
     @Override
@@ -88,7 +92,6 @@ public class SignInFragment extends Fragment {
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         if (result.getResultCode() == Activity.RESULT_OK) {
-// There are no request codes
                             Intent data = result.getData();
                             try {
                                 firebaseAuthWithGoogle(GoogleSignIn.getSignedInAccountFromIntent(data).getResult(ApiException.class));
@@ -99,6 +102,7 @@ public class SignInFragment extends Fragment {
                         }
                     }
                 });
+
         googleSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -117,28 +121,59 @@ public class SignInFragment extends Fragment {
         activityResultLauncher.launch(googleSignInClient.getSignInIntent());
     }
 
+    // Después de autenticar con Google, obtiene los datos del usuario
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         if(acct == null) return;
-//        signInProgressBar.setVisibility(View.VISIBLE);
-        signInForm.setVisibility(View.GONE);
-        mAuth.signInWithCredential(GoogleAuthProvider.getCredential(acct.getIdToken(
-                ), null))
-                .addOnCompleteListener(requireActivity(), new
-                        OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    Log.e("ABCD", "signInWithCredential:success");
-                                    actualizarUI(mAuth.getCurrentUser());
-                                } else {
-                                    Log.e("ABCD", "signInWithCredential:failure",
-                                            task.getException());
-                                    signInProgressBar.setVisibility(View.GONE);
-                                    signInForm.setVisibility(View.VISIBLE);
-                                }
+        mAuth.signInWithCredential(GoogleAuthProvider.getCredential(acct.getIdToken(), null))
+                .addOnCompleteListener(requireActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            if (user != null) {
+                                // Obtiene la información del usuario
+                                String uid = user.getUid();
+                                String nombre = user.getDisplayName();
+                                String correo = user.getEmail();
+                                Uri fotoPerfilUri = user.getPhotoUrl();
+                                String fotoPerfil = fotoPerfilUri != null ? fotoPerfilUri.toString() : null;
+
+                                // Crea el objeto Usuario
+                                Usuario usuario = new Usuario(uid,fotoPerfil, nombre, correo, null, null);
+
+                                // Guarda el objeto Usuario en Firestore
+                                FirebaseFirestore db = FirebaseFirestore.getInstance();
+                                db.collection("usuarios").document(user.getUid())
+                                        .set(usuario)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                SharedPreferences sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE);
+                                                boolean isFirstTime = sharedPreferences.getBoolean("is_first_time", true);
+                                                if (isFirstTime) {
+                                                    // Es la primera vez que el usuario inicia sesión con Google, navega a la pantalla de bienvenida
+                                                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                                                    editor.putBoolean("is_first_time", false);
+                                                    editor.apply();
+                                                    navController.navigate(R.id.antesDeComenzar);
+                                                } else {
+                                                    // No es la primera vez que el usuario inicia sesión con Google, navega a la pantalla de inicio
+                                                    navController.navigate(R.id.homeFragment);
+                                                }
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                // Maneja el error
+                                            }
+                                        });
                             }
-                        });
+                        }
+                    }
+                });
     }
+
 
     private void actualizarUI(FirebaseUser currentUser) {
         if(currentUser != null){
@@ -151,15 +186,16 @@ public class SignInFragment extends Fragment {
         String email = emailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
         if (TextUtils.isEmpty(email)) {
-            emailEditText.setError("Ingresa tu correo electrónico");
+            //Hacer rectangulo rojo
+            Snackbar.make(requireView(), "Ingresa tu correo electrónico", Snackbar.LENGTH_LONG).show();
             return;
         }
         if (TextUtils.isEmpty(password)) {
-            passwordEditText.setError("Ingresa tu contraseña");
+            Snackbar.make(requireView(), "Ingresa tu contraseña", Snackbar.LENGTH_LONG).show();
             return;
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            emailEditText.setError("Introduce una dirección de correo electrónico válida");
+            Snackbar.make(requireView(), "Introduce una dirección de correo electrónico válida", Snackbar.LENGTH_LONG).show();
             return;
         }
 
@@ -187,7 +223,6 @@ public class SignInFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_sign_in, container, false);
     }
 }

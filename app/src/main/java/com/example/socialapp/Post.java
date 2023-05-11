@@ -7,11 +7,9 @@ import java.util.Map;
 public class Post {
     public String uid;
     public String mediaUrl;
-    String fotoCoche,precioTotal, precioText, nombreText, ciudadText, kilometrosText, añosText, combustibleText, garantia;
+    public String fotoCoche,precioTotal, precioText, nombreText, ciudadText, kilometrosText, añosText, combustibleText, garantia;
 
-    // Constructor vacio requerido por Firestore
     public Post() {}
-
 
     public Post(String uid, String mediaUrl, String fotoCoche, String precioTotal, String precioText) {
         this.uid = uid;
@@ -35,43 +33,4 @@ public class Post {
         this.garantia = garantia;
     }
 
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
-
-    public String getMediaUrl() {
-        return mediaUrl;
-    }
-
-    public void setMediaUrl(String mediaUrl) {
-        this.mediaUrl = mediaUrl;
-    }
-
-    public String getFotoCoche() {
-        return fotoCoche;
-    }
-
-    public void setFotoCoche(String fotoCoche) {
-        this.fotoCoche = fotoCoche;
-    }
-
-    public String getPrecioTotal() {
-        return precioTotal;
-    }
-
-    public void setPrecioTotal(String precioTotal) {
-        this.precioTotal = precioTotal;
-    }
-
-    public String getPrecioText() {
-        return precioText;
-    }
-
-    public void setPrecioText(String precioText) {
-        this.precioText = precioText;
-    }
 }

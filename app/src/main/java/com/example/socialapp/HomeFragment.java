@@ -45,6 +45,7 @@ public class HomeFragment extends Fragment {
     NavController navController;   // <-----------------
     public AppViewModel appViewModel;
     FirebaseUser user;
+    ImageView perfil, iconoFiltro;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -53,6 +54,23 @@ public class HomeFragment extends Fragment {
         navController = Navigation.findNavController(view);  // <-----------------
 
         appViewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
+        perfil = view.findViewById(R.id.perfil);
+        iconoFiltro = view.findViewById(R.id.iconoFiltro);
+
+
+        perfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.perfilFragment);
+            }
+        });
+
+        iconoFiltro.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.filtrosFragment);
+            }
+        });
 
         view.findViewById(R.id.iconoVista).setOnClickListener(new View.OnClickListener() {
             @Override

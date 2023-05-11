@@ -64,7 +64,7 @@ public class RegisterFragment extends Fragment {
         if (!validarFormulario()) {
             return;
         }
-
+ 
         registerButton.setEnabled(false);
 
         mAuth.createUserWithEmailAndPassword(emailEditText.getText().toString(), passwordEditText.getText().toString())

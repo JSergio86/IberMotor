@@ -90,8 +90,6 @@ public class CrearPost extends Fragment {
     private void guardarEnFirestore(String precioTotalString, String precioString, String mediaUrl) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         Post post = new Post(user.getUid(), mediaUrl, mediaTipo, precioTotalString, precioString);
-        post.setPrecioTotal(precioTotalString);
-        post.setPrecioText(precioString);
         FirebaseFirestore.getInstance().collection("posts")
                 .add(post)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

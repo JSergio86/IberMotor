@@ -14,10 +14,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.firebase.auth.FirebaseAuth;
+
 
 public class PerfilFragment extends Fragment {
     NavController navController;   // <-----------------
-    ImageView volver;
+    ImageView volver, campanita;
     Button botonEditarPerfil;
 
     @Override
@@ -27,7 +31,24 @@ public class PerfilFragment extends Fragment {
         navController = Navigation.findNavController(view);  // <-----------------
 
         volver = view.findViewById(R.id.volverAtras);
+        campanita = view.findViewById(R.id.campanita);
+
         botonEditarPerfil = view.findViewById(R.id.botonEditarPerfil);
+
+        campanita.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController = Navigation.findNavController(view);  // <-----------------
+                GoogleSignIn.getClient(requireActivity(), new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestIdToken(getString(R.string.default_web_client_id))
+                        .build()).signOut();
+
+                FirebaseAuth.getInstance().signOut();
+
+                Navigation.findNavController(view).navigate(R.id.signInFragment);
+
+            }
+        });
 
         volver.setOnClickListener(new View.OnClickListener() {
             @Override
