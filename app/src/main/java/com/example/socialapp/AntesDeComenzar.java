@@ -36,10 +36,13 @@ import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -54,12 +57,12 @@ public class AntesDeComenzar extends FragmentActivity implements OnMapReadyCallb
     private double currentLatitude;
     private double currentLongitude;
     private Marker currentMarker;
+    private String uid, nombre, foto, correo;
 
     // variable para determinar si la cámara se ha movido manualmente
     private boolean cameraMoved = false;
 
     private FirebaseFirestore db;
-    private Usuario currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,21 +73,13 @@ public class AntesDeComenzar extends FragmentActivity implements OnMapReadyCallb
 
         // Obtener el objeto Usuario actual
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            String uid = user.getUid();
-            String nombre = user.getDisplayName();
-            String correo = user.getEmail();
-            Uri fotoPerfilUri = user.getPhotoUrl();
-            String fotoPerfil = fotoPerfilUri != null ? fotoPerfilUri.toString() : null;
-            currentUser = new Usuario(uid, fotoPerfil, nombre, correo, null, null, false);
-        }
 
         // Establecer el OnClickListener del botón "Continuar"
         Button continueButton = findViewById(R.id.continue_button);
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                subirLatLongFirebase();
+                subirUsuarioFirebase();
             }
         });
 
@@ -93,19 +88,42 @@ public class AntesDeComenzar extends FragmentActivity implements OnMapReadyCallb
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
     }
-    private void subirLatLongFirebase() {
+
+    private void subirUsuarioFirebase() {
         // Actualizar la latitud y longitud del usuario actual en Firebase
-        if (currentUser != null) {
-            currentUser.latitud = String.valueOf(currentLatitude);
-            currentUser.longitud = String.valueOf(currentLongitude);
-            FirebaseFirestore.getInstance().collection("usuarios").document(currentUser.uid).update("latitud", currentUser.latitud, "longitud", currentUser.longitud, "registrado", true);
-        }
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference usuariosRef = db.collection("usuarios");
+
+        Usuario usuario = new Usuario(uid, foto, nombre, correo, currentLatitude, currentLongitude, true);
+
+        usuariosRef.document().set(usuario)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Maneja el éxito
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Maneja el error
+                    }
+                });
 
         // Navegar al HomeFragment
-        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.mainLayout);
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.mobile_navigation);
         NavController navController = navHostFragment.getNavController();
         navController.navigate(R.id.homeFragment);
     }
+
+    public void informacionUsuario(String uid, String foto, String nombre, String correo){
+        this.uid = uid;
+        this.foto = foto;
+        this.nombre = nombre;
+        this.correo = correo;
+    }
+
+
     @Override
     protected void onResume() {
         super.onResume();

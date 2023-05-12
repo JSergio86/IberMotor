@@ -46,6 +46,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -140,39 +141,37 @@ public class SignInFragment extends Fragment {
                                 Uri fotoPerfilUri = user.getPhotoUrl();
                                 String fotoPerfil = fotoPerfilUri != null ? fotoPerfilUri.toString() : null;
 
-                                // Crea el objeto Usuario
-                                Usuario usuario = new Usuario(uid,fotoPerfil, nombre, correo, null, null,false);
-
-                                // Guarda el objeto Usuario en Firestore
+                                // Verifica si el usuario existe en Firebase Firestore
                                 FirebaseFirestore db = FirebaseFirestore.getInstance();
-                                db.collection("usuarios").document(user.getUid())
-                                        .set(usuario)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                DocumentReference docRef = db.collection("usuarios").document(user.getUid());
-                                                docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                                    @Override
-                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                        if (documentSnapshot.exists()) {
-                                                            // Si el documento existe, obtiene el valor del campo registrado
-                                                            boolean registrado = documentSnapshot.getBoolean("registrado");
-                                                            if (registrado) {
-                                                                // Si está registrado, navega a la pantalla de inicio
-                                                                navController.navigate(R.id.homeFragment);
-                                                            } else {
-                                                                // Si no está registrado, navega a la pantalla de registro
-                                                                requireActivity().startActivity(new Intent(requireActivity(), AntesDeComenzar.class));
+                                CollectionReference usuariosRef = db.collection("usuarios");
+                                usuariosRef.whereEqualTo("correo", correo).get()
+                                        .addOnCompleteListener(task1 -> {
+                                            if (task1.isSuccessful() && !task1.getResult().isEmpty()) {
+                                                // Usuario existente, navegar a Fragment1
+                                                navController.navigate(R.id.homeFragment);
+                                            } else {
+                                                // Usuario nuevo, navegar a Fragment2
+                                                requireActivity().startActivity(new Intent(requireActivity(), AntesDeComenzar.class));
+                                                AntesDeComenzar antesDeComenzar = new AntesDeComenzar();
+                                                antesDeComenzar.informacionUsuario(uid, fotoPerfil, nombre, correo);
+                                                //Usuario usuario = new Usuario(uid,fotoPerfil, nombre, correo, null, null,false);
+
+                                                // Guarda el objeto Usuario en Firestore
+                                                /*usuariosRef.document(user.getUid()).set(usuario)
+                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                // Maneja el éxito
                                                             }
-                                                        }
-                                                    }
-                                                });
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                // Maneja el error
+                                                        })
+                                                        .addOnFailureListener(new OnFailureListener() {
+                                                            @Override
+                                                            public void onFailure(@NonNull Exception e) {
+                                                                // Maneja el error
+                                                            }
+                                                        });
+
+                                                 */
                                             }
                                         });
                             }
@@ -180,6 +179,7 @@ public class SignInFragment extends Fragment {
                     }
                 });
     }
+
 
 
     private void actualizarUI(FirebaseUser currentUser) {
