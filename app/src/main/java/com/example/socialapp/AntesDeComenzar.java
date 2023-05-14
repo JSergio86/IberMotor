@@ -3,6 +3,7 @@ package com.example.socialapp;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
 import android.content.Context;
@@ -38,6 +40,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -51,41 +54,59 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class AntesDeComenzar extends FragmentActivity implements OnMapReadyCallback {
+public class AntesDeComenzar extends Fragment implements OnMapReadyCallback {
+    NavController navController;
     private GoogleMap mMap;
     private FragmentAntesDeComenzarBinding binding;
     private double currentLatitude;
     private double currentLongitude;
     private Marker currentMarker;
-    private String uid, nombre, foto, correo;
-
-    // variable para determinar si la cámara se ha movido manualmente
+    private Button continuar;
     private boolean cameraMoved = false;
-
+    private String uid, nombre, foto, correo;
     private FirebaseFirestore db;
 
+    private boolean ubicacionObtenida = false;
+
+    public AntesDeComenzar() {
+    }
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        binding = FragmentAntesDeComenzarBinding.inflate(inflater, container, false);
+        Bundle bundle = getArguments();
 
-        binding = FragmentAntesDeComenzarBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        uid = bundle.getString("uid");
+        nombre = bundle.getString("nombre");
+        foto = bundle.getString("fotoPerfil");
+        correo = bundle.getString("correo");
 
-        // Obtener el objeto Usuario actual
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        return binding.getRoot();
+    }
 
-        // Establecer el OnClickListener del botón "Continuar"
-        Button continueButton = findViewById(R.id.continue_button);
-        continueButton.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        navController = Navigation.findNavController(view);
+
+        continuar = view.findViewById(R.id.continue_button);
+        continuar.setEnabled(false); // Deshabilita el botón de continuar
+
+        continuar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                subirUsuarioFirebase();
+                if (ubicacionObtenida) {
+                    subirUsuarioFirebase();
+                } else {
+                    Snackbar.make(getView(), "Obteniendo ubicación...", Snackbar.LENGTH_SHORT).show();
+                }
             }
         });
 
         // Check location permission
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
     }
 
@@ -100,34 +121,21 @@ public class AntesDeComenzar extends FragmentActivity implements OnMapReadyCallb
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        // Maneja el éxito
+                        navController.navigate(R.id.homeFragment);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        // Maneja el error
+
                     }
                 });
-
-        // Navegar al HomeFragment
-        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.mobile_navigation);
-        NavController navController = navHostFragment.getNavController();
-        navController.navigate(R.id.homeFragment);
     }
-
-    public void informacionUsuario(String uid, String foto, String nombre, String correo){
-        this.uid = uid;
-        this.foto = foto;
-        this.nombre = nombre;
-        this.correo = correo;
-    }
-
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             initializeMap();
         }
     }
@@ -136,7 +144,7 @@ public class AntesDeComenzar extends FragmentActivity implements OnMapReadyCallb
         db = FirebaseFirestore.getInstance();
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
@@ -145,11 +153,11 @@ public class AntesDeComenzar extends FragmentActivity implements OnMapReadyCallb
         mMap = googleMap;
 
         // Check location permission
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             mMap.setMyLocationEnabled(true);
         }
 
-        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        LocationManager locationManager = (LocationManager) requireActivity().getSystemService(Context.LOCATION_SERVICE);
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         if (location != null) {
             currentLatitude = location.getLatitude();
@@ -160,33 +168,10 @@ public class AntesDeComenzar extends FragmentActivity implements OnMapReadyCallb
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15)); // mueve la camara a la ubicacion actual
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
-
-
-        System.out.println("Latitud: " + currentLatitude + " Longitud: " + currentLongitude);
-
         // establece la variable cameraMoved a true cuando la cámara se mueve manualmente
         mMap.setOnCameraMoveListener(() -> {
             cameraMoved = true;
         });
-
-       /* // consulta los datos de ubicaciones en Firebase
-        db.collection("ubicaciones")
-                .get()
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            double latitude = document.getDouble("latitude");
-                            double longitude = document.getDouble("longitude");
-                            LatLng location1 = new LatLng(latitude, longitude);
-                            MarkerOptions markerOptions = new MarkerOptions().position(location1).title("Ubicación");
-                            mMap.addMarker(markerOptions);
-                        }
-                    } else {
-                        Log.d(TAG, "Error getting documents: ", task.getException());
-                    }
-                });
-
-        */
     }
 
     private final LocationListener locationListener = new LocationListener() {
@@ -209,13 +194,8 @@ public class AntesDeComenzar extends FragmentActivity implements OnMapReadyCallb
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
             }
 
-            /*FirebaseDatabase database = FirebaseDatabase.getInstance();
-            DatabaseReference myRef = database.getReference("ubicaciones");
-
-            Ubicacion ubicacion = new Ubicacion(currentLatitude, currentLongitude);
-
-            FirebaseFirestore.getInstance().collection("ubicaciones").add(ubicacion);
-             */
+            ubicacionObtenida = true; // establece la variable como verdadera
+            continuar.setEnabled(true);
         }
 
         @Override
@@ -240,5 +220,4 @@ public class AntesDeComenzar extends FragmentActivity implements OnMapReadyCallb
             }
         }
     }
-
 }

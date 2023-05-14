@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     NavController navController;
     BottomNavigationView bottomNavigationView;
     //Lista de fragments sin el bottom nav
-    List<Integer> fragmentsWithoutBottomNav = Arrays.asList(R.id.signInFragment, R.id.registerFragment, R.id.ayudaFragment, R.id.notificacionesFragment, R.id.privacidadFragment, R.id.editarPerfilFragment);
+    List<Integer> fragmentsWithoutBottomNav = Arrays.asList(R.id.signInFragment, R.id.registerFragment, R.id.ayudaFragment, R.id.notificacionesFragment, R.id.privacidadFragment, R.id.editarPerfilFragment, R.id.antesDeComenzar);
     FirebaseAuth mAuth;
 
     @Override

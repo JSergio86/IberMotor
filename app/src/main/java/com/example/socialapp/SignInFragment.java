@@ -53,7 +53,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public class SignInFragment extends Fragment {
-
     NavController navController;
     private SignInButton googleSignInButton;
     private ActivityResultLauncher<Intent> activityResultLauncher;
@@ -150,10 +149,17 @@ public class SignInFragment extends Fragment {
                                                 // Usuario existente, navegar a Fragment1
                                                 navController.navigate(R.id.homeFragment);
                                             } else {
-                                                // Usuario nuevo, navegar a Fragment2
-                                                requireActivity().startActivity(new Intent(requireActivity(), AntesDeComenzar.class));
+                                                Bundle bundle = new Bundle();
+                                                bundle.putString("uid", uid);
+                                                bundle.putString("nombre", nombre);
+                                                bundle.putString("correo", correo);
+                                                bundle.putString("fotoPerfil", fotoPerfil);
+
                                                 AntesDeComenzar antesDeComenzar = new AntesDeComenzar();
-                                                antesDeComenzar.informacionUsuario(uid, fotoPerfil, nombre, correo);
+                                                antesDeComenzar.setArguments(bundle);
+                                                navController.navigate(R.id.antesDeComenzar, bundle);
+
+
                                                 //Usuario usuario = new Usuario(uid,fotoPerfil, nombre, correo, null, null,false);
 
                                                 // Guarda el objeto Usuario en Firestore
