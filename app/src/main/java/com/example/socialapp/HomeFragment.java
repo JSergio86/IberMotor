@@ -44,8 +44,10 @@ import io.github.muddz.styleabletoast.StyleableToast;
 public class HomeFragment extends Fragment {
     NavController navController;   // <-----------------
     public AppViewModel appViewModel;
+
     FirebaseUser user;
-    ImageView perfil, iconoFiltro;
+    ImageView iconoFiltro, fotoPerfil, menuDrawer;
+    String uid;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -54,11 +56,30 @@ public class HomeFragment extends Fragment {
         navController = Navigation.findNavController(view);  // <-----------------
 
         appViewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
-        perfil = view.findViewById(R.id.perfil);
         iconoFiltro = view.findViewById(R.id.iconoFiltro);
+        fotoPerfil = view.findViewById(R.id.perfil);
+        menuDrawer = view.findViewById(R.id.menuDrawer);
 
 
-        perfil.setOnClickListener(new View.OnClickListener() {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(user != null){
+            Glide.with(requireView())
+                    .load(user.getPhotoUrl())
+                    .transform(new CircleCrop())
+                    .into(fotoPerfil);
+        }
+
+        if(user.getPhotoUrl() == null){
+            Glide.with(requireView())
+                    .load(R.drawable.anonymo)
+                    .transform(new CircleCrop())
+                    .into(fotoPerfil);
+        }
+        uid = user.getUid();
+
+
+        fotoPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 navController.navigate(R.id.perfilFragment);
@@ -76,6 +97,33 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 navController.navigate(R.id.crearPost);
+            }
+        });
+
+        menuDrawer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopupMenu popupMenu = new PopupMenu(getContext(), v);
+                popupMenu.inflate(R.menu.menudrawer);
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        int id = item.getItemId();
+                        switch (id) {
+                            case R.id.notificaciones:
+                                navController.navigate(R.id.notificacionesFragment);
+                                return true;
+                            case R.id.privacidad:
+                                navController.navigate(R.id.privacidadFragment);
+                                return true;
+                            case R.id.ayuda:
+                                navController.navigate(R.id.ayudaFragment);
+                                return true;
+                        }
+                        return false;
+                    }
+                });
+                popupMenu.show();
             }
         });
 

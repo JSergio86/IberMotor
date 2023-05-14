@@ -14,31 +14,52 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 
 public class PerfilFragment extends Fragment {
-    NavController navController;   // <-----------------
-    ImageView volver, campanita;
+    NavController navController;
+    ImageView volver, campanita, fotoPerfil;
     Button botonEditarPerfil;
+    String uid;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        navController = Navigation.findNavController(view);  // <-----------------
+        navController = Navigation.findNavController(view);
 
         volver = view.findViewById(R.id.volverAtras);
         campanita = view.findViewById(R.id.campanita);
+        fotoPerfil = view.findViewById(R.id.perfil);
 
         botonEditarPerfil = view.findViewById(R.id.botonEditarPerfil);
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        if(user != null){
+            Glide.with(requireView())
+                    .load(user.getPhotoUrl())
+                    .transform(new CircleCrop())
+                    .into(fotoPerfil);
+        }
+
+        if(user.getPhotoUrl() == null){
+            Glide.with(requireView())
+                    .load(R.drawable.anonymo)
+                    .transform(new CircleCrop())
+                    .into(fotoPerfil);
+        }
+        uid = user.getUid();
 
         campanita.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navController = Navigation.findNavController(view);  // <-----------------
+                navController = Navigation.findNavController(view);
                 GoogleSignIn.getClient(requireActivity(), new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                         .requestIdToken(getString(R.string.default_web_client_id))
                         .build()).signOut();
