@@ -159,25 +159,6 @@ public class SignInFragment extends Fragment {
                                                 antesDeComenzar.setArguments(bundle);
                                                 navController.navigate(R.id.antesDeComenzar, bundle);
 
-
-                                                //Usuario usuario = new Usuario(uid,fotoPerfil, nombre, correo, null, null,false);
-
-                                                // Guarda el objeto Usuario en Firestore
-                                                /*usuariosRef.document(user.getUid()).set(usuario)
-                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                                            @Override
-                                                            public void onSuccess(Void aVoid) {
-                                                                // Maneja el éxito
-                                                            }
-                                                        })
-                                                        .addOnFailureListener(new OnFailureListener() {
-                                                            @Override
-                                                            public void onFailure(@NonNull Exception e) {
-                                                                // Maneja el error
-                                                            }
-                                                        });
-
-                                                 */
                                             }
                                         });
                             }
@@ -190,7 +171,6 @@ public class SignInFragment extends Fragment {
 
     private void actualizarUI(FirebaseUser currentUser) {
         if(currentUser != null){
-            //requireActivity().startActivity(new Intent(requireActivity(), GoogleMaps.class));
             navController.navigate(R.id.homeFragment);
         }
     }

@@ -26,27 +26,23 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-
 public class RegisterFragment extends Fragment {
-
-    NavController navController;   // <-----------------
-    private EditText emailEditText, passwordEditText;
+    NavController navController;
+    private EditText emailEditText, passwordEditText, nombreEditText;
     private Button registerButton;
     private FirebaseAuth mAuth;
     ImageView facebook;
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        navController = Navigation.findNavController(view);  // <-----------------
+        navController = Navigation.findNavController(view);
 
+        nombreEditText = view.findViewById(R.id.nombreEditText);
         emailEditText = view.findViewById(R.id.emailEditText);
         passwordEditText = view.findViewById(R.id.passwordEditText);
         facebook = view.findViewById(R.id.facebook);
-
-
         registerButton = view.findViewById(R.id.registerButton);
 
         registerButton.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +68,16 @@ public class RegisterFragment extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            actualizarUI(mAuth.getCurrentUser());
+                            Bundle bundle = new Bundle();
+                            bundle.putString("uid", mAuth.getCurrentUser().getUid());
+                            bundle.putString("nombre", nombreEditText.getText().toString());
+                            bundle.putString("correo", emailEditText.getText().toString());
+                            bundle.putString("fotoPerfil", String.valueOf(R.drawable.anonymo));
+
+                            AntesDeComenzar antesDeComenzar = new AntesDeComenzar();
+                            antesDeComenzar.setArguments(bundle);
+                            navController.navigate(R.id.antesDeComenzar, bundle);
+
                         } else {
                             Snackbar.make(requireView(), "Error: " + task.getException(), Snackbar.LENGTH_LONG).show();
 
@@ -83,22 +88,25 @@ public class RegisterFragment extends Fragment {
 
     }
 
-    private void actualizarUI(FirebaseUser currentUser) {
-        if(currentUser != null){
-            navController.navigate(R.id.homeFragment);
-        }
-    }
-
     private boolean validarFormulario() {
         boolean valid = true;
+
+        // Validar nombre
+        String nombre = nombreEditText.getText().toString().trim();
+        if (TextUtils.isEmpty(nombre)) {
+            Snackbar.make(requireView(), "Nombre requerido.", Snackbar.LENGTH_LONG).show();
+            valid = false;
+        } else {
+            nombreEditText.setError(null);
+        }
 
         // Validar correo electrónico
         String email = emailEditText.getText().toString().trim();
         if (TextUtils.isEmpty(email)) {
-            emailEditText.setError("Required.");
+            Snackbar.make(requireView(), "Correo electrónico requerido.", Snackbar.LENGTH_LONG).show();
             valid = false;
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            emailEditText.setError("Invalid email format.");
+            Snackbar.make(requireView(), "Formato de correo electrónico inválido.", Snackbar.LENGTH_LONG).show();
             valid = false;
         } else {
             emailEditText.setError(null);
@@ -107,15 +115,14 @@ public class RegisterFragment extends Fragment {
         // Validar contraseña
         String password = passwordEditText.getText().toString().trim();
         if (TextUtils.isEmpty(password)) {
-            passwordEditText.setError("Required.");
+            Snackbar.make(requireView(), "Contraseña requerida.", Snackbar.LENGTH_LONG).show();
             valid = false;
         } else if (password.length() < 8) {
-            passwordEditText.setError("Password must be at least 8 characters long.");
+            Snackbar.make(requireView(), "La contraseña debe tener al menos 8 caracteres.", Snackbar.LENGTH_LONG).show();
             valid = false;
         } else {
             passwordEditText.setError(null);
         }
-
         return valid;
     }
 

@@ -32,12 +32,12 @@
             android:gravity="top"
             android:text="Nombre"
             android:textAppearance="@style/email"
-            app:layout_constraintStart_toStartOf="@+id/barraNombre"
+            app:layout_constraintStart_toStartOf="@+id/nombreEditText"
             app:layout_constraintTop_toBottomOf="@+id/logo"
             tools:ignore="MissingConstraints" />
 
         <EditText
-            android:id="@+id/barraNombre"
+            android:id="@+id/nombreEditText"
             android:layout_width="318dp"
             android:layout_height="38dp"
             android:layout_alignParentLeft="true"
@@ -61,7 +61,7 @@
             android:textAppearance="@style/email"
             app:layout_constraintBottom_toTopOf="@+id/emailEditText"
             app:layout_constraintStart_toStartOf="@+id/emailEditText"
-            app:layout_constraintTop_toBottomOf="@+id/barraNombre"
+            app:layout_constraintTop_toBottomOf="@+id/nombreEditText"
             tools:ignore="MissingConstraints" />
 
         <EditText
