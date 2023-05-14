@@ -25,6 +25,8 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class RegisterFragment extends Fragment {
     NavController navController;
@@ -63,28 +65,40 @@ public class RegisterFragment extends Fragment {
  
         registerButton.setEnabled(false);
 
-        mAuth.createUserWithEmailAndPassword(emailEditText.getText().toString(), passwordEditText.getText().toString())
-                .addOnCompleteListener(requireActivity(), new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Bundle bundle = new Bundle();
-                            bundle.putString("uid", mAuth.getCurrentUser().getUid());
-                            bundle.putString("nombre", nombreEditText.getText().toString());
-                            bundle.putString("correo", emailEditText.getText().toString());
-                            bundle.putString("fotoPerfil", String.valueOf(R.drawable.anonymo));
+        String email = emailEditText.getText().toString().trim();
 
-                            AntesDeComenzar antesDeComenzar = new AntesDeComenzar();
-                            antesDeComenzar.setArguments(bundle);
-                            navController.navigate(R.id.antesDeComenzar, bundle);
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference usuariosRef = db.collection("usuarios");
+        usuariosRef.whereEqualTo("correo", email).get()
+                .addOnCompleteListener(task1 -> {
+                    if (task1.isSuccessful() && !task1.getResult().isEmpty()) {
+                        // Usuario existente
+                        Snackbar.make(requireView(), "Este correo ya esta registrado ", Snackbar.LENGTH_LONG).show();
+                    } else {
+                        mAuth.createUserWithEmailAndPassword(emailEditText.getText().toString(), passwordEditText.getText().toString())
+                                .addOnCompleteListener(requireActivity(), new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<AuthResult> task) {
+                                        if (task.isSuccessful()) {
+                                            Bundle bundle = new Bundle();
+                                            bundle.putString("uid", mAuth.getCurrentUser().getUid());
+                                            bundle.putString("nombre", nombreEditText.getText().toString());
+                                            bundle.putString("correo", emailEditText.getText().toString());
+                                            bundle.putString("fotoPerfil", String.valueOf(R.drawable.anonymo));
 
-                        } else {
-                            Snackbar.make(requireView(), "Error: " + task.getException(), Snackbar.LENGTH_LONG).show();
+                                            AntesDeComenzar antesDeComenzar = new AntesDeComenzar();
+                                            antesDeComenzar.setArguments(bundle);
+                                            navController.navigate(R.id.antesDeComenzar, bundle);
 
-                        }
-                        registerButton.setEnabled(true);
+                                        } else {
+                                            Snackbar.make(requireView(), "Error: " + task.getException(), Snackbar.LENGTH_LONG).show();
+                                        }
+                                        registerButton.setEnabled(true);
+                                    }
+                                });
                     }
                 });
+
 
     }
 
