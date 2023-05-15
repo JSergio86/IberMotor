@@ -1,9 +1,13 @@
 package com.example.socialapp;
 
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.Manifest;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -44,7 +48,6 @@ import io.github.muddz.styleabletoast.StyleableToast;
 public class HomeFragment extends Fragment {
     NavController navController;   // <-----------------
     public AppViewModel appViewModel;
-
     FirebaseUser user;
     ImageView iconoFiltro, fotoPerfil, menuDrawer;
     String uid;
@@ -53,7 +56,7 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        navController = Navigation.findNavController(view);  // <-----------------
+        navController = Navigation.findNavController(view);
 
         appViewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
         iconoFiltro = view.findViewById(R.id.iconoFiltro);
@@ -127,6 +130,16 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // Los permisos no están concedidos, solicita los permisos
+            ActivityCompat.requestPermissions(requireActivity(), new String[] {
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+            }, 1); // El número 1 es un código de solicitud que puedes usar para identificar esta solicitud de permisos en el método onRequestPermissionsResult
+        }
+
+
         RecyclerView postsRecyclerView = view.findViewById(R.id.postsRecyclerView);
 
         Query query = FirebaseFirestore.getInstance().collection("posts").limit(50);
@@ -141,6 +154,20 @@ public class HomeFragment extends Fragment {
         user = FirebaseAuth.getInstance().getCurrentUser();
 
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 1) { // El mismo código de solicitud que se usó al solicitar los permisos
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                // Los permisos fueron concedidos, realiza las acciones necesarias
+            } else {
+                // Los permisos fueron denegados, maneja esta situación de acuerdo a tus necesidades
+                Toast.makeText(requireContext(), "Los permisos de ubicación fueron denegados", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 
     class PostsAdapter extends FirestoreRecyclerAdapter<Post, PostsAdapter.PostViewHolder> {
         public PostsAdapter(@NonNull FirestoreRecyclerOptions<Post> options) {super(options);}

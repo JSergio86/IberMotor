@@ -149,16 +149,20 @@ public class SignInFragment extends Fragment {
                                                 // Usuario existente, navegar a Fragment1
                                                 navController.navigate(R.id.homeFragment);
                                             } else {
-                                                Bundle bundle = new Bundle();
-                                                bundle.putString("uid", uid);
-                                                bundle.putString("nombre", nombre);
-                                                bundle.putString("correo", correo);
-                                                bundle.putString("fotoPerfil", fotoPerfil);
+                                                Usuario usuario = new Usuario(uid, fotoPerfil, nombre, correo);
+                                                usuariosRef.document().set(usuario)
+                                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                            @Override
+                                                            public void onSuccess(Void aVoid) {
+                                                                navController.navigate(R.id.homeFragment);
+                                                            }
+                                                        })
+                                                        .addOnFailureListener(new OnFailureListener() {
+                                                            @Override
+                                                            public void onFailure(@NonNull Exception e) {
 
-                                                AntesDeComenzar antesDeComenzar = new AntesDeComenzar();
-                                                antesDeComenzar.setArguments(bundle);
-                                                navController.navigate(R.id.antesDeComenzar, bundle);
-
+                                                            }
+                                                        });
                                             }
                                         });
                             }

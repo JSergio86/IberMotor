@@ -66,7 +66,7 @@
 
 
             <com.jaredrummler.materialspinner.MaterialSpinner
-                android:id="@+id/spinner"
+                android:id="@+id/spinnerMarca"
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 app:ms_background_color="#D9D9D9"/>

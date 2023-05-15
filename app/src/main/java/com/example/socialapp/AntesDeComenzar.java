@@ -65,7 +65,6 @@ public class AntesDeComenzar extends Fragment implements OnMapReadyCallback {
     private boolean cameraMoved = false;
     private String uid, nombre, foto, correo;
     private FirebaseFirestore db;
-
     private boolean ubicacionObtenida = false;
 
     public AntesDeComenzar() {
@@ -75,13 +74,6 @@ public class AntesDeComenzar extends Fragment implements OnMapReadyCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentAntesDeComenzarBinding.inflate(inflater, container, false);
-        Bundle bundle = getArguments();
-
-        uid = bundle.getString("uid");
-        nombre = bundle.getString("nombre");
-        foto = bundle.getString("fotoPerfil");
-        correo = bundle.getString("correo");
-
         return binding.getRoot();
     }
 
@@ -90,47 +82,12 @@ public class AntesDeComenzar extends Fragment implements OnMapReadyCallback {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
 
-        continuar = view.findViewById(R.id.continue_button);
-        continuar.setEnabled(false); // Deshabilita el botón de continuar
-
-        continuar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (ubicacionObtenida) {
-                    subirUsuarioFirebase();
-                } else {
-                    Snackbar.make(getView(), "Obteniendo ubicación...", Snackbar.LENGTH_SHORT).show();
-                }
-            }
-        });
-
         // Check location permission
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
     }
 
-    private void subirUsuarioFirebase() {
-        // Actualizar la latitud y longitud del usuario actual en Firebase
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference usuariosRef = db.collection("usuarios");
-
-        Usuario usuario = new Usuario(uid, foto, nombre, correo, currentLatitude, currentLongitude, true);
-
-        usuariosRef.document().set(usuario)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        navController.navigate(R.id.homeFragment);
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-
-                    }
-                });
-    }
 
     @Override
     public void onResume() {
@@ -142,7 +99,6 @@ public class AntesDeComenzar extends Fragment implements OnMapReadyCallback {
 
     private void initializeMap() {
         db = FirebaseFirestore.getInstance();
-
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -163,6 +119,7 @@ public class AntesDeComenzar extends Fragment implements OnMapReadyCallback {
             currentLatitude = location.getLatitude();
             currentLongitude = location.getLongitude();
         }
+
         LatLng currentLocation = new LatLng(currentLatitude, currentLongitude);
 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15)); // mueve la camara a la ubicacion actual
@@ -194,8 +151,6 @@ public class AntesDeComenzar extends Fragment implements OnMapReadyCallback {
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(currentLocation));
             }
 
-            ubicacionObtenida = true; // establece la variable como verdadera
-            continuar.setEnabled(true);
         }
 
         @Override

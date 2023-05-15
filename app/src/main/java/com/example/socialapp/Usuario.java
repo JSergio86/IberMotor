@@ -2,20 +2,16 @@ package com.example.socialapp;
 
 public class Usuario {
     public String uid,fotoPerfil, nombre, correo;
-    public double latitud, longitud;
-    public boolean registrado;
 
     public Usuario() {
     }
 
-    public Usuario(String uid, String fotoPerfil, String nombre, String correo, double latitud, double longitud, boolean registrado) {
+    public Usuario(String uid, String fotoPerfil, String nombre, String correo) {
         this.uid = uid;
         this.fotoPerfil = fotoPerfil;
         this.nombre = nombre;
         this.correo = correo;
-        this.latitud = latitud;
-        this.longitud = longitud;
-        this.registrado = registrado;
+
     }
 
     public String getUid() {
@@ -50,27 +46,4 @@ public class Usuario {
         this.correo = correo;
     }
 
-    public double getLatitud() {
-        return latitud;
-    }
-
-    public void setLatitud(double latitud) {
-        this.latitud = latitud;
-    }
-
-    public double getLongitud() {
-        return longitud;
-    }
-
-    public void setLongitud(double longitud) {
-        this.longitud = longitud;
-    }
-
-    public boolean isRegistrado() {
-        return registrado;
-    }
-
-    public void setRegistrado(boolean registrado) {
-        this.registrado = registrado;
-    }
 }

@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -51,6 +52,13 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         navController = Navigation.findNavController(this,R.id.mainLayout);
+
+        navController = Navigation.findNavController(this, R.id.mainLayout);
+
+        //Establecer el graph en el NavHostFragment
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.mainLayout);
+        navHostFragment.getNavController().setGraph(R.navigation.mobile_navigation);
+
         bottomNavigationView = findViewById(R.id.bottomNavigation);
 
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
@@ -69,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
                         navController.navigate(R.id.homeFragment);
                         break;
                     case R.id.publicar:
-                        navController.navigate(R.id.publicarAnuncioFragment);
+                        navController.navigate(R.id.marcaSearchDialogFragment);
                         break;
                     case R.id.chat:
                         navController.navigate(R.id.conversacionesFragment);
@@ -112,4 +120,10 @@ public class MainActivity extends AppCompatActivity {
  */
 
     }
+
+    public NavController getNavController() {
+        NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.mainLayout);
+        return navHostFragment.getNavController();
+    }
+
 }

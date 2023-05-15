@@ -8,6 +8,7 @@ public class Post {
     public String uid;
     public String mediaUrl;
     public String fotoCoche,precioTotal, precioText, nombreText, ciudadText, kilometrosText, añosText, combustibleText, garantia;
+    public double latitud, longitud;
 
     public Post() {}
 

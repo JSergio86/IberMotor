@@ -20,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
@@ -65,30 +67,43 @@ public class RegisterFragment extends Fragment {
  
         registerButton.setEnabled(false);
 
-        String email = emailEditText.getText().toString().trim();
+        String correo = emailEditText.getText().toString().trim();
+        String nombre = nombreEditText.getText().toString().trim();
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference usuariosRef = db.collection("usuarios");
-        usuariosRef.whereEqualTo("correo", email).get()
-                .addOnCompleteListener(task1 -> {
-                    if (task1.isSuccessful() && !task1.getResult().isEmpty()) {
-                        // Usuario existente
-                        Snackbar.make(requireView(), "Este correo ya esta registrado ", Snackbar.LENGTH_LONG).show();
+
+        usuariosRef.whereEqualTo("correo", correo).get().addOnCompleteListener(task1 -> {
+            if (task1.isSuccessful() && !task1.getResult().isEmpty()) {
+                // Usuario existente con el mismo correo
+                Snackbar.make(requireView(), "Este correo ya está registrado ", Snackbar.LENGTH_LONG).show();
+            } else {
+                usuariosRef.whereEqualTo("nombre", nombre).get().addOnCompleteListener(task2 -> {
+                    if (task2.isSuccessful() && !task2.getResult().isEmpty()) {
+                        // Usuario existente con el mismo nombre
+                        Snackbar.make(requireView(), "Este nombre ya está registrado", Snackbar.LENGTH_LONG).show();
                     } else {
+                        // El correo y el nombre no están registrados, proceder con el registro
                         mAuth.createUserWithEmailAndPassword(emailEditText.getText().toString(), passwordEditText.getText().toString())
                                 .addOnCompleteListener(requireActivity(), new OnCompleteListener<AuthResult>() {
                                     @Override
                                     public void onComplete(@NonNull Task<AuthResult> task) {
                                         if (task.isSuccessful()) {
-                                            Bundle bundle = new Bundle();
-                                            bundle.putString("uid", mAuth.getCurrentUser().getUid());
-                                            bundle.putString("nombre", nombreEditText.getText().toString());
-                                            bundle.putString("correo", emailEditText.getText().toString());
-                                            bundle.putString("fotoPerfil", String.valueOf(R.drawable.anonymo));
+                                            String uid = mAuth.getCurrentUser().getUid();
+                                            Usuario usuario = new Usuario(uid, null , nombre, correo);
+                                            usuariosRef.document().set(usuario)
+                                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                        @Override
+                                                        public void onSuccess(Void aVoid) {
+                                                            navController.navigate(R.id.homeFragment);
+                                                        }
+                                                    })
+                                                    .addOnFailureListener(new OnFailureListener() {
+                                                        @Override
+                                                        public void onFailure(@NonNull Exception e) {
 
-                                            AntesDeComenzar antesDeComenzar = new AntesDeComenzar();
-                                            antesDeComenzar.setArguments(bundle);
-                                            navController.navigate(R.id.antesDeComenzar, bundle);
+                                                        }
+                                                    });
 
                                         } else {
                                             Snackbar.make(requireView(), "Error: " + task.getException(), Snackbar.LENGTH_LONG).show();
@@ -96,8 +111,14 @@ public class RegisterFragment extends Fragment {
                                         registerButton.setEnabled(true);
                                     }
                                 });
+
                     }
                 });
+            }
+            registerButton.setEnabled(true);
+
+        });
+
 
 
     }
