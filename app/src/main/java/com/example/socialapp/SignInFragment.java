@@ -26,8 +26,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -54,11 +56,11 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SignInFragment extends Fragment {
     NavController navController;
-    private SignInButton googleSignInButton;
+    private ImageView googleSignInButton;
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private EditText emailEditText, passwordEditText;
     private Button emailSignInButton;
-    private ConstraintLayout signInForm;
+    private RelativeLayout signInForm;
     private FirebaseAuth mAuth;
 
     @Override
