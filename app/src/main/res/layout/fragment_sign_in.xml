@@ -36,7 +36,7 @@
             android:background="@drawable/blue_border_rounded_cornwe">
 
             <EditText
-                android:id="@+id/username_input"
+                android:id="@+id/emailEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/username_icon"
@@ -51,7 +51,6 @@
                 android:textCursorDrawable="@drawable/cursor_color"
                 android:textSize="12sp" />
 
-            <!-- ICON -->
             <ImageView
                 android:id="@+id/username_icon"
                 android:layout_width="14.7dp"
@@ -71,9 +70,9 @@
             android:layout_marginRight="62dp"
             android:background="@drawable/blue_border_rounded_cornwe">
 
-            <!-- INPUT -->
+
             <EditText
-                android:id="@+id/password"
+                android:id="@+id/passwordEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@+id/icon"
@@ -89,7 +88,6 @@
                 android:textCursorDrawable="@drawable/cursor_color"
                 android:textSize="12sp" />
 
-            <!-- ICON -->
             <ImageView
                 android:id="@+id/icon"
                 android:layout_width="14.7dp"
@@ -97,7 +95,6 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="17dp"
                 android:src="@drawable/password" />
-
         </RelativeLayout>
 
 
@@ -119,7 +116,7 @@
             android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/gotoCreateAccountTextView"
+            android:id="@+id/passwordOlvidada"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -168,13 +165,47 @@
 
             <ImageView
                 android:id="@+id/googleSignInButton"
-                android:layout_width="26.7dp"
-                android:layout_height="26.7dp"
-                android:src="@drawable/fb" />
+                android:layout_width="36.7dp"
+                android:layout_height="36.7dp"
+                android:src="@drawable/googleg_standard_color_18" />
 
 
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="35dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/fraseTextView"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="¿No tienes cuenta? "
+                android:textColor="#1566e0"
+                android:textSize="12.5sp" />
+
+            <TextView
+                android:id="@+id/registrateTextView"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="Registrate"
+                android:textColor="#1566e0"
+                android:textSize="13.5sp"
+                android:textStyle="bold"
+                android:paddingBottom="1dp"
+                android:background="@android:color/transparent"
+                android:linksClickable="false"
+                android:autoLink="none"
+                android:inputType="none"
+                android:textIsSelectable="false" />
+
+
+        </LinearLayout>
+
 
 
     </LinearLayout>

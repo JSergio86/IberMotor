@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.socialapp">
+    package="com.example.ibermotor">
 
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -19,8 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SocialAPP"
         tools:targetApi="31">
+
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.ibermotor.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.SocialAPP.NoActionBar">
@@ -37,7 +38,7 @@
 
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="com.example.socialapp.fileprovider"
+            android:authorities="com.example.ibermotor.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

@@ -18,6 +18,7 @@
         <entry key="app/src/main/res/layout/fragment_ayuda.xml" value="0.35625" />
         <entry key="app/src/main/res/layout/fragment_conversaciones.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_crear_post.xml" value="0.35625" />
+        <entry key="app/src/main/res/layout/fragment_descripcion_coche.xml" value="0.35625" />
         <entry key="app/src/main/res/layout/fragment_editar_perfil.xml" value="0.35625" />
         <entry key="app/src/main/res/layout/fragment_google_maps.xml" value="0.35625" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.22" />
@@ -31,13 +32,15 @@
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_publicar_anuncio.xml" value="0.35625" />
         <entry key="app/src/main/res/layout/fragment_register.xml" value="0.5" />
-        <entry key="app/src/main/res/layout/fragment_sign_in.xml" value="0.48841354723707664" />
+        <entry key="app/src/main/res/layout/fragment_sign_in.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_sign_out.xml" value="0.18177083333333333" />
         <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/viewholder_post.xml" value="0.33" />
         <entry key="app/src/main/res/layout/viewholder_post_profile.xml" value="0.47842401500938087" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.35625" />
         <entry key="app/src/main/res/menu/main.xml" value="0.35625" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.329" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.329" />
         <entry key="app/src/main/res/xml/paths.xml" value="0.35520833333333335" />
       </map>
     </option>

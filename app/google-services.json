@@ -8,12 +8,57 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:149790290278:android:ee7edb4a668f8daa96d8a7",
+        "android_client_info": {
+          "package_name": "com.example.ibermotor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "149790290278-1982qdl8lgv1se6el7ja5e5pp9dn9jga.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBrbzLOWQbgVxV2L-JaLYMnN-XPx-i9_Gw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "149790290278-1982qdl8lgv1se6el7ja5e5pp9dn9jga.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:149790290278:android:8504aa9b798171f296d8a7",
         "android_client_info": {
           "package_name": "com.example.socialapp"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "149790290278-5s4l0cemmtc531gcm18vh6jkkh65c0rm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.socialapp",
+            "certificate_hash": "e2b4a362ecb851fbb52e3645cbb62a93d3b54d2c"
+          }
+        },
+        {
+          "client_id": "149790290278-hkl86vt3f6fhp8frlqqie98cut5afhr7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.socialapp",
+            "certificate_hash": "4ed71f95400521317035861e5c1c10b2cfde37d5"
+          }
+        },
         {
           "client_id": "149790290278-1982qdl8lgv1se6el7ja5e5pp9dn9jga.apps.googleusercontent.com",
           "client_type": 3
