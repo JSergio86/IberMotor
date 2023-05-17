@@ -45,8 +45,6 @@ public class MainActivity extends AppCompatActivity {
 
         navController = Navigation.findNavController(this,R.id.mainLayout);
 
-        navController = Navigation.findNavController(this, R.id.mainLayout);
-
         //Establecer el graph en el NavHostFragment
         NavHostFragment navHostFragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.mainLayout);
         navHostFragment.getNavController().setGraph(R.navigation.mobile_navigation);
@@ -69,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                         navController.navigate(R.id.homeFragment);
                         break;
                     case R.id.publicar:
-                        navController.navigate(R.id.marcaSearchDialogFragment);
+                        navController.navigate(R.id.publicarAnuncioFragment);
                         break;
                     case R.id.chat:
                         navController.navigate(R.id.conversacionesFragment);

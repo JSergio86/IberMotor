@@ -29,7 +29,6 @@ import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.UUID;
 public class CrearPost extends Fragment {
-
     Button publishButton;
     EditText precioTotal, precioText;
     NavController navController;

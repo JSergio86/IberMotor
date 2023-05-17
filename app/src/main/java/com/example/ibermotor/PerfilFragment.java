@@ -32,9 +32,11 @@ public class PerfilFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         navController = Navigation.findNavController(view);
-
+/*
         volver = view.findViewById(R.id.volverAtras);
         campanita = view.findViewById(R.id.campanita);
+
+ */
         fotoPerfil = view.findViewById(R.id.perfil);
 
         botonEditarPerfil = view.findViewById(R.id.botonEditarPerfil);
@@ -54,7 +56,7 @@ public class PerfilFragment extends Fragment {
                     .into(fotoPerfil);
         }
         uid = user.getUid();
-
+/*
         campanita.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,7 +69,6 @@ public class PerfilFragment extends Fragment {
 
                 Navigation.findNavController(view).navigate(R.id.signInFragment);
 
-
             }
         });
 
@@ -79,6 +80,8 @@ public class PerfilFragment extends Fragment {
 
             }
         });
+
+ */
 
         botonEditarPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
