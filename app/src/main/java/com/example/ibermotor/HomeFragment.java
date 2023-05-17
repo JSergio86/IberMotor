@@ -182,7 +182,7 @@ public class HomeFragment extends Fragment {
 
                 holder.fotoCoche.setOnClickListener(view -> {
                     appViewModel.postSeleccionado.setValue(post);
-                    navController.navigate(R.id.fotoCoche);
+                    navController.navigate(R.id.descripcionCoche);
                 });
 
             } else {

@@ -9,8 +9,12 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
@@ -29,7 +33,7 @@ public class PublicarAnuncioFragment extends Fragment implements MarcaSearchDial
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
 
-        spinnerMarca = view.findViewById(R.id.spinnerMarca);
+      /*  spinnerMarca = view.findViewById(R.id.spinnerMarca);
         spinnerMarca.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,6 +42,32 @@ public class PublicarAnuncioFragment extends Fragment implements MarcaSearchDial
                 dialogFragment.show(getChildFragmentManager(), "marca_search_dialog");
             }
         });
+
+       */
+
+        Spinner spinnerModelo = view.findViewById(R.id.spinnerModelo);
+        EditText editTextModelo = view.findViewById(R.id.editTextModelo);
+
+        spinnerModelo.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    MarcaSearchDialogFragment dialogFragment = new MarcaSearchDialogFragment();
+                    dialogFragment.setMarcaSelectedListener(new MarcaSearchDialogFragment.OnMarcaSelectedListener() {
+                        @Override
+                        public void onMarcaSelected(String modelo) {
+                            editTextModelo.setText(modelo);
+                        }
+                    });
+                    dialogFragment.show(getChildFragmentManager(), "modelo_search_dialog");
+                    return true;
+                }
+                return false;
+            }
+        });
+
+
+
     }
 
     @Override
