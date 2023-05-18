@@ -111,6 +111,16 @@
         android:name="com.example.ibermotor.MarcaSearchDialogFragment"
         android:label="fragment_marca_search_dialog"
         tools:layout="@layout/fragment_marca_search_dialog" />
+    <fragment
+        android:id="@+id/combustibleSearchDialogFragment"
+        android:name="com.example.ibermotor.CombustibleSearchDialogFragment"
+        android:label="fragment_combustible_search_dialog"
+        tools:layout="@layout/fragment_combustible_search_dialog" />
+    <fragment
+        android:id="@+id/colorSearchDialogFragment"
+        android:name="com.example.ibermotor.ColorSearchDialogFragment"
+        android:label="fragment_color_search_dialog"
+        tools:layout="@layout/fragment_color_search_dialog" />
 
 </navigation>
 

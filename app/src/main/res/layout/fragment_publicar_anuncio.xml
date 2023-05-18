@@ -44,35 +44,47 @@
             app:layout_constraintTop_toBottomOf="@+id/publicarAnuncioText"
             tools:layout_editor_absoluteX="4dp" />
 
+        <TextView
+            android:id="@+id/datosCocheTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="17dp"
+            android:layout_marginTop="20dp"
+            android:text="Datos de tu coche"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/marcaLinear"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linea">
+
+        </TextView>
 
         <LinearLayout
             android:id="@+id/marcaLinear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/linea">
+            app:layout_constraintTop_toBottomOf="@id/datosCocheTextView">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/marcaTextInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:hint="Marca"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+                android:hint="Marca">
 
                 <AutoCompleteTextView
                     android:id="@+id/marcaAutoCompleteTextView"
-                    android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:inputType="none"
-                    />
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
 
 
             </com.google.android.material.textfield.TextInputLayout>
-
 
 
         </LinearLayout>
@@ -96,7 +108,8 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    />
 
 
                 <!-- <EditText
@@ -127,7 +140,7 @@
 
 
         <LinearLayout
-            android:id="@+id/carroceriaLinear"
+            android:id="@+id/añoLinear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -136,15 +149,156 @@
             app:layout_constraintTop_toBottomOf="@id/modeloLinear">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textInputLayout"
+                android:id="@+id/añoTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
-                android:hint="Carroceria"
+                android:hint="Año de matriculación"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"/>
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/combustibleLinear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/añoLinear">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/combustibleTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:hint="Combustible"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
 
                 <AutoCompleteTextView
-                    android:id="@+id/autoCompleteTextView"
+                    android:id="@+id/combustibleAutoCompleteTextView"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:inputType="none"
+                    />
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/puertasLinear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="17dp"
+            android:layout_marginEnd="17dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/colorLinear"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/combustibleLinear">
+
+
+            <TextView
+                android:id="@+id/puertas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="Puertas"
+                android:textSize="18dp"
+                 />
+
+
+            <GridLayout
+                android:id="@+id/gridLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:columnCount="4">
+
+                <Button
+                    android:id="@+id/button1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_marginStart="-4dp"
+                    android:layout_marginEnd="-2dp"
+                    android:backgroundTint="@color/colorButtonUnselected"
+                    android:text="2"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_marginStart="-2dp"
+                    android:layout_marginEnd="-2dp"
+                    android:backgroundTint="@color/colorButtonUnselected"
+                    android:text="3"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/button3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_marginStart="-2dp"
+                    android:layout_marginEnd="-2dp"
+                    android:backgroundTint="@color/colorButtonUnselected"
+                    android:text="4"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/button4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_columnWeight="1"
+                    android:layout_marginStart="-2dp"
+                    android:layout_marginEnd="-4dp"
+                    android:backgroundTint="@color/colorButtonUnselected"
+                    android:text="5"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
+
+            </GridLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/colorLinear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/puertasLinear">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/colortextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:hint="Color"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+                <AutoCompleteTextView
+                    android:id="@+id/colorAutoCompleteTextView"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:inputType="none"
@@ -156,117 +310,61 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/combustibleLinear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="15dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/carroceriaLinear">
-
-            <TextView
-                android:id="@+id/combustible"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:text="Combustible"
-                android:textAppearance="@style/styleAppbar" />
-
-
-            <com.jaredrummler.materialspinner.MaterialSpinner
-                android:id="@+id/spinnerCombustible"
-                android:layout_width="320dp"
-                android:layout_height="wrap_content"
-                app:ms_background_color="#D9D9D9"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/añoLinear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="15dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/combustibleLinear">
-
-            <TextView
-                android:id="@+id/año"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:text="Año"
-                android:textAppearance="@style/styleAppbar" />
-
-
-            <EditText
-                android:id="@+id/añoTextModelo"
-                android:layout_width="320dp"
-                android:layout_height="50dp"
-                />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/colorLinear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="15dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/añoLinear">
-
-
-            <TextView
-                android:id="@+id/color"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:text="Color"
-                android:textAppearance="@style/styleAppbar" />
-
-
-            <com.jaredrummler.materialspinner.MaterialSpinner
-                android:id="@+id/spinnerColor"
-                android:layout_width="320dp"
-                android:layout_height="wrap_content"
-                app:ms_background_color="#D9D9D9"/>
-        </LinearLayout>
-
-        <LinearLayout
             android:id="@+id/kilometrajeLinear"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/colorLinear">
 
 
-            <TextView
-                android:id="@+id/kilometraje"
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/kmTextInputLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:text="Kilometros"
-                android:textAppearance="@style/styleAppbar" />
+                android:layout_margin="16dp"
+                android:hint="Kilometros"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"/>
 
-            <EditText
-                android:id="@+id/kmTextModelo"
-                android:layout_width="320dp"
-                android:layout_height="50dp"
-                />
+            </com.google.android.material.textfield.TextInputLayout>
+
 
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/cambioLinear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/kilometrajeLinear">
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/cambioTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:hint="Tipo de cambio"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </LinearLayout>
+
 
         <com.github.nikartm.button.FitButton
             android:id="@+id/subiranuncio"
@@ -287,7 +385,7 @@
             app:fb_backgroundColor="#002196"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/kilometrajeLinear"/>
+            app:layout_constraintTop_toBottomOf="@+id/cambioLinear"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

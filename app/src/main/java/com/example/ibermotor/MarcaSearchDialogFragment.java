@@ -55,24 +55,61 @@ public class MarcaSearchDialogFragment extends DialogFragment {
     }
 
     private void mostrarOpciones() {
-        List<String> opcionesList = new ArrayList<>();
-        opcionesList.add("Audi");
-        opcionesList.add("BMW");
-        opcionesList.add("Mercedes-Benz");
-        opcionesList.add("Toyota");
-        opcionesList.add("Honda");
-        opcionesList.add("Ford");
-        opcionesList.add("Chevrolet");
-        opcionesList.add("Volkswagen");
-        opcionesList.add("Nissan");
-        opcionesList.add("Hyundai");
-        opcionesList.add("Kia");
-        opcionesList.add("Volvo");
-        opcionesList.add("Mazda");
-        opcionesList.add("Subaru");
-        opcionesList.add("Ferrari");
+        List<String> marcasList = new ArrayList<>();
+        marcasList.add("Abarth");
+        marcasList.add("Alfa Romeo");
+        marcasList.add("Aston Martin");
+        marcasList.add("Audi");
+        marcasList.add("Bentley");
+        marcasList.add("BMW");
+        marcasList.add("Cadillac");
+        marcasList.add("Caterham");
+        marcasList.add("Chevrolet");
+        marcasList.add("Citroen");
+        marcasList.add("Dacia");
+        marcasList.add("Ferrari");
+        marcasList.add("Fiat");
+        marcasList.add("Ford");
+        marcasList.add("Honda");
+        marcasList.add("Infiniti");
+        marcasList.add("Isuzu");
+        marcasList.add("Iveco");
+        marcasList.add("Jaguar");
+        marcasList.add("Jeep");
+        marcasList.add("Kia");
+        marcasList.add("KTM");
+        marcasList.add("Lada");
+        marcasList.add("Lamborghini");
+        marcasList.add("Lancia");
+        marcasList.add("Land Rover");
+        marcasList.add("Lexus");
+        marcasList.add("Lotus");
+        marcasList.add("Maserati");
+        marcasList.add("Mazda");
+        marcasList.add("Mercedes-Benz");
+        marcasList.add("Mini");
+        marcasList.add("Mitsubishi");
+        marcasList.add("Morgan");
+        marcasList.add("Nissan");
+        marcasList.add("Opel");
+        marcasList.add("Peugeot");
+        marcasList.add("Piaggio");
+        marcasList.add("Porsche");
+        marcasList.add("Renault");
+        marcasList.add("Rolls-Royce");
+        marcasList.add("Seat");
+        marcasList.add("Skoda");
+        marcasList.add("Smart");
+        marcasList.add("SsangYong");
+        marcasList.add("Subaru");
+        marcasList.add("Suzuki");
+        marcasList.add("Tata");
+        marcasList.add("Tesla");
+        marcasList.add("Toyota");
+        marcasList.add("Volkswagen");
+        marcasList.add("Volvo");
 
-        adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1, opcionesList);
+        adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1, marcasList);
         listViewMarcas.setAdapter(adapter);
 
         listViewMarcas.setOnItemClickListener(new AdapterView.OnItemClickListener() {

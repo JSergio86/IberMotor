@@ -4,35 +4,92 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".CrearPost">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <!-- Cuadro gris claro en la parte superior -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="#DDDDDD"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <!-- Icono de galería -->
+            <ImageView
+                android:id="@+id/galleryIcon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/image"
+                android:layout_marginBottom="8dp" />
+
+            <!-- Texto "Fotografías de tu coche" en negrita y más pequeño -->
+            <TextView
+                android:id="@+id/photoText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fotografías de tu coche"
+                android:textStyle="bold"
+                android:textSize="12sp"
+                android:layout_marginBottom="8dp" />
+
+            <!-- ImageView para mostrar la imagen seleccionada -->
+            <ImageView
+                android:id="@+id/selectedImage"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:visibility="invisible" />
+
+            <!-- Botón más pequeño para añadir foto -->
+            <Button
+                android:id="@+id/btn_add_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Subir fotografías"
+                android:textSize="12sp"
+                android:padding="4dp"
+                android:background="@drawable/btn_add_photo_background"
+                android:foreground="?attr/selectableItemBackground"
+                style="@style/FineButton"
+                android:layout_marginBottom="8dp" />
+
+        </LinearLayout>
+
+        <!-- Resto del contenido -->
         <Button
             android:id="@+id/publishButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Publish"
             android:layout_gravity="end"/>
+
         <ImageView
             android:id="@+id/previsualizacion"
             android:layout_width="200dp"
             android:layout_height="wrap_content" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <Button
                     android:id="@+id/imagen_galeria"
                     android:layout_width="64dp"
                     android:layout_height="64dp"
                     android:layout_marginLeft="8dp"
                     android:background="@drawable/image" />
+
             </LinearLayout>
+
             <EditText
                 android:id="@+id/precioTotal"
                 android:layout_width="wrap_content"
@@ -46,5 +103,27 @@
                 android:text="Precio" />
 
         </LinearLayout>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:id="@+id/photoContainer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="start" />
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
     </LinearLayout>
+
 </FrameLayout>
