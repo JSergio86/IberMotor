@@ -13,13 +13,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.google.android.material.textfield.TextInputLayout;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
-public class PublicarAnuncioFragment extends Fragment implements MarcaSearchDialogFragment.OnMarcaSelectedListener{
-    private MaterialSpinner spinnerMarca;
+public class PublicarAnuncioFragment extends Fragment{
     NavController navController;
 
     @Override
@@ -33,18 +34,46 @@ public class PublicarAnuncioFragment extends Fragment implements MarcaSearchDial
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
 
-      /*  spinnerMarca = view.findViewById(R.id.spinnerMarca);
-        spinnerMarca.setOnClickListener(new View.OnClickListener() {
+        AutoCompleteTextView marcaAutoCompleteTextView = view.findViewById(R.id.marcaAutoCompleteTextView);
+        marcaAutoCompleteTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MarcaSearchDialogFragment dialogFragment = new MarcaSearchDialogFragment();
-                dialogFragment.setMarcaSelectedListener(PublicarAnuncioFragment.this);
-                dialogFragment.show(getChildFragmentManager(), "marca_search_dialog");
+                showMarcaSearchDialog(marcaAutoCompleteTextView);
             }
         });
 
-       */
 
+        TextInputLayout textInputLayout = view.findViewById(R.id.textInputLayout);
+        AutoCompleteTextView autoCompleteTextView = view.findViewById(R.id.autoCompleteTextView);
+
+        textInputLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMarcaSearchDialog(autoCompleteTextView);
+            }
+        });
+
+        autoCompleteTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMarcaSearchDialog(autoCompleteTextView);
+            }
+        });
+
+    }
+    private void showMarcaSearchDialog(AutoCompleteTextView autoCompleteTextView) {
+        MarcaSearchDialogFragment dialogFragment = new MarcaSearchDialogFragment();
+        dialogFragment.setMarcaSelectedListener(new MarcaSearchDialogFragment.OnMarcaSelectedListener() {
+            @Override
+            public void onMarcaSelected(String modelo) {
+                autoCompleteTextView.setText(modelo);
+            }
+        });
+        dialogFragment.show(getChildFragmentManager(), "marca_search_dialog");
+    }
+}
+
+/*
         Spinner spinnerModelo = view.findViewById(R.id.spinnerModelo);
         EditText editTextModelo = view.findViewById(R.id.editTextModelo);
 
@@ -66,12 +95,9 @@ public class PublicarAnuncioFragment extends Fragment implements MarcaSearchDial
             }
         });
 
-
-
-    }
-
-    @Override
+         @Override
     public void onMarcaSelected(String marca) {
         spinnerMarca.setText(marca);
     }
-}
+
+         */

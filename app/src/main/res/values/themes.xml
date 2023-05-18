@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.SocialAPP" parent="Theme.AppCompat.DayNight.DarkActionBar">
+    <style name="Theme.SocialAPP" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/lila</item>
         <item name="colorPrimaryVariant">@color/GrisitemDeseleccionado</item>
@@ -113,7 +113,6 @@
         </item>
 
     </style>
-    bmw_serie_3
     <style name="nameVistaPrincipal">
 
         <item name="android:textSize">

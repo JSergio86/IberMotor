@@ -47,7 +47,7 @@
 
         <LinearLayout
             android:id="@+id/marcaLinear"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_marginTop="20dp"
@@ -55,82 +55,103 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/linea">
 
-            <TextView
-                android:id="@+id/marca"
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/marcaTextInputLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:text="Marca"
-                android:textAppearance="@style/styleAppbar" />
+                android:layout_margin="16dp"
+                android:hint="Marca"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+                <AutoCompleteTextView
+                    android:id="@+id/marcaAutoCompleteTextView"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:inputType="none"
+                    />
 
 
-            <com.jaredrummler.materialspinner.MaterialSpinner
-                android:id="@+id/spinnerMarca"
-                android:layout_width="320dp"
-                android:layout_height="wrap_content"
-                app:ms_background_color="#D9D9D9" />
+            </com.google.android.material.textfield.TextInputLayout>
+
 
 
         </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/modeloLinear"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/marcaLinear">
 
-            <EditText
-                android:id="@+id/editTextModelo"
-                android:layout_width="320dp"
-                android:layout_height="50dp"
-                android:background="@drawable/edittext_background"
-                android:hint="Modelo"
-                android:textColorHint="#808080"
-                android:textColor="#000000"
-                android:paddingLeft="8dp"
-                android:enabled="false"/>
 
-            <Spinner
-                android:id="@+id/spinnerModelo"
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/modeloTextInputLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignEnd="@id/editTextModelo"
-                android:layout_alignBottom="@id/editTextModelo"
-                android:layout_alignTop="@id/editTextModelo"
-                android:layout_marginEnd="8dp"/>
+                android:layout_margin="16dp"
+                android:hint="Modelo"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+
+                <!-- <EditText
+                     android:id="@+id/editTextModelo"
+                     android:layout_width="320dp"
+                     android:layout_height="50dp"
+                     android:background="@drawable/edittext_background"
+                     android:hint="Modelo"
+                     android:textColorHint="#808080"
+                     android:textColor="#000000"
+                     android:paddingLeft="8dp"
+                     android:enabled="false"/> -->
+
+                <!-- <Spinner
+                     android:id="@+id/spinnerModelo"
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     android:layout_alignEnd="@id/editTextModelo"
+                     android:layout_alignBottom="@id/editTextModelo"
+                     android:layout_alignTop="@id/editTextModelo"
+                     android:layout_marginEnd="8dp"/> -->
+
+
+            </com.google.android.material.textfield.TextInputLayout>
+
 
         </RelativeLayout>
 
 
         <LinearLayout
             android:id="@+id/carroceriaLinear"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/modeloLinear">
 
-            <TextView
-                android:id="@+id/carroceria"
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:text="Carroceria"
-                android:textAppearance="@style/styleAppbar" />
+                android:layout_margin="16dp"
+                android:hint="Carroceria"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+
+                <AutoCompleteTextView
+                    android:id="@+id/autoCompleteTextView"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:inputType="none"
+                    />
 
 
-            <com.jaredrummler.materialspinner.MaterialSpinner
-                android:id="@+id/spinnerCarroceria"
-                android:layout_width="320dp"
-                android:layout_height="wrap_content"
-                app:ms_background_color="#D9D9D9"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 
