@@ -19,18 +19,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class CombustibleSearchDialogFragment extends DialogFragment {
+public class CambioSearchDialogFragment extends DialogFragment {
     private ListView listView;
     private ArrayAdapter<String> adapter;
-    private OnCombustibleSelectedListener combustibleSelectedListener;
+    private OnCambioSelectedListener cambioSelectedListener;
     private SearchView searchView;
 
-    public interface OnCombustibleSelectedListener {
-        void onCombustibleSelected(String combustible);
+    public interface OnCambioSelectedListener {
+        void onCambioSelected(String cambio);
     }
 
-    public void setCombustibleSelectedListener(OnCombustibleSelectedListener listener) {
-        combustibleSelectedListener = listener;
+    public void setCambioSelectedListener(OnCambioSelectedListener listener) {
+        cambioSelectedListener = listener;
     }
 
     @Override
@@ -41,10 +41,10 @@ public class CombustibleSearchDialogFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_combustible_search_dialog, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_cambio_search_dialog, container, false);
 
-        listView = rootView.findViewById(R.id.listViewCombustible);
-        searchView = rootView.findViewById(R.id.searchViewCombustible);
+        listView = rootView.findViewById(R.id.listViewCambio);
+        searchView = rootView.findViewById(R.id.searchViewCambio);
 
         mostrarOpciones();
         configurarBusqueda();
@@ -54,12 +54,9 @@ public class CombustibleSearchDialogFragment extends DialogFragment {
 
     private void mostrarOpciones() {
         List<String> opcionesList = new ArrayList<>();
-        opcionesList.add("Gasolina");
-        opcionesList.add("Diesel");
-        opcionesList.add("Hibrido");
-        opcionesList.add("Electrico");
-        opcionesList.add("GLP");
-        opcionesList.add("Otro");
+        opcionesList.add("Automatico");
+        opcionesList.add("Manual");
+
 
         adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_list_item_1, opcionesList);
         listView.setAdapter(adapter);
@@ -67,9 +64,9 @@ public class CombustibleSearchDialogFragment extends DialogFragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String combusitble = (String) parent.getItemAtPosition(position);
-                if (combustibleSelectedListener != null) {
-                    combustibleSelectedListener.onCombustibleSelected(combusitble);
+                String cambio = (String) parent.getItemAtPosition(position);
+                if (cambioSelectedListener != null) {
+                    cambioSelectedListener.onCambioSelected(cambio);
                 }
                 dismiss();
             }
@@ -85,13 +82,13 @@ public class CombustibleSearchDialogFragment extends DialogFragment {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                buscarCombustible(newText);
+                buscarCambio(newText);
                 return true;
             }
         });
     }
 
-    private void buscarCombustible(String query) {
+    private void buscarCambio(String query) {
         adapter.getFilter().filter(query);
     }
 }

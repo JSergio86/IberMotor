@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -41,8 +42,10 @@ public class CrearPost extends Fragment {
     String mediaTipo;
     Uri mediaUri;
     LinearLayout photoContainer;
-    List<ImageView> photoViews;
-    int maxPhotos = 4; // Define el número máximo de fotos
+    List<RelativeLayout> photoViews;
+    int maxPhotos = 4;
+    ImageView iconoGaleria;
+    TextView photoText;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -53,7 +56,9 @@ public class CrearPost extends Fragment {
         precioTotal = view.findViewById(R.id.precioTotal);
         precioText = view.findViewById(R.id.precioText);
         photoContainer = view.findViewById(R.id.photoContainer);
-        photoViews = new ArrayList<>();
+        iconoGaleria = view.findViewById(R.id.galleryIcon);
+        photoText = view.findViewById(R.id.photoText);
+        photoViews = new ArrayList<RelativeLayout>();
 
         publishButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,32 +69,15 @@ public class CrearPost extends Fragment {
 
         appViewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
 
-        view.findViewById(R.id.imagen_galeria).setOnClickListener(v ->
-                seleccionarImagen());
+        view.findViewById(R.id.btn_add_photo).setOnClickListener(v -> seleccionarImagen());
+
         appViewModel.mediaSeleccionado.observe(getViewLifecycleOwner(), media -> {
             this.mediaUri = media.uri;
             this.mediaTipo = media.tipo;
             agregarNuevaFoto(media.uri);
         });
 
-        Button addPhotoButton = view.findViewById(R.id.btn_add_photo);
-        ImageView galleryIcon = view.findViewById(R.id.galleryIcon);
-        TextView photoText = view.findViewById(R.id.photoText);
-        ImageView selectedImage = view.findViewById(R.id.selectedImage);
 
-        addPhotoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Aquí debes implementar la lógica para seleccionar una imagen
-                // y asignar la URI de la imagen seleccionada a la variable 'mediaUri'
-
-                // Mostrar la imagen seleccionada y ocultar el icono de la galería y el texto
-                selectedImage.setImageURI(mediaUri);
-                selectedImage.setVisibility(View.VISIBLE);
-                galleryIcon.setVisibility(View.GONE);
-                photoText.setVisibility(View.GONE);
-            }
-        });
     }
 
     private void publicar() {
@@ -141,26 +129,63 @@ public class CrearPost extends Fragment {
             return; // Si se alcanza el número máximo de fotos, no se agrega una nueva
         }
 
-        ImageView imageView = new ImageView(requireContext());
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 getResources().getDimensionPixelSize(R.dimen.photo_size),
                 getResources().getDimensionPixelSize(R.dimen.photo_size)
         );
-        params.setMargins(
+        layoutParams.setMargins(
                 getResources().getDimensionPixelSize(R.dimen.photo_margin),
                 0,
                 getResources().getDimensionPixelSize(R.dimen.photo_margin),
                 0
         );
-        imageView.setLayoutParams(params);
+
+        RelativeLayout relativeLayout = new RelativeLayout(requireContext());
+        ImageView imageView = new ImageView(requireContext());
+        ImageView closeIcon = new ImageView(requireContext());
+
+        relativeLayout.setLayoutParams(layoutParams);
+
+        imageView.setLayoutParams(new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.MATCH_PARENT,
+                RelativeLayout.LayoutParams.MATCH_PARENT
+        ));
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         Glide.with(this).load(uri).into(imageView);
 
-        photoContainer.addView(imageView);
-        photoViews.add(imageView);
+        closeIcon.setLayoutParams(new RelativeLayout.LayoutParams(
+                RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT
+        ));
+        closeIcon.setImageResource(R.drawable.baseline_cancel_24);
+        closeIcon.setScaleType(ImageView.ScaleType.CENTER);
+        closeIcon.setVisibility(View.VISIBLE);
+        closeIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                eliminarFoto(relativeLayout);
+            }
+        });
 
+        relativeLayout.addView(imageView);
+        relativeLayout.addView(closeIcon);
+        photoContainer.addView(relativeLayout);
+        photoViews.add(relativeLayout);
+
+        iconoGaleria.setVisibility(View.INVISIBLE);
+        photoText.setVisibility(View.INVISIBLE);
         if (photoViews.size() >= maxPhotos) {
-            //view.findViewById(R.id.imagen_galeria).setVisibility(View.GONE);
+            //addImagen.setVisibility(View.GONE);
+        }
+    }
+
+
+    private void eliminarFoto(RelativeLayout photoLayout) {
+        photoContainer.removeView(photoLayout);
+        photoViews.remove(photoLayout);
+        if (photoViews.size() == 0) {
+            iconoGaleria.setVisibility(View.VISIBLE);
+            photoText.setVisibility(View.VISIBLE);
         }
     }
 

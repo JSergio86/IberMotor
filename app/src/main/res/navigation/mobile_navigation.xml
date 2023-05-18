@@ -121,6 +121,11 @@
         android:name="com.example.ibermotor.ColorSearchDialogFragment"
         android:label="fragment_color_search_dialog"
         tools:layout="@layout/fragment_color_search_dialog" />
+    <fragment
+        android:id="@+id/cambioSearchDialogFragment"
+        android:name="com.example.ibermotor.CambioSearchDialogFragment"
+        android:label="fragment_cambio_search_dialog"
+        tools:layout="@layout/fragment_cambio_search_dialog" />
 
 </navigation>
 
