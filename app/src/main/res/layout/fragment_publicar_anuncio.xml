@@ -216,7 +216,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:hint="Año de matriculación"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:counterEnabled="true"
+                app:counterMaxLength="4">>
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -427,8 +429,37 @@
 
             </com.google.android.material.textfield.TextInputLayout>
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/descripcionLinear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cambioLinear">
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/descripcionTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:hint="Descripción"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:counterEnabled="true"
+                app:counterMaxLength="280">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
 
         </LinearLayout>
+
 
 
         <com.github.nikartm.button.FitButton
@@ -450,7 +481,7 @@
             app:fb_backgroundColor="#002196"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cambioLinear"/>
+            app:layout_constraintTop_toBottomOf="@+id/descripcionLinear"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

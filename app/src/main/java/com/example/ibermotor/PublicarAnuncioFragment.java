@@ -252,7 +252,7 @@ public class PublicarAnuncioFragment extends Fragment{
                 RelativeLayout.LayoutParams.WRAP_CONTENT,
                 RelativeLayout.LayoutParams.WRAP_CONTENT
         ));
-        closeIcon.setImageResource(R.drawable.baseline_cancel_24);
+        closeIcon.setImageResource(R.drawable.baseline_cancel_white);
         closeIcon.setScaleType(ImageView.ScaleType.CENTER);
         closeIcon.setVisibility(View.VISIBLE);
         closeIcon.setOnClickListener(new View.OnClickListener() {
