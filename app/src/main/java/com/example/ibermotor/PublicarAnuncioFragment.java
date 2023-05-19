@@ -35,6 +35,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.github.nikartm.button.FitButton;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -50,7 +51,7 @@ import java.util.UUID;
 public class PublicarAnuncioFragment extends Fragment{
     NavController navController;
     public AppViewModel appViewModel;
-    String mediaTipo;
+    String mediaTipo, marca, modelo, combustibe, color, kilometros, tipoDeCambio, descripcion;
     Uri mediaUri;
     LinearLayout photoContainer;
     List<RelativeLayout> photoViews;
@@ -59,6 +60,7 @@ public class PublicarAnuncioFragment extends Fragment{
     int maxPhotos = 8;
     FitButton subirAnuncio;
     Button subirFotosBoton;
+    AutoCompleteTextView marcaAutoCompleteTextView, combustibleAutoCompleteTextView, colorAutoCompleteTextView, cambioAutoCompleteTextView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -88,19 +90,21 @@ public class PublicarAnuncioFragment extends Fragment{
                 publicar();
             }
         });
+
         subirFotosBoton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 seleccionarImagen();
             }
         });
+
         appViewModel.mediaSeleccionado.observe(getViewLifecycleOwner(), media -> {
             this.mediaUri = media.uri;
             this.mediaTipo = media.tipo;
             agregarNuevaFoto(media.uri);
         });
 
-        AutoCompleteTextView marcaAutoCompleteTextView = view.findViewById(R.id.marcaAutoCompleteTextView);
+        marcaAutoCompleteTextView = view.findViewById(R.id.marcaAutoCompleteTextView);
         marcaAutoCompleteTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,7 +113,7 @@ public class PublicarAnuncioFragment extends Fragment{
         });
 
 
-        AutoCompleteTextView combustibleAutoCompleteTextView = view.findViewById(R.id.combustibleAutoCompleteTextView);
+        combustibleAutoCompleteTextView = view.findViewById(R.id.combustibleAutoCompleteTextView);
         combustibleAutoCompleteTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,7 +121,7 @@ public class PublicarAnuncioFragment extends Fragment{
             }
         });
 
-        AutoCompleteTextView colorAutoCompleteTextView = view.findViewById(R.id.colorAutoCompleteTextView);
+        colorAutoCompleteTextView = view.findViewById(R.id.colorAutoCompleteTextView);
         colorAutoCompleteTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -125,7 +129,7 @@ public class PublicarAnuncioFragment extends Fragment{
             }
         });
 
-        AutoCompleteTextView cambioAutoCompleteTextView = view.findViewById(R.id.cambioAutoCompleteTextView);
+        cambioAutoCompleteTextView = view.findViewById(R.id.cambioAutoCompleteTextView);
         cambioAutoCompleteTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -171,7 +175,16 @@ public class PublicarAnuncioFragment extends Fragment{
         }
 
     }
+
     private void publicar() {
+        marca = marcaAutoCompleteTextView.getText().toString();
+        combustibe = combustibleAutoCompleteTextView.getText().toString();
+        color = colorAutoCompleteTextView.getText().toString();
+        tipoDeCambio = cambioAutoCompleteTextView.getText().toString();
+
+        Snackbar.make(requireView(), "Seleccion marca: "+ marca, Snackbar.LENGTH_LONG).show();
+
+
         /*String precioTotalString = precioTotal.getText().toString();
         String precioString = precioText.getText().toString();
 
@@ -210,6 +223,7 @@ public class PublicarAnuncioFragment extends Fragment{
             registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
                 appViewModel.setMediaSeleccionado(uri, mediaTipo);
             });
+
     private void seleccionarImagen() {
         mediaTipo = "image";
         galeria.launch("image/*");
