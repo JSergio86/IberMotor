@@ -94,7 +94,7 @@ public class CrearPost extends Fragment {
 
     private void guardarEnFirestore(String precioTotalString, String precioString, String mediaUrl) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        Post post = new Post(user.getUid(), mediaUrl, mediaTipo, precioTotalString, precioString);
+       /* Post post = new Post(user.getUid(), mediaUrl, mediaTipo, precioTotalString, precioString);
         FirebaseFirestore.getInstance().collection("posts")
                 .add(post)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -104,7 +104,9 @@ public class CrearPost extends Fragment {
                         appViewModel.setMediaSeleccionado(null, null);
                         documentReference.update("postId", documentReference.getId());
                     }
-                });
+
+
+                });*/
     }
 
     private void pujaIguardarEnFirestore(final String precioTotalString, final String precioString) {

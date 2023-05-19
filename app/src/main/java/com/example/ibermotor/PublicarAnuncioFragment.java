@@ -3,6 +3,8 @@ package com.example.ibermotor;
 import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 import android.annotation.SuppressLint;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -34,6 +36,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.github.nikartm.button.FitButton;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
@@ -45,14 +48,17 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 public class PublicarAnuncioFragment extends Fragment{
     NavController navController;
     public AppViewModel appViewModel;
-    String mediaTipo, marca, modelo, año ,combustibe, puertas, color, kilometros, tipoDeCambio, descripcion;
+    String mediaTipo, marca, modelo, año ,combustibe, puertas, color, kilometros, tipoDeCambio, potencia, precio,descripcion, ciudad;
     Uri mediaUri;
     LinearLayout photoContainer;
     List<RelativeLayout> photoViews;
@@ -62,7 +68,10 @@ public class PublicarAnuncioFragment extends Fragment{
     FitButton subirAnuncio;
     Button subirFotosBoton;
     AutoCompleteTextView marcaAutoCompleteTextView, combustibleAutoCompleteTextView, colorAutoCompleteTextView, cambioAutoCompleteTextView;
-    TextInputEditText modeloEditText, añoEditText, kmEditText, descripcionEditText;
+    TextInputEditText modeloEditText, añoEditText, kmEditText, potenciaEditText,precioEditText,descripcionEditText, ubicacionEditText;
+    TextInputLayout potenciaTextInputLayout;
+    private List<String> imageUrls = new ArrayList<>();
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -84,6 +93,11 @@ public class PublicarAnuncioFragment extends Fragment{
         modeloEditText = view.findViewById(R.id.modeloEditText);
         añoEditText = view.findViewById(R.id.añoEditText);
         kmEditText = view.findViewById(R.id.kmEditText);
+        potenciaEditText = view.findViewById(R.id.potenciaEditText);
+        precioEditText = view.findViewById(R.id.precioEditText);
+        potenciaTextInputLayout = view.findViewById(R.id.potenciaTextInputLayout);
+        ubicacionEditText = view.findViewById(R.id.ubicacionEditText);
+
 
         photoViews = new ArrayList<RelativeLayout>();
 
@@ -183,6 +197,8 @@ public class PublicarAnuncioFragment extends Fragment{
     }
 
     private void publicar() {
+        double currentLatitude = 0, currentLongitude=0;
+        String ciudad;
         marca = marcaAutoCompleteTextView.getText().toString();
         modelo = modeloEditText.getText().toString();
         año = añoEditText.getText().toString();
@@ -191,12 +207,26 @@ public class PublicarAnuncioFragment extends Fragment{
         color = colorAutoCompleteTextView.getText().toString();
         tipoDeCambio = cambioAutoCompleteTextView.getText().toString();
         kilometros = kmEditText.getText().toString();
+        potencia = potenciaEditText.getText().toString();
+        precio = precioEditText.getText().toString();
         descripcion = descripcionEditText.getText().toString();
+        ciudad = ubicacionEditText.getText().toString();
+        LatLng cityLocation = getLocationFromCity(ciudad);
+        Date date = new Date();
+        List<Uri> imageUris = new ArrayList<>();
+        for (int i = 0; i < photoContainer.getChildCount(); i++) {
+            RelativeLayout photoLayout = (RelativeLayout) photoContainer.getChildAt(i);
+            ImageView imageView = (ImageView) photoLayout.getChildAt(0);
+            imageUris.add((Uri) imageView.getTag());
+        }
 
+        if (cityLocation != null) {
+            currentLatitude = cityLocation.latitude;
+            currentLongitude = cityLocation.longitude;
 
-        Snackbar.make(requireView(), "Botónn: "+ puertas, Snackbar.LENGTH_LONG).show();
+        }
 
-
+        guardarEnFirestore(marca, modelo, Integer.parseInt(año), combustibe, puertas, color, kilometros, tipoDeCambio,potencia, precio, descripcion, ciudad, currentLatitude, currentLongitude, date);
         /*String precioTotalString = precioTotal.getText().toString();
         String precioString = precioText.getText().toString();
 
@@ -210,9 +240,10 @@ public class PublicarAnuncioFragment extends Fragment{
          */
     }
 
-    private void guardarEnFirestore(String precioTotalString, String precioString, String mediaUrl) {
+
+    private void guardarEnFirestore(String marca, String modelo, int año, String combustible, String puertas, String color, String kilometros, String tipoDeCambio, String potencia,String precio, String descripcion, String ciudad, double latitude, double longitude, Date date) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        Post post = new Post(user.getUid(), mediaUrl, mediaTipo, precioTotalString, precioString);
+        Post post = new Post(user.getUid(), imageUrls, marca, modelo, año, combustible, puertas, color, kilometros, tipoDeCambio, potencia, precio, descripcion, ciudad, latitude, longitude, date);
         FirebaseFirestore.getInstance().collection("posts")
                 .add(post)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -223,15 +254,37 @@ public class PublicarAnuncioFragment extends Fragment{
                         documentReference.update("postId", documentReference.getId());
                     }
                 });
+
+
     }
 
-    private void pujaIguardarEnFirestore(final String precioTotalString, final String precioString) {
+    private void pujaIguardarEnFirestore() {
         FirebaseStorage.getInstance().getReference(mediaTipo + "/" + UUID.randomUUID())
                 .putFile(mediaUri)
-                .continueWithTask(task -> task.getResult().getStorage().getDownloadUrl())
-                .addOnSuccessListener(url -> guardarEnFirestore(precioTotalString, precioString, url.toString()));
+                .continueWithTask(task -> task.getResult().getStorage().getDownloadUrl());
     }
 
+    private LatLng getLocationFromCity(String cityName) {
+        Geocoder geocoder = new Geocoder(requireContext(), Locale.getDefault());
+        List<Address> addresses;
+        LatLng location = null;
+
+        try {
+            addresses = geocoder.getFromLocationName(cityName, 1);
+
+            if (addresses != null && addresses.size() > 0) {
+                double latitude = addresses.get(0).getLatitude();
+                double longitude = addresses.get(0).getLongitude();
+                location = new LatLng(latitude, longitude);
+            } else {
+                Toast.makeText(requireContext(), "No se encontraron resultados para la ciudad especificada", Toast.LENGTH_SHORT).show();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return location;
+    }
     private final ActivityResultLauncher<String> galeria =
             registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
                 appViewModel.setMediaSeleccionado(uri, mediaTipo);
@@ -283,10 +336,15 @@ public class PublicarAnuncioFragment extends Fragment{
         closeIcon.setImageResource(R.drawable.baseline_cancel_white);
         closeIcon.setScaleType(ImageView.ScaleType.CENTER);
         closeIcon.setVisibility(View.VISIBLE);
+        Glide.with(this).load(uri).into(imageView);
+
         closeIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 eliminarFoto(relativeLayout);
+
+                // Eliminar la URL de la imagen de la lista
+                imageUrls.remove(uri.toString());
             }
         });
 
@@ -294,6 +352,9 @@ public class PublicarAnuncioFragment extends Fragment{
         relativeLayout.addView(closeIcon);
         photoContainer.addView(relativeLayout);
         photoViews.add(relativeLayout);
+
+        // Guardar la URL de la imagen en la lista
+        imageUrls.add(uri.toString());
 
         iconoGaleria.setVisibility(View.INVISIBLE);
         photoText.setVisibility(View.INVISIBLE);

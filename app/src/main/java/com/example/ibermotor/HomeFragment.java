@@ -170,7 +170,7 @@ public class HomeFragment extends Fragment {
 
         @Override
         protected void onBindViewHolder(@NonNull PostViewHolder holder, int position, @NonNull final Post post) {
-            if (post.mediaUrl != null) {
+            /*if (post.mediaUrl != null) {
                 holder.fotoCoche.setVisibility(View.VISIBLE);
                 RequestOptions options = new RequestOptions()
                         .override(Target.SIZE_ORIGINAL);
@@ -180,6 +180,8 @@ public class HomeFragment extends Fragment {
                         .apply(options)
                         .into(holder.fotoCoche);
 
+
+
                 holder.fotoCoche.setOnClickListener(view -> {
                     appViewModel.postSeleccionado.setValue(post);
                     navController.navigate(R.id.descripcionCoche);
@@ -188,18 +190,29 @@ public class HomeFragment extends Fragment {
             } else {
                 holder.fotoCoche.setVisibility(View.GONE);
             }
+            */
+            /*
+
             holder.precioTotal.setText(post.precioTotal);
             holder.precioText.setText(post.precioText);
+
+             */
+
+            holder.precioText.setText(post.precio+"€");
+            holder.kilometrosText.setText(post.kilometros);
+            //holder.añosText.setText(post.año);
+            holder.ciudadText.setText(post.ciudad);
+            holder.nombreText.setText(post.marca+" "+ post.modelo);
+            holder.combustibleText.setText(post.combustible);
         }
 
         class PostViewHolder extends RecyclerView.ViewHolder {
             ImageView fotoCoche;
-            TextView precioTotal, precioText, nombreText, ciudadText, kilometrosText, añosText, combustibleText, garantia;
+            TextView precioText, nombreText, ciudadText, kilometrosText, añosText, combustibleText, garantia;
 
             PostViewHolder(@NonNull View itemView) {
                 super(itemView);
                 fotoCoche = itemView.findViewById(R.id.fotoCoche);
-                precioTotal = itemView.findViewById(R.id.precioTotal);
                 precioText = itemView.findViewById(R.id.precioText);
                 nombreText = itemView.findViewById(R.id.nombreText);
                 ciudadText = itemView.findViewById(R.id.ciudadText);
