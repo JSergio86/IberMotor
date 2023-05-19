@@ -36,6 +36,7 @@ import com.bumptech.glide.Glide;
 import com.github.nikartm.button.FitButton;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -51,7 +52,7 @@ import java.util.UUID;
 public class PublicarAnuncioFragment extends Fragment{
     NavController navController;
     public AppViewModel appViewModel;
-    String mediaTipo, marca, modelo, combustibe, color, kilometros, tipoDeCambio, descripcion;
+    String mediaTipo, marca, modelo, año ,combustibe, puertas, color, kilometros, tipoDeCambio, descripcion;
     Uri mediaUri;
     LinearLayout photoContainer;
     List<RelativeLayout> photoViews;
@@ -61,6 +62,7 @@ public class PublicarAnuncioFragment extends Fragment{
     FitButton subirAnuncio;
     Button subirFotosBoton;
     AutoCompleteTextView marcaAutoCompleteTextView, combustibleAutoCompleteTextView, colorAutoCompleteTextView, cambioAutoCompleteTextView;
+    TextInputEditText modeloEditText, añoEditText, kmEditText, descripcionEditText;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,6 +80,11 @@ public class PublicarAnuncioFragment extends Fragment{
         photoText = view.findViewById(R.id.photoText);
         subirAnuncio = view.findViewById(R.id.subiranuncio);
         subirFotosBoton = view.findViewById(R.id.subirFotosBoton);
+        descripcionEditText = view.findViewById(R.id.descripcionEditText);
+        modeloEditText = view.findViewById(R.id.modeloEditText);
+        añoEditText = view.findViewById(R.id.añoEditText);
+        kmEditText = view.findViewById(R.id.kmEditText);
+
         photoViews = new ArrayList<RelativeLayout>();
 
         subirFotosBoton.setEnabled(photoViews.size() < maxPhotos);
@@ -112,7 +119,6 @@ public class PublicarAnuncioFragment extends Fragment{
             }
         });
 
-
         combustibleAutoCompleteTextView = view.findViewById(R.id.combustibleAutoCompleteTextView);
         combustibleAutoCompleteTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,7 +151,7 @@ public class PublicarAnuncioFragment extends Fragment{
             View childView = gridLayout.getChildAt(i);
 
             if (childView instanceof Button) {
-                Button button = (Button) childView;
+               Button button = (Button) childView;
 
                 button.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -166,7 +172,7 @@ public class PublicarAnuncioFragment extends Fragment{
                         button.setTextColor(getResources().getColor(R.color.lila));
                         button.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.white));
 
-                        String option = button.getText().toString();
+                        puertas = button.getText().toString();
 
 
                     }
@@ -178,11 +184,17 @@ public class PublicarAnuncioFragment extends Fragment{
 
     private void publicar() {
         marca = marcaAutoCompleteTextView.getText().toString();
+        modelo = modeloEditText.getText().toString();
+        año = añoEditText.getText().toString();
         combustibe = combustibleAutoCompleteTextView.getText().toString();
+        //puertas
         color = colorAutoCompleteTextView.getText().toString();
         tipoDeCambio = cambioAutoCompleteTextView.getText().toString();
+        kilometros = kmEditText.getText().toString();
+        descripcion = descripcionEditText.getText().toString();
 
-        Snackbar.make(requireView(), "Seleccion marca: "+ marca, Snackbar.LENGTH_LONG).show();
+
+        Snackbar.make(requireView(), "Botónn: "+ puertas, Snackbar.LENGTH_LONG).show();
 
 
         /*String precioTotalString = precioTotal.getText().toString();
@@ -219,6 +231,7 @@ public class PublicarAnuncioFragment extends Fragment{
                 .continueWithTask(task -> task.getResult().getStorage().getDownloadUrl())
                 .addOnSuccessListener(url -> guardarEnFirestore(precioTotalString, precioString, url.toString()));
     }
+
     private final ActivityResultLauncher<String> galeria =
             registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
                 appViewModel.setMediaSeleccionado(uri, mediaTipo);
@@ -228,6 +241,7 @@ public class PublicarAnuncioFragment extends Fragment{
         mediaTipo = "image";
         galeria.launch("image/*");
     }
+
     private void agregarNuevaFoto(Uri uri) {
         if (photoViews.size() >= maxPhotos) {
             return; // Si se alcanza el número máximo de fotos, no se agrega una nueva
@@ -287,7 +301,6 @@ public class PublicarAnuncioFragment extends Fragment{
             subirFotosBoton.setEnabled(false);
         }
     }
-
 
     private void eliminarFoto(RelativeLayout photoLayout) {
         photoContainer.removeView(photoLayout);

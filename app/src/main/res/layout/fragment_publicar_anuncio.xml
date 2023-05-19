@@ -169,32 +169,10 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/modeloEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     />
-
-
-                <!-- <EditText
-                     android:id="@+id/editTextModelo"
-                     android:layout_width="320dp"
-                     android:layout_height="50dp"
-                     android:background="@drawable/edittext_background"
-                     android:hint="Modelo"
-                     android:textColorHint="#808080"
-                     android:textColor="#000000"
-                     android:paddingLeft="8dp"
-                     android:enabled="false"/> -->
-
-                <!-- <Spinner
-                     android:id="@+id/spinnerModelo"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     android:layout_alignEnd="@id/editTextModelo"
-                     android:layout_alignBottom="@id/editTextModelo"
-                     android:layout_alignTop="@id/editTextModelo"
-                     android:layout_marginEnd="8dp"/> -->
-
-
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -221,6 +199,7 @@
                 app:counterMaxLength="4">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/añoEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"/>
@@ -393,6 +372,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/kmEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"/>
@@ -453,6 +433,7 @@
                 app:counterMaxLength="280">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/descripcionEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
