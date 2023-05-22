@@ -11,6 +11,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
@@ -30,8 +31,9 @@ public class MainActivity extends AppCompatActivity {
     NavController navController;
     BottomNavigationView bottomNavigationView;
     //Lista de fragments sin el bottom nav
-    List<Integer> fragmentsWithoutBottomNav = Arrays.asList(R.id.signInFragment, R.id.registerFragment, R.id.ayudaFragment, R.id.notificacionesFragment, R.id.privacidadFragment, R.id.editarPerfilFragment, R.id.antesDeComenzar);
+    List<Integer> fragmentsWithoutBottomNav = Arrays.asList(R.id.signInFragment, R.id.registerFragment, R.id.ayudaFragment, R.id.notificacionesFragment, R.id.privacidadFragment, R.id.editarPerfilFragment);
     FirebaseAuth mAuth;
+    private AppViewModel appViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        appViewModel = new ViewModelProvider(this).get(AppViewModel.class);
 
         //Instancia de la autentificacion del firebase
         mAuth = FirebaseAuth.getInstance();
@@ -68,6 +71,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.publicar:
                         navController.navigate(R.id.publicarAnuncioFragment);
+                        break;
+                    case R.id.mapa:
+                        navController.navigate(R.id.antesDeComenzar);
                         break;
                     case R.id.chat:
                         navController.navigate(R.id.conversacionesFragment);

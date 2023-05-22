@@ -4,27 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/antesDeComenzarRelative">
-    <FrameLayout
-        android:id="@+id/map_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/white_box" />
-    <View
-        android:id="@+id/white_box"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:background="@android:color/white" />
-
-    <TextView
-        android:id="@+id/location_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ubicación Actual"
-        android:textSize="20sp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="8dp"
-        android:textColor="@android:color/black"/>
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:map="http://schemas.android.com/apk/res-auto"
@@ -33,15 +12,6 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/white_box"
         tools:context=".AntesDeComenzar" />
-
-    <Button
-        android:id="@+id/continue_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Continuar"
-        android:layout_centerInParent="true"
-        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>

@@ -201,18 +201,13 @@
 
             <TextView
                 android:id="@+id/descripcion"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="15dp"
-                android:text="Vehículo nacional, segundo propietario coche muy mimado siempre en garaje, kilómetros reales hechos en autopista.
-                Llantas M 18, cristales traseros tintados para mayor privacidad, neumáticos como nuevos, control crucero, dos llaves, interior impecable, pantalla con navegador y bluetooth para conexión al móvil, modo eco, comfort y sport. El motor de serie suena precioso, gran capacidad de tuning para el motor.
-                \nEs un coche ideal si lo que buscas es deportividad y elegancia en un mismo vehículo.
-                \nPrecio negociable."
+                android:layout_marginTop="8dp"
+                android:gravity="start"
+                android:text="Vehículo"
                 android:textAppearance="@style/styleGris"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/descripcionCoche">
 
