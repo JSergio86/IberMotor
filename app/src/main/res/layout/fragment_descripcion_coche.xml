@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/constraintLayout">
 
     <ImageView
         android:id="@+id/volverAtras"
@@ -44,7 +45,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/favorito">
 
@@ -56,7 +56,7 @@
             <ImageView
                 android:id="@+id/fotoCoche"
                 android:layout_width="match_parent"
-                android:layout_height="170dp"
+                android:layout_height="230dp"
                 android:layout_marginTop="25dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/bmw"
@@ -64,57 +64,53 @@
 
             <TextView
                 android:id="@+id/nombreText"
-                android:layout_width="199dp"
-                android:layout_height="23dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="20dp"
                 android:text="BMW Serie 3 M3 E36"
-                android:textAppearance="@style/nameVistaPrincipal"
+                android:textSize="24dp"
+                android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fotoCoche" />
 
             <TextView
                 android:id="@+id/horasText"
                 android:layout_width="wrap_content"
-                android:layout_height="16dp"
-                android:layout_marginStart="15dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Hace 4 horas"
-                android:textAppearance="@style/styleGris"
-                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="14dp"
+                app:layout_constraintStart_toStartOf="@+id/nombreText"
                 app:layout_constraintTop_toBottomOf="@+id/nombreText" />
 
             <TextView
                 android:id="@+id/precioText"
-                android:layout_width="80dp"
-                android:layout_height="22dp"
-                android:layout_marginStart="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="13dp"
                 android:text="23.999€"
-                android:textAppearance="@style/some_id"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/horasText"
-                tools:ignore="MissingConstraints" />
+                android:textSize="20dp"
+                app:layout_constraintStart_toStartOf="@+id/horasText"
+                app:layout_constraintTop_toBottomOf="@+id/horasText" />
 
             <ImageView
                 android:id="@+id/ubicacion"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
-                android:layout_marginStart="15dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:layout_marginTop="25dp"
                 android:src="@drawable/iconoubicacion"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/precioText"
-                tools:ignore="MissingConstraints" />
+                app:layout_constraintStart_toStartOf="@+id/precioText"
+                app:layout_constraintTop_toBottomOf="@+id/precioText" />
 
             <TextView
                 android:id="@+id/nombreUbicacion"
                 android:layout_width="wrap_content"
-                android:layout_height="16dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="1dp"
                 android:layout_marginTop="24dp"
                 android:text="Barcelona"
-                android:textAppearance="@style/styleGris"
+                android:textSize="16dp"
                 app:layout_constraintStart_toEndOf="@+id/ubicacion"
                 app:layout_constraintTop_toBottomOf="@+id/precioText" />
 
@@ -122,21 +118,21 @@
                 android:id="@+id/detallesVehiculo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
                 android:layout_marginTop="30dp"
                 android:text="Detalle del Vehiculo"
                 android:textAppearance="@style/nameVistaPrincipal"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/ubicacion"
                 app:layout_constraintTop_toBottomOf="@+id/nombreUbicacion" />
 
             <RelativeLayout
                 android:id="@+id/atributosLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginEnd="115dp"
                 android:gravity="left|center"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/detallesVehiculo"
                 app:layout_constraintTop_toBottomOf="@+id/detallesVehiculo">
 
 
@@ -147,21 +143,20 @@
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
                     android:layout_marginRight="2dp"
-                    android:textSize="15dp"
                     android:text="Barcelona |"
-                    android:textAppearance="@style/styleGris" />
+                    android:textAppearance="@style/styleGris"
+                    android:textSize="15dp" />
 
 
                 <TextView
                     android:id="@+id/kilometrosText"
                     android:layout_width="wrap_content"
-                    android:layout_height="16dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginRight="2dp"
                     android:layout_toRightOf="@id/ciudadText"
                     android:text="217.000km |"
-                    android:textSize="15dp"
-
-                    android:textAppearance="@style/styleGris" />
+                    android:textAppearance="@style/styleGris"
+                    android:textSize="15dp" />
 
 
                 <TextView
@@ -171,9 +166,8 @@
                     android:layout_marginRight="2dp"
                     android:layout_toRightOf="@id/kilometrosText"
                     android:text="1997 |"
-                    android:textSize="15dp"
-
-                    android:textAppearance="@style/styleGris" />
+                    android:textAppearance="@style/styleGris"
+                    android:textSize="15dp" />
 
                 <TextView
                     android:id="@+id/combustibleText"
@@ -181,10 +175,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="2dp"
                     android:layout_toRightOf="@id/añosText"
-                    android:textSize="15dp"
-
                     android:text="Gasolina"
-                    android:textAppearance="@style/styleGris" />
+                    android:textAppearance="@style/styleGris"
+                    android:textSize="15dp" />
 
             </RelativeLayout>
 
@@ -192,23 +185,21 @@
                 android:id="@+id/descripcionCoche"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
                 android:layout_marginTop="20dp"
                 android:text="Descripción del coche"
                 android:textAppearance="@style/nameVistaPrincipal"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/detallesVehiculo"
                 app:layout_constraintTop_toBottomOf="@+id/atributosLayout" />
 
             <TextView
                 android:id="@+id/descripcion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="10dp"
                 android:gravity="start"
                 android:text="Vehículo"
-                android:textAppearance="@style/styleGris"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/descripcionCoche"
                 app:layout_constraintTop_toBottomOf="@+id/descripcionCoche">
 
             </TextView>

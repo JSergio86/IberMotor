@@ -15,15 +15,14 @@ import android.widget.ImageView;
 
 
 public class ChatJuanFragment extends Fragment {
-
-    NavController navController;   // <-----------------
+    NavController navController;
     ImageView volver, iconoUser;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        navController = Navigation.findNavController(view);  // <-----------------
+        navController = Navigation.findNavController(view);
 
         volver = view.findViewById(R.id.volverAtras);
         iconoUser = view.findViewById(R.id.iconoUser);

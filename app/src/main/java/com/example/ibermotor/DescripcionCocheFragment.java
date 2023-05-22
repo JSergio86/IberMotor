@@ -27,7 +27,7 @@ public class DescripcionCocheFragment extends Fragment {
     ImageView volver, fotoCoche;
     FitButton botonChatPaco;
     AppViewModel appViewModel;
-    TextView descripcion;
+    TextView descripcion, nombreText, horasText, precioText, nombreUbicacion, ciudadText, kilometrosText, añosText, combustibleText;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -40,8 +40,14 @@ public class DescripcionCocheFragment extends Fragment {
         botonChatPaco = view.findViewById(R.id.botonChatPaco);
         descripcion = view.findViewById(R.id.descripcion);
         fotoCoche = view.findViewById(R.id.fotoCoche);
-
-
+        nombreText = view.findViewById(R.id.nombreText);
+        horasText = view.findViewById(R.id.horasText);
+        precioText = view.findViewById(R.id.precioText);
+        nombreUbicacion = view.findViewById(R.id.nombreUbicacion);
+        ciudadText = view.findViewById(R.id.ciudadText);
+        kilometrosText = view.findViewById(R.id.kilometrosText);
+        añosText = view.findViewById(R.id.añosText);
+        combustibleText = view.findViewById(R.id.combustibleText);
 
 
         volver.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +69,6 @@ public class DescripcionCocheFragment extends Fragment {
         appViewModel.postSeleccionado.observe(getViewLifecycleOwner(), new Observer<Post>() {
             @Override
             public void onChanged(Post post) {
-                descripcion.setText(post.descripcion+"");
                 List<String> fotos = post.fotoCoche;
 
                 // Verificar si hay fotos disponibles
@@ -76,7 +81,18 @@ public class DescripcionCocheFragment extends Fragment {
                             .load(urlPrimeraFoto)
                             .into(fotoCoche);
                 }
+
+                descripcion.setText(post.descripcion+"");
+                nombreText.setText(post.marca+" "+post.modelo);
+                horasText.setText(post.date+"");
+                precioText.setText(post.precio+"€");
+                nombreUbicacion.setText(post.ciudad);
+                ciudadText.setText(post.ciudad);
+                kilometrosText.setText(post.kilometros);
+                añosText.setText(post.año+"");
+                combustibleText.setText(combustibleText+"");
             }
+
         });
 
     }

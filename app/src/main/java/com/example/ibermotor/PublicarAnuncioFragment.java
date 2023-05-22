@@ -61,18 +61,21 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class PublicarAnuncioFragment extends Fragment{
     NavController navController;
     public AppViewModel appViewModel;
-    String mediaTipo, marca, modelo ,combustibe, puertas,color,kilometros,potencia, tipoDeCambio,descripcion,precio, ciudad, codigoPostal;
-    int año ;
+    String mediaTipo, marca, modelo ,combustibe,año, puertas,color,kilometros,potencia, tipoDeCambio,descripcion,precio, ciudad, codigoPostal;
+    int añoInt;
+
     Uri mediaUri;
     LinearLayout photoContainer;
     List<RelativeLayout> photoViews;
     ImageView iconoGaleria;
     TextView photoText;
-    int maxPhotos = 8;
+    int maxPhotos = 6;
     FitButton subirAnuncio;
     Button subirFotosBoton, button2;
     AutoCompleteTextView marcaAutoCompleteTextView, combustibleAutoCompleteTextView, colorAutoCompleteTextView, cambioAutoCompleteTextView;
@@ -210,8 +213,6 @@ public class PublicarAnuncioFragment extends Fragment{
                         button.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.white));
 
                         puertas = (button.getText().toString());
-
-
                     }
                 });
             }
@@ -222,9 +223,7 @@ public class PublicarAnuncioFragment extends Fragment{
     private void publicar() {
         marca = marcaAutoCompleteTextView.getText().toString();
         modelo = modeloEditText.getText().toString();
-        if(año != 0){
-            año = Integer.parseInt(añoEditText.getText().toString());
-        }
+        año = añoEditText.getText().toString();
         combustibe = combustibleAutoCompleteTextView.getText().toString();
         //puertas
         color = colorAutoCompleteTextView.getText().toString();
@@ -237,7 +236,7 @@ public class PublicarAnuncioFragment extends Fragment{
         codigoPostal = codigoPostalEditText.getText().toString();
 
         // Validar si al menos un campo está en blanco
-        boolean camposVacios = marca.isEmpty() || modelo.isEmpty() || añoEditText.getText().toString().isEmpty() || añoEditText.getText().toString().length() != 4 ||
+        boolean camposVacios = marca.isEmpty() || modelo.isEmpty() || año.isEmpty() || año.length() != 4 ||
                 combustibe.isEmpty() || puertas == null || color.isEmpty() || tipoDeCambio.isEmpty() ||
                 kilometros.isEmpty() || potencia.isEmpty() || precio.isEmpty() ||
                 descripcion.isEmpty() || descripcion.length() > 280 || ciudad.isEmpty() || codigoPostal.isEmpty();
@@ -254,12 +253,12 @@ public class PublicarAnuncioFragment extends Fragment{
             }else{
                 modeloTextInputLayout.setError(null);
             }
-            if (añoEditText.getText().toString().isEmpty()) {
+            if (año.isEmpty()) {
                 añoTextInputLayout.setError("Campo obligatorio");
             }else{
                 añoTextInputLayout.setError(null);
             }
-            if (añoEditText.getText().toString().length() != 4) {
+            if (año.length() != 4) {
                 añoTextInputLayout.setError("El año debe tener 4 dígitos");
             }else{
                 añoTextInputLayout.setError(null);
@@ -316,6 +315,7 @@ public class PublicarAnuncioFragment extends Fragment{
             return; // Salir del método si al menos un campo está en blanco
         }
 
+        añoInt = Integer.parseInt(año);
         for (int i = 0; i < photoContainer.getChildCount(); i++) {
             RelativeLayout photoLayout = (RelativeLayout) photoContainer.getChildAt(i);
             ImageView imageView = (ImageView) photoLayout.getChildAt(0);
@@ -340,7 +340,10 @@ public class PublicarAnuncioFragment extends Fragment{
             currentLongitude = cityLocation.longitude;
         }
 
-        subirImagenesAlmacenamiento(imageUrls);
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        executor.execute(() -> {
+            subirImagenesAlmacenamiento(imageUrls);
+        });
     }
 
     private void subirImagenesAlmacenamiento(List<String> imageUrls) {
@@ -373,7 +376,7 @@ public class PublicarAnuncioFragment extends Fragment{
                 }
             }
             // Llama al método guardarEnFirestore() pasando la lista downloadUrls
-            guardarEnFirestore(marca, modelo, año, combustibe, puertas, color, kilometros, tipoDeCambio, potencia, precio, descripcion, ciudad, currentLatitude, currentLongitude, date, downloadUrls);
+            guardarEnFirestore(marca, modelo, añoInt, combustibe, puertas, color, kilometros, tipoDeCambio, potencia, precio, descripcion, ciudad, currentLatitude, currentLongitude, date, downloadUrls);
         });
     }
 

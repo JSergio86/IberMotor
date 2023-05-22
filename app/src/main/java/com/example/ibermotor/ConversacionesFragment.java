@@ -13,16 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class ConversacionesFragment extends Fragment {
-
     View fondoChatPaco, fondoChatJuan;
-    NavController navController;   // <-----------------
+    NavController navController;
 
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        navController = Navigation.findNavController(view);  // <-----------------
+        navController = Navigation.findNavController(view);
 
         fondoChatPaco = view.findViewById(R.id.fondoChatPaco);
         fondoChatJuan = view.findViewById(R.id.fondoChatJuan);

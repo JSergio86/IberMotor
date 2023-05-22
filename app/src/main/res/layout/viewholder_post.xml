@@ -3,12 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="339dp"
     android:layout_height="wrap_content"
-    app:cardUseCompatPadding="true">
+    app:cardUseCompatPadding="true"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+        android:layout_width="339dp"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
@@ -99,7 +100,6 @@
             app:layout_constraintStart_toStartOf="@+id/rectangle"
             app:layout_constraintTop_toBottomOf="@+id/nombreText">
 
-
             <TextView
                 android:id="@+id/ciudadText"
                 android:layout_width="wrap_content"
@@ -107,9 +107,9 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="2dp"
-                android:text="Barcelona -"
-                />
-
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="Barcelona -" />
 
             <TextView
                 android:id="@+id/kilometrosText"
@@ -117,8 +117,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="2dp"
                 android:layout_toRightOf="@id/ciudadText"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:text="217.000km -" />
-
 
             <TextView
                 android:id="@+id/añosText"
@@ -126,6 +127,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="2dp"
                 android:layout_toRightOf="@id/kilometrosText"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:text="1997 -" />
 
             <TextView
@@ -134,8 +137,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="2dp"
                 android:layout_toRightOf="@id/añosText"
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:text="Gasolina" />
-
 
         </RelativeLayout>
 

@@ -161,7 +161,6 @@ public class HomeFragment extends Fragment {
         }
     }
 
-
     class PostsAdapter extends FirestoreRecyclerAdapter<Post, PostsAdapter.PostViewHolder> {
         public PostsAdapter(@NonNull FirestoreRecyclerOptions<Post> options) {super(options);}
 
@@ -174,7 +173,7 @@ public class HomeFragment extends Fragment {
         @Override
         protected void onBindViewHolder(@NonNull PostViewHolder holder, int position, @NonNull final Post post) {
             holder.precioText.setText(post.precio+"€");
-            holder.kilometrosText.setText(post.kilometros+" - ");
+            holder.kilometrosText.setText(post.kilometros+"km - ");
             holder.añosText.setText(post.año+" - ");
             holder.ciudadText.setText(post.ciudad+" - ");
             holder.nombreText.setText(post.marca+" "+ post.modelo);
@@ -222,7 +221,6 @@ public class HomeFragment extends Fragment {
                 garantia = itemView.findViewById(R.id.garantia);
 
             }
-
         }
     }
 
