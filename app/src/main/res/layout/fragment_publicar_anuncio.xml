@@ -509,14 +509,14 @@
             android:textColor="@color/black"
             android:textSize="18dp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/ubicacionLinear"
+            app:layout_constraintBottom_toTopOf="@+id/ciudadLinear"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/descripcionLinear">
 
         </TextView>
 
         <LinearLayout
-            android:id="@+id/ubicacionLinear"
+            android:id="@+id/ciudadLinear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -525,7 +525,7 @@
             app:layout_constraintTop_toBottomOf="@id/datosUsuarioTextView">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ubicacionTextInputLayout"
+                android:id="@+id/ciudadTextInputLayout"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -533,7 +533,7 @@
                 android:hint="Ciudad">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ubicacionEditText"
+                    android:id="@+id/ciudadEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
@@ -542,10 +542,38 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/codigoPostalLinear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ciudadLinear">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/codigoPostalTextInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:hint="Código Postal">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/codigoPostalEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+
 
         <com.github.nikartm.button.FitButton
             android:id="@+id/subiranuncio"
-            android:layout_width="130dp"
+            android:layout_width="230dp"
             android:layout_height="40dp"
             android:layout_margin="32dp"
             android:enabled="true"
@@ -562,7 +590,7 @@
             app:fb_backgroundColor="#002196"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ubicacionLinear"/>
+            app:layout_constraintTop_toBottomOf="@+id/codigoPostalLinear"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

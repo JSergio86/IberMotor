@@ -64,7 +64,7 @@ import java.util.UUID;
 public class PublicarAnuncioFragment extends Fragment{
     NavController navController;
     public AppViewModel appViewModel;
-    String mediaTipo, marca, modelo ,combustibe, puertas,color,kilometros,potencia, tipoDeCambio,descripcion,precio, ciudad;
+    String mediaTipo, marca, modelo ,combustibe, puertas,color,kilometros,potencia, tipoDeCambio,descripcion,precio, ciudad, codigoPostal;
     int año ;
     Uri mediaUri;
     LinearLayout photoContainer;
@@ -75,7 +75,7 @@ public class PublicarAnuncioFragment extends Fragment{
     FitButton subirAnuncio;
     Button subirFotosBoton;
     AutoCompleteTextView marcaAutoCompleteTextView, combustibleAutoCompleteTextView, colorAutoCompleteTextView, cambioAutoCompleteTextView;
-    TextInputEditText modeloEditText, añoEditText, kmEditText, potenciaEditText,precioEditText,descripcionEditText, ubicacionEditText;
+    TextInputEditText modeloEditText, añoEditText, kmEditText, potenciaEditText,precioEditText,descripcionEditText, ciudadEditText, codigoPostalEditText;
     TextInputLayout potenciaTextInputLayout, colorTextInputLayout;
     private List<String> imageUrls = new ArrayList<>();
     Date date = new Date();
@@ -104,9 +104,9 @@ public class PublicarAnuncioFragment extends Fragment{
         potenciaEditText = view.findViewById(R.id.potenciaEditText);
         precioEditText = view.findViewById(R.id.precioEditText);
         potenciaTextInputLayout = view.findViewById(R.id.potenciaTextInputLayout);
-        ubicacionEditText = view.findViewById(R.id.ubicacionEditText);
+        ciudadEditText = view.findViewById(R.id.ciudadEditText);
         colorTextInputLayout = view.findViewById(R.id.colortextInputLayout);
-
+        codigoPostalEditText = view.findViewById(R.id.codigoPostalEditText);
 
 
         photoViews = new ArrayList<RelativeLayout>();
@@ -220,14 +220,14 @@ public class PublicarAnuncioFragment extends Fragment{
         potencia = potenciaEditText.getText().toString();
         precio = precioEditText.getText().toString();
         descripcion = descripcionEditText.getText().toString();
-        ciudad = ubicacionEditText.getText().toString();
-        LatLng cityLocation = getLocationFromCity(ciudad);
+        ciudad = ciudadEditText.getText().toString();
+        codigoPostal = codigoPostalEditText.getText().toString();
 
         // Validar si al menos un campo está en blanco
         boolean camposVacios = marca.isEmpty() || modelo.isEmpty() || añoEditText.getText().toString().isEmpty() ||
-                combustibe.isEmpty() || color.isEmpty() || color.isEmpty() || tipoDeCambio.isEmpty() ||
+                combustibe.isEmpty() || puertas.isEmpty() || color.isEmpty() || tipoDeCambio.isEmpty() ||
                 kilometros.isEmpty() || potencia.isEmpty() || precio.isEmpty() ||
-                descripcion.isEmpty() || ciudad.isEmpty();
+                descripcion.isEmpty() || ciudad.isEmpty() || codigoPostal.isEmpty();
 
         if (camposVacios) {
             // Mostrar un mensaje de error o realizar alguna acción apropiada
@@ -247,6 +247,9 @@ public class PublicarAnuncioFragment extends Fragment{
                 colorAutoCompleteTextView.setError("Campo obligatorio");
                 //setTextInputLayoutErrorColor(colorTextInputLayout, Color.RED);
             }
+            if (puertas.isEmpty()) {
+                Snackbar.make(requireView(), "Elige cuantas puertas tiene tu coche", Snackbar.LENGTH_LONG).show();
+            }
             if (tipoDeCambio.isEmpty()) {
                 cambioAutoCompleteTextView.setError("Campo obligatorio");
             }
@@ -263,12 +266,25 @@ public class PublicarAnuncioFragment extends Fragment{
                 descripcionEditText.setError("Campo obligatorio");
             }
             if (ciudad.isEmpty()) {
-                ubicacionEditText.setError("Campo obligatorio");
+                ciudadEditText.setError("Campo obligatorio");
+            }
+            if (codigoPostal.isEmpty()) {
+                codigoPostalEditText.setError("Campo obligatorio");
             }
 
             return; // Salir del método si al menos un campo está en blanco
         }
+        // Validar longitud del año
+        if (añoEditText.getText().toString().length() != 4) {
+            añoEditText.setError("El año debe tener 4 dígitos");
+            return;
+        }
 
+        // Validar longitud de la descripción
+        if (descripcion.length() > 280) {
+            descripcionEditText.setError("La descripción no puede superar los 280 caracteres");
+            return;
+        }
 
         for (int i = 0; i < photoContainer.getChildCount(); i++) {
             RelativeLayout photoLayout = (RelativeLayout) photoContainer.getChildAt(i);
@@ -284,6 +300,11 @@ public class PublicarAnuncioFragment extends Fragment{
             return;
         }
 
+        LatLng cityLocation = getLocationFromCity(ciudad);
+
+        if (cityLocation == null) {
+            cityLocation = getLocationFromPostalCode(codigoPostal);
+        }
         if (cityLocation != null) {
             currentLatitude = cityLocation.latitude;
             currentLongitude = cityLocation.longitude;
@@ -291,6 +312,7 @@ public class PublicarAnuncioFragment extends Fragment{
 
         subirImagenesAlmacenamiento(imageUrls);
     }
+
     private void subirImagenesAlmacenamiento(List<String> imageUrls) {
         List<Task<Uri>> uploadTasks = new ArrayList<>();
 
@@ -353,7 +375,7 @@ public class PublicarAnuncioFragment extends Fragment{
                 double longitude = addresses.get(0).getLongitude();
                 location = new LatLng(latitude, longitude);
             } else {
-                Toast.makeText(requireContext(), "No se encontraron resultados para la ciudad especificada", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(requireContext(), "No se encontraron resultados para la ciudad especificada", Toast.LENGTH_SHORT).show();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -365,6 +387,28 @@ public class PublicarAnuncioFragment extends Fragment{
             registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
                 appViewModel.setMediaSeleccionado(uri, mediaTipo);
             });
+
+    private LatLng getLocationFromPostalCode(String postalCode) {
+        Geocoder geocoder = new Geocoder(requireContext(), Locale.getDefault());
+        List<Address> addresses;
+        LatLng location = null;
+
+        try {
+            addresses = geocoder.getFromLocationName(postalCode, 1);
+
+            if (addresses != null && addresses.size() > 0) {
+                double latitude = addresses.get(0).getLatitude();
+                double longitude = addresses.get(0).getLongitude();
+                location = new LatLng(latitude, longitude);
+            } else {
+                //Toast.makeText(requireContext(), "No se encontraron resultados para el código postal especificado", Toast.LENGTH_SHORT).show();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return location;
+    }
 
     private void seleccionarImagen() {
         mediaTipo = "image";

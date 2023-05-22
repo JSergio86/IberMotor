@@ -14,21 +14,6 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/black</item>
-        <item name="colorPrimaryVariant">@color/GrisitemDeseleccionado</item>
-        <item name="colorOnPrimary">@color/GrisitemDeseleccionado</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/GrisitemDeseleccionado</item>
-        <item name="colorSecondaryVariant">@color/GrisitemDeseleccionado</item>
-        <item name="colorOnSecondary">@color/GrisitemDeseleccionado</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
-        <!-- Customize your theme here. -->
-    </style>
-
-
     <style name="Theme.SocialAPP.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -76,6 +61,18 @@
         <item name="android:minWidth">0dp</item>
         <item name="android:background">@color/black</item>
         <!-- Otros atributos de estilo que desees agregar -->
+    </style>
+
+    <style name="TextInputLayoutStyleError" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">#CC0000</item>
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="android:textColor">#CC0000</item>
+    </style>
+
+    <style name="TextInputLayoutMenuStyleError" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="boxStrokeColor">#CC0000</item>
+        <item name="boxStrokeWidth">2dp</item>
+        <item name="android:textColor">#CC0000</item>
     </style>
 
     <style name="email">
