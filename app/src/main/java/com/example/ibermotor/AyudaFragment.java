@@ -14,14 +14,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 public class AyudaFragment extends Fragment {
-    NavController navController;   // <-----------------
+    NavController navController;
     ImageView volver;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        navController = Navigation.findNavController(view);  // <-----------------
+        navController = Navigation.findNavController(view);
 
         volver = view.findViewById(R.id.volverAtras);
 

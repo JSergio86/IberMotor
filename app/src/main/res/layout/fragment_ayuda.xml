@@ -130,68 +130,6 @@
             app:layout_constraintTop_toTopOf="@+id/fondo2"
             tools:ignore="MissingConstraints" />
 
-        <LinearLayout
-            android:id="@+id/modeloLinear"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/email">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/modeloTextInputLayout"
-                style="@style/TextInputLayoutStyleError"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:hint="Marca">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/modeloEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
-
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/marcaLinear"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/modeloLinear">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/marcaTextInputLayout"
-                style="@style/TextInputLayoutMenuStyleError"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:hint="Marca">
-
-                <AutoCompleteTextView
-                    android:id="@+id/marcaAutoCompleteTextView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none" />
-
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-        </LinearLayout>
-
-
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

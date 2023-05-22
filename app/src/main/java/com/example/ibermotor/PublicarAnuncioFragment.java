@@ -3,6 +3,7 @@ package com.example.ibermotor;
 import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 import android.annotation.SuppressLint;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.location.Address;
@@ -73,10 +74,10 @@ public class PublicarAnuncioFragment extends Fragment{
     TextView photoText;
     int maxPhotos = 8;
     FitButton subirAnuncio;
-    Button subirFotosBoton;
+    Button subirFotosBoton, button2;
     AutoCompleteTextView marcaAutoCompleteTextView, combustibleAutoCompleteTextView, colorAutoCompleteTextView, cambioAutoCompleteTextView;
     TextInputEditText modeloEditText, añoEditText, kmEditText, potenciaEditText,precioEditText,descripcionEditText, ciudadEditText, codigoPostalEditText;
-    TextInputLayout potenciaTextInputLayout, colorTextInputLayout;
+    TextInputLayout potenciaTextInputLayout, colorTextInputLayout, marcaTextInputLayout, modeloTextInputLayout, añoTextInputLayout, combustibleTextInputLayout, colortextInputLayout, kmTextInputLayout, cambioTextInputLayout, precioTextInputLayout, descripcionTextInputLayout, ciudadTextInputLayout, codigoPostalTextInputLayout;
     private List<String> imageUrls = new ArrayList<>();
     Date date = new Date();
     double currentLatitude = 0, currentLongitude=0;
@@ -103,11 +104,23 @@ public class PublicarAnuncioFragment extends Fragment{
         kmEditText = view.findViewById(R.id.kmEditText);
         potenciaEditText = view.findViewById(R.id.potenciaEditText);
         precioEditText = view.findViewById(R.id.precioEditText);
-        potenciaTextInputLayout = view.findViewById(R.id.potenciaTextInputLayout);
         ciudadEditText = view.findViewById(R.id.ciudadEditText);
-        colorTextInputLayout = view.findViewById(R.id.colortextInputLayout);
         codigoPostalEditText = view.findViewById(R.id.codigoPostalEditText);
 
+        potenciaTextInputLayout = view.findViewById(R.id.potenciaTextInputLayout);
+        colorTextInputLayout = view.findViewById(R.id.colortextInputLayout);
+        marcaTextInputLayout = view.findViewById(R.id.marcaTextInputLayout);
+        modeloTextInputLayout = view.findViewById(R.id.modeloTextInputLayout);
+        añoTextInputLayout = view.findViewById(R.id.añoTextInputLayout);
+        combustibleTextInputLayout = view.findViewById(R.id.combustibleTextInputLayout);
+        kmTextInputLayout = view.findViewById(R.id.kmTextInputLayout);
+        cambioTextInputLayout = view.findViewById(R.id.cambioTextInputLayout);
+        descripcionTextInputLayout = view.findViewById(R.id.descripcionTextInputLayout);
+        ciudadTextInputLayout = view.findViewById(R.id.ciudadTextInputLayout);
+        codigoPostalTextInputLayout = view.findViewById(R.id.codigoPostalTextInputLayout);
+        precioTextInputLayout = view.findViewById(R.id.precioTextInputLayout);
+
+        button2 = view.findViewById(R.id.button1);
 
         photoViews = new ArrayList<RelativeLayout>();
 
@@ -224,66 +237,83 @@ public class PublicarAnuncioFragment extends Fragment{
         codigoPostal = codigoPostalEditText.getText().toString();
 
         // Validar si al menos un campo está en blanco
-        boolean camposVacios = marca.isEmpty() || modelo.isEmpty() || añoEditText.getText().toString().isEmpty() ||
-                combustibe.isEmpty() || puertas.isEmpty() || color.isEmpty() || tipoDeCambio.isEmpty() ||
+        boolean camposVacios = marca.isEmpty() || modelo.isEmpty() || añoEditText.getText().toString().isEmpty() || añoEditText.getText().toString().length() != 4 ||
+                combustibe.isEmpty() || puertas == null || color.isEmpty() || tipoDeCambio.isEmpty() ||
                 kilometros.isEmpty() || potencia.isEmpty() || precio.isEmpty() ||
-                descripcion.isEmpty() || ciudad.isEmpty() || codigoPostal.isEmpty();
+                descripcion.isEmpty() || descripcion.length() > 280 || ciudad.isEmpty() || codigoPostal.isEmpty();
 
         if (camposVacios) {
             // Mostrar un mensaje de error o realizar alguna acción apropiada
             if (marca.isEmpty()) {
-                marcaAutoCompleteTextView.setError("Campo obligatorio");
+                marcaTextInputLayout.setError("Campo obligatorio");
+            }else{
+                marcaTextInputLayout.setError(null);
             }
             if (modelo.isEmpty()) {
-                modeloEditText.setError("Campo obligatorio");
+                modeloTextInputLayout.setError("Campo obligatorio");
+            }else{
+                modeloTextInputLayout.setError(null);
             }
             if (añoEditText.getText().toString().isEmpty()) {
-                añoEditText.setError("Campo obligatorio");
+                añoTextInputLayout.setError("Campo obligatorio");
+            }else{
+                añoTextInputLayout.setError(null);
+            }
+            if (añoEditText.getText().toString().length() != 4) {
+                añoTextInputLayout.setError("El año debe tener 4 dígitos");
+            }else{
+                añoTextInputLayout.setError(null);
             }
             if (combustibe.isEmpty()) {
-                combustibleAutoCompleteTextView.setError("Campo obligatorio");
+                combustibleTextInputLayout.setError("Campo obligatorio");
+            }else{
+                combustibleTextInputLayout.setError(null);
             }
             if (color.isEmpty()) {
-                colorAutoCompleteTextView.setError("Campo obligatorio");
-                //setTextInputLayoutErrorColor(colorTextInputLayout, Color.RED);
+                colorTextInputLayout.setError("Campo obligatorio");
+            }else{
+                colorTextInputLayout.setError(null);
             }
-            if (puertas.isEmpty()) {
+            if (puertas == null) {
                 Snackbar.make(requireView(), "Elige cuantas puertas tiene tu coche", Snackbar.LENGTH_LONG).show();
             }
             if (tipoDeCambio.isEmpty()) {
-                cambioAutoCompleteTextView.setError("Campo obligatorio");
+                cambioTextInputLayout.setError("Campo obligatorio");
+            }else{
+                cambioTextInputLayout.setError(null);
             }
             if (kilometros.isEmpty()) {
-                kmEditText.setError("Campo obligatorio");
+                kmTextInputLayout.setError("Campo obligatorio");
+            }else{
+                kmTextInputLayout.setError(null);
             }
             if (potencia.isEmpty()) {
-                potenciaEditText.setError("Campo obligatorio");
+                potenciaTextInputLayout.setError("Campo obligatorio");
+            }else{
+                potenciaTextInputLayout.setError(null);
             }
             if (precio.isEmpty()) {
-                precioEditText.setError("Campo obligatorio");
+                precioTextInputLayout.setError("Campo obligatorio");
+            }else{
+                precioTextInputLayout.setError(null);
             }
-            if (descripcion.isEmpty()) {
-                descripcionEditText.setError("Campo obligatorio");
+            if (descripcion.isEmpty() || descripcion.length() > 280) {
+                descripcionTextInputLayout.setError("Campo obligatorio con un máximo de 280 caracteres");
+            }else{
+                descripcionTextInputLayout.setError(null);
             }
             if (ciudad.isEmpty()) {
-                ciudadEditText.setError("Campo obligatorio");
+                ciudadTextInputLayout.setError("Campo obligatorio");
+            }else{
+                ciudadTextInputLayout.setError(null);
             }
             if (codigoPostal.isEmpty()) {
-                codigoPostalEditText.setError("Campo obligatorio");
+                codigoPostalTextInputLayout.setError("Campo obligatorio");
+            }else{
+                codigoPostalTextInputLayout.setError(null);
             }
 
             return; // Salir del método si al menos un campo está en blanco
-        }
-        // Validar longitud del año
-        if (añoEditText.getText().toString().length() != 4) {
-            añoEditText.setError("El año debe tener 4 dígitos");
-            return;
-        }
-
-        // Validar longitud de la descripción
-        if (descripcion.length() > 280) {
-            descripcionEditText.setError("La descripción no puede superar los 280 caracteres");
-            return;
         }
 
         for (int i = 0; i < photoContainer.getChildCount(); i++) {
