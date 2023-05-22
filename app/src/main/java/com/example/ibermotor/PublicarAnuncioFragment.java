@@ -3,6 +3,8 @@ package com.example.ibermotor;
 import static com.firebase.ui.auth.AuthUI.getApplicationContext;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
@@ -38,6 +40,8 @@ import com.bumptech.glide.Glide;
 import com.github.nikartm.button.FitButton;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -46,9 +50,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.jaredrummler.materialspinner.MaterialSpinner;
 
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -58,7 +64,8 @@ import java.util.UUID;
 public class PublicarAnuncioFragment extends Fragment{
     NavController navController;
     public AppViewModel appViewModel;
-    String mediaTipo, marca, modelo, año ,combustibe, puertas, color, kilometros, tipoDeCambio, potencia, precio,descripcion, ciudad;
+    String mediaTipo, marca, modelo ,combustibe, puertas,color,kilometros,potencia, tipoDeCambio,descripcion,precio, ciudad;
+    int año ;
     Uri mediaUri;
     LinearLayout photoContainer;
     List<RelativeLayout> photoViews;
@@ -69,9 +76,10 @@ public class PublicarAnuncioFragment extends Fragment{
     Button subirFotosBoton;
     AutoCompleteTextView marcaAutoCompleteTextView, combustibleAutoCompleteTextView, colorAutoCompleteTextView, cambioAutoCompleteTextView;
     TextInputEditText modeloEditText, añoEditText, kmEditText, potenciaEditText,precioEditText,descripcionEditText, ubicacionEditText;
-    TextInputLayout potenciaTextInputLayout;
+    TextInputLayout potenciaTextInputLayout, colorTextInputLayout;
     private List<String> imageUrls = new ArrayList<>();
-
+    Date date = new Date();
+    double currentLatitude = 0, currentLongitude=0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -97,6 +105,8 @@ public class PublicarAnuncioFragment extends Fragment{
         precioEditText = view.findViewById(R.id.precioEditText);
         potenciaTextInputLayout = view.findViewById(R.id.potenciaTextInputLayout);
         ubicacionEditText = view.findViewById(R.id.ubicacionEditText);
+        colorTextInputLayout = view.findViewById(R.id.colortextInputLayout);
+
 
 
         photoViews = new ArrayList<RelativeLayout>();
@@ -186,7 +196,7 @@ public class PublicarAnuncioFragment extends Fragment{
                         button.setTextColor(getResources().getColor(R.color.lila));
                         button.setBackgroundTintList(ContextCompat.getColorStateList(getContext(), R.color.white));
 
-                        puertas = button.getText().toString();
+                        puertas = (button.getText().toString());
 
 
                     }
@@ -197,11 +207,11 @@ public class PublicarAnuncioFragment extends Fragment{
     }
 
     private void publicar() {
-        double currentLatitude = 0, currentLongitude=0;
-        String ciudad;
         marca = marcaAutoCompleteTextView.getText().toString();
         modelo = modeloEditText.getText().toString();
-        año = añoEditText.getText().toString();
+        if(año != 0){
+            año = Integer.parseInt(añoEditText.getText().toString());
+        }
         combustibe = combustibleAutoCompleteTextView.getText().toString();
         //puertas
         color = colorAutoCompleteTextView.getText().toString();
@@ -212,38 +222,112 @@ public class PublicarAnuncioFragment extends Fragment{
         descripcion = descripcionEditText.getText().toString();
         ciudad = ubicacionEditText.getText().toString();
         LatLng cityLocation = getLocationFromCity(ciudad);
-        Date date = new Date();
-        List<Uri> imageUris = new ArrayList<>();
+
+        // Validar si al menos un campo está en blanco
+        boolean camposVacios = marca.isEmpty() || modelo.isEmpty() || añoEditText.getText().toString().isEmpty() ||
+                combustibe.isEmpty() || color.isEmpty() || color.isEmpty() || tipoDeCambio.isEmpty() ||
+                kilometros.isEmpty() || potencia.isEmpty() || precio.isEmpty() ||
+                descripcion.isEmpty() || ciudad.isEmpty();
+
+        if (camposVacios) {
+            // Mostrar un mensaje de error o realizar alguna acción apropiada
+            if (marca.isEmpty()) {
+                marcaAutoCompleteTextView.setError("Campo obligatorio");
+            }
+            if (modelo.isEmpty()) {
+                modeloEditText.setError("Campo obligatorio");
+            }
+            if (añoEditText.getText().toString().isEmpty()) {
+                añoEditText.setError("Campo obligatorio");
+            }
+            if (combustibe.isEmpty()) {
+                combustibleAutoCompleteTextView.setError("Campo obligatorio");
+            }
+            if (color.isEmpty()) {
+                colorAutoCompleteTextView.setError("Campo obligatorio");
+                //setTextInputLayoutErrorColor(colorTextInputLayout, Color.RED);
+            }
+            if (tipoDeCambio.isEmpty()) {
+                cambioAutoCompleteTextView.setError("Campo obligatorio");
+            }
+            if (kilometros.isEmpty()) {
+                kmEditText.setError("Campo obligatorio");
+            }
+            if (potencia.isEmpty()) {
+                potenciaEditText.setError("Campo obligatorio");
+            }
+            if (precio.isEmpty()) {
+                precioEditText.setError("Campo obligatorio");
+            }
+            if (descripcion.isEmpty()) {
+                descripcionEditText.setError("Campo obligatorio");
+            }
+            if (ciudad.isEmpty()) {
+                ubicacionEditText.setError("Campo obligatorio");
+            }
+
+            return; // Salir del método si al menos un campo está en blanco
+        }
+
+
         for (int i = 0; i < photoContainer.getChildCount(); i++) {
             RelativeLayout photoLayout = (RelativeLayout) photoContainer.getChildAt(i);
             ImageView imageView = (ImageView) photoLayout.getChildAt(0);
-            imageUris.add((Uri) imageView.getTag());
+            Uri uri = (Uri) imageView.getTag();
+            if (uri != null) {
+                imageUrls.add(uri.toString());
+            }
+        }
+
+        if(imageUrls.size() == 0){
+            Snackbar.make(requireView(), "Ingresa una foto de tu coche", Snackbar.LENGTH_LONG).show();
+            return;
         }
 
         if (cityLocation != null) {
             currentLatitude = cityLocation.latitude;
             currentLongitude = cityLocation.longitude;
-
         }
 
-        guardarEnFirestore(marca, modelo, Integer.parseInt(año), combustibe, puertas, color, kilometros, tipoDeCambio,potencia, precio, descripcion, ciudad, currentLatitude, currentLongitude, date);
-        /*String precioTotalString = precioTotal.getText().toString();
-        String precioString = precioText.getText().toString();
+        subirImagenesAlmacenamiento(imageUrls);
+    }
+    private void subirImagenesAlmacenamiento(List<String> imageUrls) {
+        List<Task<Uri>> uploadTasks = new ArrayList<>();
 
-        publishButton.setEnabled(false);
-        if (mediaTipo == null) {
-            guardarEnFirestore(precioTotalString, precioString, null);
-        } else {
-            pujaIguardarEnFirestore(precioTotalString, precioString);
+        for (String imageUrl : imageUrls) {
+            String imageFileName = UUID.randomUUID().toString();
+
+            StorageReference storageRef = FirebaseStorage.getInstance().getReference().child("image").child(imageFileName);
+            Uri imageUri = Uri.parse(imageUrl);
+
+            uploadTasks.add(storageRef.putFile(imageUri).continueWithTask(task -> {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+                return storageRef.getDownloadUrl();
+            }));
         }
 
-         */
+        // Esperar a que se completen todas las tareas de carga
+        Tasks.whenAllComplete(uploadTasks).addOnCompleteListener(task -> {
+            List<String> downloadUrls = new ArrayList<>();
+
+            for (Task<Uri> uploadTask : uploadTasks) {
+                if (uploadTask.isSuccessful()) {
+                    Uri downloadUri = uploadTask.getResult();
+                    if (downloadUri != null) {
+                        downloadUrls.add(downloadUri.toString());
+                    }
+                }
+            }
+            // Llama al método guardarEnFirestore() pasando la lista downloadUrls
+            guardarEnFirestore(marca, modelo, año, combustibe, puertas, color, kilometros, tipoDeCambio, potencia, precio, descripcion, ciudad, currentLatitude, currentLongitude, date, downloadUrls);
+        });
     }
 
-
-    private void guardarEnFirestore(String marca, String modelo, int año, String combustible, String puertas, String color, String kilometros, String tipoDeCambio, String potencia,String precio, String descripcion, String ciudad, double latitude, double longitude, Date date) {
+    private void guardarEnFirestore(String marca, String modelo, int año, String combustible, String puertas, String color, String kilometros, String tipoDeCambio, String potencia, String precio, String descripcion, String ciudad, double latitude, double longitude, Date date, List<String> downloadUrls) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        Post post = new Post(user.getUid(), imageUrls, marca, modelo, año, combustible, puertas, color, kilometros, tipoDeCambio, potencia, precio, descripcion, ciudad, latitude, longitude, date);
+        Post post = new Post(user.getUid(), downloadUrls, marca, modelo, año, combustible, puertas, color, kilometros, tipoDeCambio, potencia, precio, descripcion, ciudad, latitude, longitude, date);
         FirebaseFirestore.getInstance().collection("posts")
                 .add(post)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -254,14 +338,6 @@ public class PublicarAnuncioFragment extends Fragment{
                         documentReference.update("postId", documentReference.getId());
                     }
                 });
-
-
-    }
-
-    private void pujaIguardarEnFirestore() {
-        FirebaseStorage.getInstance().getReference(mediaTipo + "/" + UUID.randomUUID())
-                .putFile(mediaUri)
-                .continueWithTask(task -> task.getResult().getStorage().getDownloadUrl());
     }
 
     private LatLng getLocationFromCity(String cityName) {
@@ -343,8 +419,13 @@ public class PublicarAnuncioFragment extends Fragment{
             public void onClick(View view) {
                 eliminarFoto(relativeLayout);
 
-                // Eliminar la URL de la imagen de la lista
-                imageUrls.remove(uri.toString());
+                // Obtener el índice del photoLayout
+                int index = photoContainer.indexOfChild(relativeLayout);
+
+                if (index >= 0 && index < imageUrls.size()) {
+                    // Eliminar la URL de la imagen de la lista usando el índice
+                    imageUrls.remove(index);
+                }
             }
         });
 
@@ -360,12 +441,24 @@ public class PublicarAnuncioFragment extends Fragment{
         photoText.setVisibility(View.INVISIBLE);
         if (photoViews.size() >= maxPhotos) {
             subirFotosBoton.setEnabled(false);
+            subirImagenesAlmacenamiento(imageUrls); // Llamar al método para subir las imágenes a Firebase
         }
     }
 
+
     private void eliminarFoto(RelativeLayout photoLayout) {
-        photoContainer.removeView(photoLayout);
-        photoViews.remove(photoLayout);
+        int index = photoContainer.indexOfChild(photoLayout);
+
+        if (index >= 0 && index < imageUrls.size()) {
+            photoContainer.removeView(photoLayout);
+            photoViews.remove(index);
+            imageUrls.remove(index);
+
+            // Eliminar la URL de la imagen de la lista usando el índice
+            if (index < imageUrls.size()) {
+                imageUrls.remove(index);
+            }
+        }
 
         if (photoViews.size() == 0) {
             iconoGaleria.setVisibility(View.VISIBLE);

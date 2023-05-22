@@ -34,9 +34,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class HomeFragment extends Fragment {
-    NavController navController;   // <-----------------
+    NavController navController;
     public AppViewModel appViewModel;
     FirebaseUser user;
     ImageView iconoFiltro, fotoPerfil, menuDrawer;
@@ -52,7 +55,6 @@ public class HomeFragment extends Fragment {
         iconoFiltro = view.findViewById(R.id.iconoFiltro);
         fotoPerfil = view.findViewById(R.id.perfil);
         menuDrawer = view.findViewById(R.id.menuDrawer);
-
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -89,7 +91,7 @@ public class HomeFragment extends Fragment {
         view.findViewById(R.id.iconoVista).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                navController.navigate(R.id.crearPost);
+                navController.navigate(R.id.homeFragmentV2);
             }
         });
 
@@ -170,40 +172,38 @@ public class HomeFragment extends Fragment {
 
         @Override
         protected void onBindViewHolder(@NonNull PostViewHolder holder, int position, @NonNull final Post post) {
-            /*if (post.mediaUrl != null) {
-                holder.fotoCoche.setVisibility(View.VISIBLE);
-                RequestOptions options = new RequestOptions()
-                        .override(Target.SIZE_ORIGINAL);
-
-                Glide.with(requireView())
-                        .load(post.mediaUrl)
-                        .apply(options)
-                        .into(holder.fotoCoche);
-
-
-
-                holder.fotoCoche.setOnClickListener(view -> {
-                    appViewModel.postSeleccionado.setValue(post);
-                    navController.navigate(R.id.descripcionCoche);
-                });
-
-            } else {
-                holder.fotoCoche.setVisibility(View.GONE);
-            }
-            */
-            /*
-
-            holder.precioTotal.setText(post.precioTotal);
-            holder.precioText.setText(post.precioText);
-
-             */
-
             holder.precioText.setText(post.precio+"€");
-            holder.kilometrosText.setText(post.kilometros);
-            //holder.añosText.setText(post.año);
-            holder.ciudadText.setText(post.ciudad);
+            holder.kilometrosText.setText(post.kilometros+" - ");
+            holder.añosText.setText(post.año+" - ");
+            holder.ciudadText.setText(post.ciudad+" - ");
             holder.nombreText.setText(post.marca+" "+ post.modelo);
             holder.combustibleText.setText(post.combustible);
+
+
+            holder.fotoCoche.setOnClickListener(view -> {
+                appViewModel.postSeleccionado.setValue(post);
+                navController.navigate(R.id.dodgeDescripcionFragment);
+            });
+            // Obtener la lista de fotos del post
+            List<String> fotos = post.fotoCoche;
+
+            // Verificar si hay fotos disponibles
+            if (!fotos.isEmpty()) {
+                // Obtener la URL de la primera foto
+                String urlPrimeraFoto = fotos.get(0);
+
+                // Cargar la imagen en el ImageView usando Glide
+                Glide.with(holder.itemView)
+                        .load(urlPrimeraFoto)
+                        .into(holder.fotoCoche);
+            } else {
+                // Si no hay fotos disponibles, puedes mostrar una imagen de carga o dejar el ImageView vacío
+                // Aquí se muestra una imagen de carga por defecto
+                Glide.with(holder.itemView)
+                        .load(R.drawable.logo)
+                        .into(holder.fotoCoche);
+            }
+
         }
 
         class PostViewHolder extends RecyclerView.ViewHolder {
@@ -226,7 +226,27 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    /*if (post.mediaUrl != null) {
+                   holder.fotoCoche.setVisibility(View.VISIBLE);
+                   RequestOptions options = new RequestOptions()
+                           .override(Target.SIZE_ORIGINAL);
 
+                   Glide.with(requireView())
+                           .load(post.mediaUrl)
+                           .apply(options)
+                           .into(holder.fotoCoche);
+
+
+
+                   holder.fotoCoche.setOnClickListener(view -> {
+                       appViewModel.postSeleccionado.setValue(post);
+                       navController.navigate(R.id.descripcionCoche);
+                   });
+
+               } else {
+                   holder.fotoCoche.setVisibility(View.GONE);
+               }
+               */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
