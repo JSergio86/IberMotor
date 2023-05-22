@@ -255,6 +255,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fondoMensajePropio2" />
 
+            <Button
+                android:id="@+id/enviarButton"
+                android:layout_width="320dp"
+                android:layout_height="42dp"
+                android:layout_marginTop="80dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/barraMensaje" />
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
