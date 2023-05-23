@@ -72,12 +72,13 @@ public class PublicarAnuncioFragment extends Fragment{
     NavController navController;
     public AppViewModel appViewModel;
     String mediaTipo, marca, modelo ,combustibe,año, puertas,color,kilometros,potencia, tipoDeCambio,descripcion,precio, ciudad, codigoPostal;
-    int añoInt;
+    int añoInt, potenciaInt, puertasInt, kilometrosInt, precioInt;
     Uri mediaUri;
     LinearLayout photoContainer;
     List<RelativeLayout> photoViews;
     ImageView iconoGaleria;
-    TextView photoText;
+    TextView photoText,puertasText;
+    ;
     int maxPhotos = 6;
     FitButton subirAnuncio;
     Button subirFotosBoton, button2;
@@ -113,6 +114,7 @@ public class PublicarAnuncioFragment extends Fragment{
         precioEditText = view.findViewById(R.id.precioEditText);
         ciudadEditText = view.findViewById(R.id.ciudadEditText);
         codigoPostalEditText = view.findViewById(R.id.codigoPostalEditText);
+        puertasText = view.findViewById(R.id.puertas);
 
         potenciaTextInputLayout = view.findViewById(R.id.potenciaTextInputLayout);
         colorTextInputLayout = view.findViewById(R.id.colortextInputLayout);
@@ -245,10 +247,10 @@ public class PublicarAnuncioFragment extends Fragment{
         codigoPostal = codigoPostalEditText.getText().toString();
 
         // Validar si al menos un campo está en blanco
-        boolean camposVacios = marca.isEmpty() || modelo.isEmpty() || año.isEmpty() || año.length() != 4 ||
+        boolean camposVacios = marca.isEmpty() || modelo.isEmpty() || año.isEmpty() ||
                 combustibe.isEmpty() || puertas == null || color.isEmpty() || tipoDeCambio.isEmpty() ||
                 kilometros.isEmpty() || potencia.isEmpty() || precio.isEmpty() ||
-                descripcion.isEmpty() || descripcion.length() > 280 || ciudad.isEmpty() || codigoPostal.isEmpty();
+                descripcion.length() < 100 || descripcion.length() > 280 || ciudad.isEmpty() || codigoPostal.isEmpty();
 
         if (camposVacios) {
             // Mostrar un mensaje de error o realizar alguna acción apropiada
@@ -267,11 +269,6 @@ public class PublicarAnuncioFragment extends Fragment{
             }else{
                 añoTextInputLayout.setError(null);
             }
-            if (año.length() != 4) {
-                añoTextInputLayout.setError("El año debe tener 4 dígitos");
-            }else{
-                añoTextInputLayout.setError(null);
-            }
             if (combustibe.isEmpty()) {
                 combustibleTextInputLayout.setError("Campo obligatorio");
             }else{
@@ -283,7 +280,9 @@ public class PublicarAnuncioFragment extends Fragment{
                 colorTextInputLayout.setError(null);
             }
             if (puertas == null) {
-                Snackbar.make(requireView(), "Elige cuantas puertas tiene tu coche", Snackbar.LENGTH_LONG).show();
+                puertasText.setError("Campo obligatorio");
+            }else{
+                puertasText.setError(null);
             }
             if (tipoDeCambio.isEmpty()) {
                 cambioTextInputLayout.setError("Campo obligatorio");
@@ -305,8 +304,8 @@ public class PublicarAnuncioFragment extends Fragment{
             }else{
                 precioTextInputLayout.setError(null);
             }
-            if (descripcion.isEmpty() || descripcion.length() > 280) {
-                descripcionTextInputLayout.setError("Campo obligatorio con un máximo de 280 caracteres");
+            if (descripcion.length() < 100 || descripcion.length() > 280) {
+                descripcionTextInputLayout.setError("Mínimo 100 caracteres y máximo 280");
             }else{
                 descripcionTextInputLayout.setError(null);
             }
@@ -325,6 +324,12 @@ public class PublicarAnuncioFragment extends Fragment{
         }
 
         añoInt = Integer.parseInt(año);
+        puertasInt = Integer.parseInt(puertas);
+        kilometrosInt = Integer.parseInt(kilometros);
+        potenciaInt = Integer.parseInt(potencia);
+        precioInt = Integer.parseInt(precio);
+
+
         for (int i = 0; i < photoContainer.getChildCount(); i++) {
             RelativeLayout photoLayout = (RelativeLayout) photoContainer.getChildAt(i);
             ImageView imageView = (ImageView) photoLayout.getChildAt(0);
@@ -384,11 +389,11 @@ public class PublicarAnuncioFragment extends Fragment{
             }
 
             // Llama al método guardarEnFirestore() pasando la lista downloadUrls
-            guardarEnFirestore(marca, modelo, añoInt, combustibe, puertas, color, kilometros, tipoDeCambio, potencia, precio, descripcion, ciudad, currentLatitude, currentLongitude, date, downloadUrls);
+            guardarEnFirestore(marca, modelo, añoInt, combustibe, puertasInt, color, kilometrosInt, tipoDeCambio, potenciaInt, precioInt, descripcion, ciudad, currentLatitude, currentLongitude, date, downloadUrls);
         });
     }
 
-    private void guardarEnFirestore(String marca, String modelo, int año, String combustible, String puertas, String color, String kilometros, String tipoDeCambio, String potencia, String precio, String descripcion, String ciudad, double latitude, double longitude, Date date, List<String> downloadUrls) {
+    private void guardarEnFirestore(String marca, String modelo, int año, String combustible, int puertas, String color, int kilometros, String tipoDeCambio, int potencia, int precio, String descripcion, String ciudad, double latitude, double longitude, Date date, List<String> downloadUrls) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         Post post = new Post(user.getUid(), downloadUrls, marca, modelo, año, combustible, puertas, color, kilometros, tipoDeCambio, potencia, precio, descripcion, ciudad, latitude, longitude, date);
         FirebaseFirestore.getInstance().collection("posts")

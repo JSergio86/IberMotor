@@ -100,7 +100,7 @@ public class DescripcionCocheFragment extends Fragment {
                 precioText.setText(post.precio+"€");
                 nombreUbicacion.setText(post.ciudad);
                 ciudadText.setText(post.ciudad);
-                kilometrosText.setText(post.kilometros);
+                kilometrosText.setText(post.kilometros+"");
                 añosText.setText(post.año+"");
                 combustibleText.setText(post.combustible);
                 puertasText.setText(post.puertas+"");

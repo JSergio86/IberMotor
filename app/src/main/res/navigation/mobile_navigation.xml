@@ -56,16 +56,12 @@
         android:name="com.example.ibermotor.ConversacionesFragment"
         android:label="fragment_conversaciones"
         tools:layout="@layout/fragment_conversaciones" />
+
     <fragment
-        android:id="@+id/chatPacoFragment"
-        android:name="com.example.ibermotor.ChatPacoFragment"
-        android:label="fragment_chat_paco"
-        tools:layout="@layout/fragment_chat_paco" />
-    <fragment
-        android:id="@+id/chatJuanFragment"
-        android:name="com.example.ibermotor.ChatJuanFragment"
+        android:id="@+id/chatFragment"
+        android:name="com.example.ibermotor.ChatFragment"
         android:label="fragment_chat_juan"
-        tools:layout="@layout/fragment_chat_juan" />
+        tools:layout="@layout/fragment_chat" />
     <fragment
         android:id="@+id/filtrosFragment"
         android:name="com.example.ibermotor.FiltrosFragment"
@@ -81,26 +77,6 @@
         android:name="com.example.ibermotor.EditarPerfilFragment"
         android:label="fragment_editar_perfil"
         tools:layout="@layout/fragment_editar_perfil" />
-    <fragment
-        android:id="@+id/pacoPerfilFragment"
-        android:name="com.example.ibermotor.PacoPerfilFragment"
-        android:label="fragment_paco_perfil"
-        tools:layout="@layout/fragment_paco_perfil" />
-    <fragment
-        android:id="@+id/dodgeDescripcionFragment"
-        android:name="com.example.ibermotor.DodgeDescripcionFragment"
-        android:label="fragment_dodge_descripcion"
-        tools:layout="@layout/fragment_dodge_descripcion" />
-    <fragment
-        android:id="@+id/juanPerfilFragment"
-        android:name="com.example.ibermotor.JuanPerfilFragment"
-        android:label="fragment_juan_perfil"
-        tools:layout="@layout/fragment_juan_perfil" />
-    <fragment
-        android:id="@+id/crearPost"
-        android:name="com.example.ibermotor.CrearPost"
-        android:label="fragment_crear_post"
-        tools:layout="@layout/fragment_crear_post" />
     <fragment
         android:id="@+id/antesDeComenzar"
         android:name="com.example.ibermotor.AntesDeComenzar"

@@ -6,14 +6,14 @@ import java.util.List;
 public class Post {
     public String uid;
     public List<String> fotoCoche;
-    public String marca, modelo, combustible, color,puertas, potencia, precio,kilometros, cambioMarchas, descripcion, ciudad;
-    public int año;
+    public String marca, modelo, combustible, color, cambioMarchas, descripcion, ciudad;
+    public int año, puertas, potencia, kilometros, precio;
     public double latitud, longitud;
     public Date date;
 
     public Post() {}
 
-    public Post(String uid, List<String> fotoCoche, String marca, String modelo, int año, String combustible, String puertas, String color, String kilometros, String cambioMarchas, String potencia, String precio, String descripcion, String ciudad, double latitud, double longitud, Date date) {
+    public Post(String uid, List<String> fotoCoche, String marca, String modelo, int año, String combustible, int puertas, String color, int kilometros, String cambioMarchas, int potencia, int precio, String descripcion, String ciudad, double latitud, double longitud, Date date) {
         this.uid = uid;
         this.fotoCoche = fotoCoche;
         this.marca = marca;
@@ -32,5 +32,4 @@ public class Post {
         this.longitud = longitud;
         this.date = date;
     }
-
 }

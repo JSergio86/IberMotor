@@ -199,15 +199,14 @@
                 android:hint="Año de matriculación"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:boxStrokeColor="@color/text_input_layout_stroke_color"
-                app:boxStrokeErrorColor="@color/text_input_layout_stroke_color_error"
-                app:counterEnabled="true"
-                app:counterMaxLength="4">
+                app:boxStrokeErrorColor="@color/text_input_layout_stroke_color_error">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/añoEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"/>
+                    android:inputType="number"
+                    android:maxLength="4"/>
 
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -219,7 +218,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="-20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/añoLinear">
@@ -386,7 +384,8 @@
                     android:id="@+id/kmEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"/>
+                    android:inputType="number"
+                    app:counterMaxLength="7"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -450,7 +449,8 @@
                     android:id="@+id/potenciaEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    app:counterMaxLength="4"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -481,7 +481,8 @@
                     android:id="@+id/precioEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="number"/>
+                    android:inputType="number"
+                    app:counterMaxLength="6"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 

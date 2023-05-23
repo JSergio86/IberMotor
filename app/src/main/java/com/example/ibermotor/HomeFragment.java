@@ -173,7 +173,7 @@ public class HomeFragment extends Fragment {
         @Override
         protected void onBindViewHolder(@NonNull PostViewHolder holder, int position, @NonNull final Post post) {
             holder.precioText.setText(post.precio+"€");
-            holder.kilometrosText.setText(post.kilometros+"km - ");
+            holder.kilometrosText.setText(post.kilometros+"");
             holder.añosText.setText(post.año+" - ");
             holder.ciudadText.setText(post.ciudad+" - ");
             holder.nombreText.setText(post.marca+" "+ post.modelo);
