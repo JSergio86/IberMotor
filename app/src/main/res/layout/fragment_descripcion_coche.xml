@@ -54,12 +54,14 @@
             android:layout_marginBottom="10dp">
 
             <ImageView
-                android:id="@+id/fotoCoche"
+                android:id="@+id/fotosCoches"
                 android:layout_width="match_parent"
                 android:layout_height="230dp"
-                android:layout_marginTop="25dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/bmw"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="MissingConstraints" />
 
             <TextView
@@ -72,7 +74,7 @@
                 android:textSize="24dp"
                 android:textColor="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fotoCoche" />
+                app:layout_constraintTop_toBottomOf="@+id/fotosCoches" />
 
             <TextView
                 android:id="@+id/horasText"
@@ -91,6 +93,8 @@
                 android:layout_marginTop="13dp"
                 android:text="23.999€"
                 android:textSize="20dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/horasText"
                 app:layout_constraintTop_toBottomOf="@+id/horasText" />
 
@@ -120,66 +124,195 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:text="Detalle del Vehiculo"
-                android:textAppearance="@style/nameVistaPrincipal"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/ubicacion"
                 app:layout_constraintTop_toBottomOf="@+id/nombreUbicacion" />
+
 
             <RelativeLayout
                 android:id="@+id/atributosLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="115dp"
-                android:gravity="left|center"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/detallesVehiculo"
-                app:layout_constraintTop_toBottomOf="@+id/detallesVehiculo">
-
+                android:layout_weight="1"
+                app:layout_constraintStart_toStartOf="@+id/nombreUbicacion"
+                app:layout_constraintTop_toBottomOf="@id/detallesVehiculo">
 
                 <TextView
-                    android:id="@+id/ciudadText"
+                    android:id="@+id/ciudadTitulo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
-                    android:layout_marginRight="2dp"
-                    android:text="Barcelona |"
-                    android:textAppearance="@style/styleGris"
+                    android:text="Ciudad"
                     android:textSize="15dp" />
 
+                <TextView
+                    android:id="@+id/ciudadText"
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ciudadTitulo"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginBottom="20dp"
+                    android:text="Barcelona"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/kilometrosTitulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/ciudadText"
+                    android:layout_alignParentLeft="true"
+                    android:text="Kilómetros"
+                    android:textSize="15dp" />
 
                 <TextView
                     android:id="@+id/kilometrosText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="2dp"
-                    android:layout_toRightOf="@id/ciudadText"
-                    android:text="217.000km |"
-                    android:textAppearance="@style/styleGris"
+                    android:layout_below="@id/kilometrosTitulo"
+                    android:layout_alignParentLeft="true"
+                    android:text="217.000km"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"
+                    android:layout_marginBottom="20dp"/>
+
+                <TextView
+                    android:id="@+id/puertasTitulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/kilometrosText"
+                    android:layout_alignParentLeft="true"
+                    android:text="Puertas"
                     android:textSize="15dp" />
 
+                <TextView
+                    android:id="@+id/puertasText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/puertasTitulo"
+                    android:layout_alignParentLeft="true"
+                    android:text="3 puertas"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"
+                    android:layout_marginBottom="20dp"/>
+
+                <TextView
+                    android:id="@+id/cambioTitulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/puertasText"
+                    android:layout_alignParentLeft="true"
+                    android:text="Cambio"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/cambioText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/cambioTitulo"
+                    android:layout_alignParentLeft="true"
+                    android:text="Manual"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/columna2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="70dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1"
+                app:layout_constraintStart_toEndOf="@+id/atributosLayout"
+                app:layout_constraintTop_toBottomOf="@id/detallesVehiculo">
+
+                <TextView
+                    android:id="@+id/añosTitulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="Años"
+                    android:textSize="15dp" />
 
                 <TextView
                     android:id="@+id/añosText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="2dp"
-                    android:layout_toRightOf="@id/kilometrosText"
-                    android:text="1997 |"
-                    android:textAppearance="@style/styleGris"
+                    android:layout_below="@id/añosTitulo"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginBottom="20dp"
+                    android:text="1997"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
+                <TextView
+                    android:id="@+id/combustibleTitulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/añosText"
+                    android:layout_alignParentLeft="true"
+                    android:text="Combustible"
                     android:textSize="15dp" />
 
                 <TextView
                     android:id="@+id/combustibleText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="2dp"
-                    android:layout_toRightOf="@id/añosText"
+                    android:layout_below="@id/combustibleTitulo"
+                    android:layout_alignParentLeft="true"
                     android:text="Gasolina"
-                    android:textAppearance="@style/styleGris"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"
+                    android:layout_marginBottom="20dp"/>
+
+                <TextView
+                    android:id="@+id/potenciaTitulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/combustibleText"
+                    android:layout_alignParentLeft="true"
+                    android:text="CV"
                     android:textSize="15dp" />
 
+                <TextView
+                    android:id="@+id/potenciaText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/potenciaTitulo"
+                    android:layout_alignParentLeft="true"
+                    android:text="104 CV"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"
+                    android:layout_marginBottom="20dp"/>
+
+                <TextView
+                    android:id="@+id/colorTitulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/potenciaText"
+                    android:layout_alignParentLeft="true"
+                    android:text="Color"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/colorText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/colorTitulo"
+                    android:layout_alignParentLeft="true"
+                    android:text="Negro"
+                    android:textColor="@color/black"
+                    android:textSize="16dp" />
+
             </RelativeLayout>
+
 
             <TextView
                 android:id="@+id/descripcionCoche"
@@ -187,18 +320,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:text="Descripción del coche"
-                android:textAppearance="@style/nameVistaPrincipal"
+                android:textSize="20dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/detallesVehiculo"
                 app:layout_constraintTop_toBottomOf="@+id/atributosLayout" />
 
             <TextView
                 android:id="@+id/descripcion"
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="10dp"
                 android:gravity="start"
-                android:text="Vehículo"
+                android:text="Vehículo efef wfw few fewf wef wefew ffwfefewfewewwefewefewfewewfwewefewwefewewefwewewefwewfefwe"
                 app:layout_constraintStart_toStartOf="@+id/descripcionCoche"
                 app:layout_constraintTop_toBottomOf="@+id/descripcionCoche">
 

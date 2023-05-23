@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,15 +20,17 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.github.nikartm.button.FitButton;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class DescripcionCocheFragment extends Fragment {
 
     NavController navController;
-    ImageView volver, fotoCoche;
+    ImageView volver, fotosCoches;
     FitButton botonChatPaco;
     AppViewModel appViewModel;
-    TextView descripcion, nombreText, horasText, precioText, nombreUbicacion, ciudadText, kilometrosText, añosText, combustibleText;
+    TextView descripcion, nombreText, horasText, precioText, nombreUbicacion, ciudadText, kilometrosText, añosText, combustibleText, puertasText, cambioText, potenciaText, colorText;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -39,7 +42,7 @@ public class DescripcionCocheFragment extends Fragment {
         volver = view.findViewById(R.id.volverAtras);
         botonChatPaco = view.findViewById(R.id.botonChatPaco);
         descripcion = view.findViewById(R.id.descripcion);
-        fotoCoche = view.findViewById(R.id.fotoCoche);
+        fotosCoches = view.findViewById(R.id.fotosCoches);
         nombreText = view.findViewById(R.id.nombreText);
         horasText = view.findViewById(R.id.horasText);
         precioText = view.findViewById(R.id.precioText);
@@ -48,6 +51,11 @@ public class DescripcionCocheFragment extends Fragment {
         kilometrosText = view.findViewById(R.id.kilometrosText);
         añosText = view.findViewById(R.id.añosText);
         combustibleText = view.findViewById(R.id.combustibleText);
+        puertasText = view.findViewById(R.id.puertasText);
+        cambioText = view.findViewById(R.id.cambioText);
+        potenciaText = view.findViewById(R.id.potenciaText);
+        colorText = view.findViewById(R.id.colorText);
+
 
 
         volver.setOnClickListener(new View.OnClickListener() {
@@ -75,22 +83,31 @@ public class DescripcionCocheFragment extends Fragment {
                 if (!fotos.isEmpty()) {
                     // Obtener la URL de la primera foto
                     String urlPrimeraFoto = fotos.get(0);
+                    Log.d("URL", urlPrimeraFoto);
 
                     // Cargar la imagen en el ImageView usando Glide
-                    Glide.with(requireView())
+                    Glide.with(fotosCoches)
                             .load(urlPrimeraFoto)
-                            .into(fotoCoche);
+                            .into(fotosCoches);
                 }
 
                 descripcion.setText(post.descripcion+"");
                 nombreText.setText(post.marca+" "+post.modelo);
-                horasText.setText(post.date+"");
+                Date date = post.date;
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                String fechaHora = sdf.format(date);
+                horasText.setText(fechaHora);
                 precioText.setText(post.precio+"€");
                 nombreUbicacion.setText(post.ciudad);
                 ciudadText.setText(post.ciudad);
                 kilometrosText.setText(post.kilometros);
                 añosText.setText(post.año+"");
-                combustibleText.setText(combustibleText+"");
+                combustibleText.setText(post.combustible);
+                puertasText.setText(post.puertas+"");
+                cambioText.setText(post.cambioMarchas+"");
+                potenciaText.setText(post.potencia+"");
+                colorText.setText(post.color+"");
+
             }
 
         });

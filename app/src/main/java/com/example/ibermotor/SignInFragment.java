@@ -59,8 +59,6 @@ public class SignInFragment extends Fragment {
 
         navController = Navigation.findNavController(view);
 
-
-
         emailEditText = view.findViewById(R.id.emailEditText);
         passwordEditText = view.findViewById(R.id.passwordEditText);
         emailSignInButton = view.findViewById(R.id.emailSignInButton);
@@ -185,12 +183,12 @@ public class SignInFragment extends Fragment {
             Snackbar.make(requireView(), "Ingresa tu correo electrónico", Snackbar.LENGTH_LONG).show();
             return;
         }
-        if (TextUtils.isEmpty(password)) {
-            Snackbar.make(requireView(), "Ingresa tu contraseña", Snackbar.LENGTH_LONG).show();
-            return;
-        }
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             Snackbar.make(requireView(), "Introduce una dirección de correo electrónico válida", Snackbar.LENGTH_LONG).show();
+            return;
+        }
+        if (TextUtils.isEmpty(password)) {
+            Snackbar.make(requireView(), "Ingresa tu contraseña", Snackbar.LENGTH_LONG).show();
             return;
         }
 

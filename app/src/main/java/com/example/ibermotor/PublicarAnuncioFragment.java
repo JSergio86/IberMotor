@@ -15,12 +15,15 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -32,6 +35,7 @@ import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -69,7 +73,6 @@ public class PublicarAnuncioFragment extends Fragment{
     public AppViewModel appViewModel;
     String mediaTipo, marca, modelo ,combustibe,año, puertas,color,kilometros,potencia, tipoDeCambio,descripcion,precio, ciudad, codigoPostal;
     int añoInt;
-
     Uri mediaUri;
     LinearLayout photoContainer;
     List<RelativeLayout> photoViews;
@@ -84,7 +87,8 @@ public class PublicarAnuncioFragment extends Fragment{
     private List<String> imageUrls = new ArrayList<>();
     Date date = new Date();
     double currentLatitude = 0, currentLongitude=0;
-
+    CardView progressBar;
+    ProgressButton progressButton;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -123,6 +127,9 @@ public class PublicarAnuncioFragment extends Fragment{
         codigoPostalTextInputLayout = view.findViewById(R.id.codigoPostalTextInputLayout);
         precioTextInputLayout = view.findViewById(R.id.precioTextInputLayout);
 
+        progressBar = view.findViewById(R.id.cardViewProgressBar);
+
+
         button2 = view.findViewById(R.id.button1);
 
         photoViews = new ArrayList<RelativeLayout>();
@@ -131,12 +138,14 @@ public class PublicarAnuncioFragment extends Fragment{
 
         appViewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
 
-        subirAnuncio.setOnClickListener(new View.OnClickListener() {
+        progressBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                progressButton = new ProgressButton(view);
                 publicar();
             }
         });
+
 
         subirFotosBoton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -339,11 +348,9 @@ public class PublicarAnuncioFragment extends Fragment{
             currentLatitude = cityLocation.latitude;
             currentLongitude = cityLocation.longitude;
         }
+        progressButton.buttonActivated();
+        subirImagenesAlmacenamiento(imageUrls);
 
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        executor.execute(() -> {
-            subirImagenesAlmacenamiento(imageUrls);
-        });
     }
 
     private void subirImagenesAlmacenamiento(List<String> imageUrls) {
@@ -375,6 +382,7 @@ public class PublicarAnuncioFragment extends Fragment{
                     }
                 }
             }
+
             // Llama al método guardarEnFirestore() pasando la lista downloadUrls
             guardarEnFirestore(marca, modelo, añoInt, combustibe, puertas, color, kilometros, tipoDeCambio, potencia, precio, descripcion, ciudad, currentLatitude, currentLongitude, date, downloadUrls);
         });
@@ -388,6 +396,7 @@ public class PublicarAnuncioFragment extends Fragment{
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
+                        progressButton.buttonFinished();
                         navController.popBackStack();
                         appViewModel.setMediaSeleccionado(null, null);
                         documentReference.update("postId", documentReference.getId());
@@ -518,7 +527,6 @@ public class PublicarAnuncioFragment extends Fragment{
         photoText.setVisibility(View.INVISIBLE);
         if (photoViews.size() >= maxPhotos) {
             subirFotosBoton.setEnabled(false);
-            subirImagenesAlmacenamiento(imageUrls); // Llamar al método para subir las imágenes a Firebase
         }
     }
 
