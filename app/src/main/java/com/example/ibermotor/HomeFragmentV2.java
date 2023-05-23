@@ -60,7 +60,7 @@ public class HomeFragmentV2 extends Fragment {
                 navController.navigate(R.id.filtrosFragment);
             }
         });
-
+/*
         cuadroInfoCocheDodge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,6 +68,8 @@ public class HomeFragmentV2 extends Fragment {
 
             }
         });
+
+ */
 
         iconoVista.setOnClickListener(new View.OnClickListener() {
             @Override

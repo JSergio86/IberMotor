@@ -27,22 +27,6 @@ public class ConversacionesFragment extends Fragment {
         fondoChatJuan = view.findViewById(R.id.fondoChatJuan);
 
 
-        fondoChatPaco.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                navController.navigate(R.id.chatPacoFragment);
-
-            }
-        });
-
-        fondoChatJuan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                navController.navigate(R.id.chatJuanFragment);
-
-            }
-        });
-
     }
 
     @Override

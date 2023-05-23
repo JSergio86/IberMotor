@@ -66,13 +66,6 @@ public class DescripcionCocheFragment extends Fragment {
             }
         });
 
-        botonChatPaco.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                navController.navigate(R.id.chatPacoFragment);
-
-            }
-        });
 
         appViewModel.postSeleccionado.observe(getViewLifecycleOwner(), new Observer<Post>() {
             @Override
