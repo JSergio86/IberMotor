@@ -1,88 +1,236 @@
 package com.example.ibermotor;
 
+import static android.content.ContentValues.TAG;
+
+import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
+import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
-
-import com.google.firebase.database.DatabaseError;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatFragment extends Fragment {
 
-    private DatabaseReference mensajesRef;
+    private NavController navController;
+    private RecyclerView messagesRecyclerView;
+    private EditText messageInput;
+    private ImageButton sendMessageButton;
+    private MessagesAdapter messagesAdapter;
+    private FirebaseFirestore db;
+    private TextView titleUsername;
+    private CircleImageView userImage;
+    private Chat chat;
+    private String chatUserId, currentUserId;
+
+    public void setChat(Chat chat) {
+        this.chat = chat;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
 
-        // Obtén una referencia a la base de datos de Firebase y a la ubicación de los mensajes
-        mensajesRef = FirebaseDatabase.getInstance().getReference("chats").child("chat1").child("mensajes");
+        messagesRecyclerView = view.findViewById(R.id.messages_recyclerview);
+        messageInput = view.findViewById(R.id.message_input);
+        sendMessageButton = view.findViewById(R.id.send_message_button);
+        db = FirebaseFirestore.getInstance();
 
-        EditText barraMensaje = view.findViewById(R.id.barraMensaje);
-        Button enviarButton = view.findViewById(R.id.enviarButton);
+        titleUsername = view.findViewById(R.id.titleUsername);
+        userImage = view.findViewById(R.id.userImage);
 
-        enviarButton.setOnClickListener(new View.OnClickListener() {
+        setupMessagesList();
+
+        if (getArguments() != null) {
+            chat = (Chat) getArguments().getSerializable("selected_chat");
+        }
+
+        currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            chatUserId = chat.getUsers().stream().filter(id -> !id.equals(currentUserId)).findFirst().orElse(null);
+        }
+        loadChatUserDetails();
+
+        sendMessageButton.setOnClickListener(v -> {
+            String messageContent = messageInput.getText().toString().trim();
+            if (!messageContent.isEmpty()) {
+                sendMessage(messageContent);
+                messageInput.setText("");
+            }
+        });
+
+        // ? Flecha según contenido
+        messageInput.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View view) {
-                String mensaje = barraMensaje.getText().toString().trim();
-                if (!mensaje.isEmpty()) {
-                    String mensajeId = mensajesRef.push().getKey();
-                    Mensaje nuevoMensaje = new Mensaje(mensaje);
-                    mensajesRef.child(mensajeId).setValue(nuevoMensaje);
-                    barraMensaje.setText("");
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.toString().trim().isEmpty()) {
+                    sendMessageButton.setAlpha(0.2f);
+                } else {
+                    sendMessageButton.setAlpha(1.0f);
                 }
             }
         });
 
-        ChildEventListener mensajesListener = new ChildEventListener() {
-            @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                Mensaje mensaje = snapshot.getValue(Mensaje.class);
-                recibirMensajeContrario(mensaje.getContenido());
-            }
-
-            @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            @Override
-            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
-
-            // Implementa los demás métodos del ChildEventListener según tus necesidades
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                // Maneja la cancelación de la lectura de mensajes si es necesario
-            }
-        };
-
-        mensajesRef.addChildEventListener(mensajesListener);
+        loadMessages();
 
         return view;
     }
 
-    private void recibirMensajeContrario(String mensaje) {
-        // Implementa la lógica para recibir y mostrar los mensajes en la interfaz de usuario
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        navController = Navigation.findNavController(view);
+
+        // ? Flecha Back
+        view.findViewById(R.id.flechaBack).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigateUp();
+            }
+        });
+
     }
+
+    private void setupMessagesList() {
+        messagesAdapter = new MessagesAdapter();
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setStackFromEnd(true);
+        messagesRecyclerView.setLayoutManager(layoutManager);
+        messagesRecyclerView.setAdapter(messagesAdapter);
+    }
+
+    private void loadMessages() {
+        String chatId = chat.getChatId();
+        CollectionReference messagesRef = db.collection("chats").document(chatId).collection("messages");
+
+        messagesRef.orderBy("timestamp")
+                .addSnapshotListener((value, error) -> {
+                    if (error != null) {
+                        Log.e("ChatFragment", "Error loading messages", error);
+                        return;
+                    }
+
+                    List<Message> messages = new ArrayList<>();
+                    if (value != null) {
+                        for (QueryDocumentSnapshot document : value) {
+                            Message message = document.toObject(Message.class);
+                            messages.add(message);
+                        }
+                    }
+
+                    messagesAdapter.setMessages(messages);
+                });
+    }
+
+    private void loadChatUserDetails() {
+        String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        if (chatUserId == null) {
+            Log.e(TAG, "Unable to find chat user ID");
+            return;
+        }
+
+        db.collection("usuarios")
+                .document(chatUserId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    Usuario chatUser = documentSnapshot.toObject(Usuario.class);
+
+                    if (chatUser != null) {
+                        titleUsername.setText(chatUser.getNombre());
+
+                        if(chatUser.getFotoPerfil() == null){
+                            Glide.with(requireContext())
+                                    .load(R.drawable.anonymo)
+                                    .into(userImage);
+                        }
+                        if (chatUser.getFotoPerfil() != null && !chatUser.getFotoPerfil().isEmpty()) {
+                            Glide.with(requireContext())
+                                    .load(chatUser.getFotoPerfil())
+                                    .into(userImage);
+                        }
+                    } else {
+                        Log.e(TAG, "Unable to find chat user in Firestore");
+                    }
+                })
+                .addOnFailureListener(e -> Log.e(TAG, "Error fetching chat user details", e));
+    }
+    private void sendMessage(String messageContent) {
+        long timestamp = System.currentTimeMillis();
+        String messageId = generateMessageId();
+
+        Message newMessage = new Message(messageId, messageContent, currentUserId, timestamp);
+        List<Message> messages = messagesAdapter.getMessages();
+        messages.add(newMessage);
+        messagesAdapter.setMessages(messages);
+        messagesRecyclerView.scrollToPosition(messages.size() - 1);
+
+        // Aquí puedes guardar el mensaje en tu base de datos o servicio de backend
+        saveMessageToFirestore(messageId, newMessage);
+
+        // Actualiza el timestamp del último mensaje en el documento de chat
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("chats").document(chat.getChatId())
+                .update("lastMessageTimestamp", timestamp)
+                .addOnFailureListener(e -> Log.e("ChatActivity", "Error updating lastMessageTimestamp", e));
+
+    }
+    private String generateMessageId() {
+        return UUID.randomUUID().toString();
+    }
+    private void saveMessageToFirestore(String messageId, Message message) {
+        // Reemplaza "chatId" por el ID del chat en el que estás trabajando
+        String chatId = chat.getChatId();
+
+        // Crear una referencia a la subcolección de mensajes en el documento de chat
+        CollectionReference messagesRef = db.collection("chats").document(chatId).collection("messages");
+
+        // Guardar el mensaje en Firestore
+        messagesRef.document(messageId).set(message)
+                .addOnSuccessListener(aVoid -> {
+                    Log.d(TAG, "Mensaje guardado con éxito");
+                })
+                .addOnFailureListener(e -> {
+                    Log.w(TAG, "Error al guardar el mensaje", e);
+                });
+    }
+/*
+    public void goToProfile(View v, String uid){
+        Bundle bundle = new Bundle();
+        bundle.putString("userUID", uid); // Pasar el UID del usuario al fragmento de perfil del usuario
+        Navigation.findNavController(v).navigate(R.id.usersProfileFragment, bundle);
+    }
+
+ */
 }
