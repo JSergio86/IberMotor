@@ -7,17 +7,17 @@
         android:icon="@drawable/iconobusqueda"
         android:title="Buscar" />
     <item
-        android:id="@+id/publicar"
-        android:icon="@drawable/iconopublicar"
-        android:title="Publicar" />
-    <item
         android:id="@+id/mapa"
         android:icon="@drawable/baseline_map_24"
         android:title="Mapa" />
+    <item
+        android:id="@+id/publicar"
+        android:icon="@drawable/iconopublicar"
+        android:title="Publicar" />
 
     <item
         android:id="@+id/chat"
-        android:icon="@drawable/iconochat"
+        android:icon="@drawable/baseline_chat_24"
         android:title="Chat" />
     <item
         android:id="@+id/perfil"

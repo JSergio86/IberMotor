@@ -184,18 +184,6 @@
 
     </style>
 
-    <style name="garantia">
-
-        <item name="android:textSize">
-            10sp
-        </item>
-
-        <item name="android:textColor">
-            #075480
-        </item>
-
-    </style>
-
     <style name="coches">
 
         <item name="android:textSize">

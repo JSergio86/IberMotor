@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/constraintLayout">
 
@@ -42,27 +42,23 @@
     <ScrollView
         android:id="@+id/layoutDescripcion"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="60dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/favorito">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_marginBottom="10dp">
 
-            <ImageView
+            <org.imaginativeworld.whynotimagecarousel.ImageCarousel
                 android:id="@+id/fotosCoches"
                 android:layout_width="match_parent"
                 android:layout_height="230dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/bmw"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:ignore="MissingConstraints" />
+                app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
                 android:id="@+id/nombreText"
@@ -71,8 +67,9 @@
                 android:layout_marginStart="15dp"
                 android:layout_marginTop="20dp"
                 android:text="BMW Serie 3 M3 E36"
-                android:textSize="24dp"
                 android:textColor="@color/black"
+                android:textSize="24dp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fotosCoches" />
 
@@ -92,18 +89,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="13dp"
                 android:text="23.999€"
-                android:textSize="20dp"
                 android:textColor="@color/black"
+                android:textSize="24dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/horasText"
                 app:layout_constraintTop_toBottomOf="@+id/horasText" />
 
             <ImageView
                 android:id="@+id/ubicacion"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginTop="25dp"
-                android:src="@drawable/iconoubicacion"
+                android:src="@drawable/baseline_location_on_24"
                 app:layout_constraintStart_toStartOf="@+id/precioText"
                 app:layout_constraintTop_toBottomOf="@+id/precioText" />
 
@@ -112,7 +109,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="1dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="25dp"
                 android:text="Barcelona"
                 android:textSize="16dp"
                 app:layout_constraintStart_toEndOf="@+id/ubicacion"
@@ -122,10 +119,10 @@
                 android:id="@+id/detallesVehiculo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:text="Detalle del Vehiculo"
-                android:textSize="20dp"
+                android:layout_marginTop="40dp"
+                android:text="Detalles"
                 android:textColor="@color/black"
+                android:textSize="20dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/ubicacion"
                 app:layout_constraintTop_toBottomOf="@+id/nombreUbicacion" />
@@ -139,26 +136,6 @@
                 android:layout_weight="1"
                 app:layout_constraintStart_toStartOf="@+id/nombreUbicacion"
                 app:layout_constraintTop_toBottomOf="@id/detallesVehiculo">
-
-                <TextView
-                    android:id="@+id/ciudadTitulo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
-                    android:text="Ciudad"
-                    android:textSize="15dp" />
-
-                <TextView
-                    android:id="@+id/ciudadText"
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/ciudadTitulo"
-                    android:layout_alignParentLeft="true"
-                    android:layout_marginBottom="20dp"
-                    android:text="Barcelona"
-                    android:textColor="@color/black"
-                    android:textSize="16dp" />
 
                 <TextView
                     android:id="@+id/kilometrosTitulo"
@@ -175,10 +152,11 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/kilometrosTitulo"
                     android:layout_alignParentLeft="true"
+                    android:layout_marginBottom="20dp"
                     android:text="217.000km"
                     android:textColor="@color/black"
                     android:textSize="16dp"
-                    android:layout_marginBottom="20dp"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/puertasTitulo"
@@ -195,10 +173,11 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/puertasTitulo"
                     android:layout_alignParentLeft="true"
+                    android:layout_marginBottom="20dp"
                     android:text="3 puertas"
                     android:textColor="@color/black"
                     android:textSize="16dp"
-                    android:layout_marginBottom="20dp"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/cambioTitulo"
@@ -217,7 +196,27 @@
                     android:layout_alignParentLeft="true"
                     android:text="Manual"
                     android:textColor="@color/black"
-                    android:textSize="16dp" />
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
+                <TextView
+                    android:id="@+id/colorTitulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/cambioText"
+                    android:layout_alignParentLeft="true"
+                    android:text="Color"
+                    android:textSize="15dp" />
+
+                <TextView
+                    android:id="@+id/colorText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/colorTitulo"
+                    android:layout_alignParentLeft="true"
+                    android:text="Negro"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
 
 
             </RelativeLayout>
@@ -238,7 +237,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentTop="true"
-                    android:text="Años"
+                    android:text="Año"
                     android:textSize="15dp" />
 
                 <TextView
@@ -250,7 +249,8 @@
                     android:layout_marginBottom="20dp"
                     android:text="1997"
                     android:textColor="@color/black"
-                    android:textSize="16dp" />
+                    android:textSize="16dp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/combustibleTitulo"
@@ -267,10 +267,11 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/combustibleTitulo"
                     android:layout_alignParentLeft="true"
+                    android:layout_marginBottom="20dp"
                     android:text="Gasolina"
                     android:textColor="@color/black"
                     android:textSize="16dp"
-                    android:layout_marginBottom="20dp"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/potenciaTitulo"
@@ -287,29 +288,11 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/potenciaTitulo"
                     android:layout_alignParentLeft="true"
+                    android:layout_marginBottom="20dp"
                     android:text="104 CV"
                     android:textColor="@color/black"
                     android:textSize="16dp"
-                    android:layout_marginBottom="20dp"/>
-
-                <TextView
-                    android:id="@+id/colorTitulo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/potenciaText"
-                    android:layout_alignParentLeft="true"
-                    android:text="Color"
-                    android:textSize="15dp" />
-
-                <TextView
-                    android:id="@+id/colorText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/colorTitulo"
-                    android:layout_alignParentLeft="true"
-                    android:text="Negro"
-                    android:textColor="@color/black"
-                    android:textSize="16dp" />
+                    android:textStyle="bold" />
 
             </RelativeLayout>
 
@@ -318,10 +301,10 @@
                 android:id="@+id/descripcionCoche"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Descripción del coche"
-                android:textSize="20dp"
+                android:layout_marginTop="40dp"
+                android:text="Descripción"
                 android:textColor="@color/black"
+                android:textSize="20dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/detallesVehiculo"
                 app:layout_constraintTop_toBottomOf="@+id/atributosLayout" />
@@ -330,68 +313,78 @@
                 android:id="@+id/descripcion"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="10dp"
                 android:gravity="start"
-                android:text="Vehículo efef wfw few fewf wef wefew ffwfefewfewewwefewefewfewewfwewefewwefewewefwewewefwewfefwe"
+                android:text="Vehículo efef wfw few fewf wef wefew ffwfefewfewewwefewefewfewewfwewefewwefewewefwewewefwewfefwssse"
                 app:layout_constraintStart_toStartOf="@+id/descripcionCoche"
                 app:layout_constraintTop_toBottomOf="@+id/descripcionCoche">
 
             </TextView>
 
-            <ImageView
-                android:id="@+id/iconoChat"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_marginBottom="92dp"
-                android:src="@drawable/iconochat"
-                app:layout_constraintBottom_toBottomOf="@+id/cuadroChat"
-                app:layout_constraintTop_toTopOf="@+id/cuadroChat"
-                app:layout_constraintVertical_bias="0.0"
-                tools:ignore="MissingConstraints"
-                tools:layout_editor_absoluteX="159dp" />
+            <TextView
+                android:id="@+id/usuarioTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:text="Datos del usuario"
+                android:textColor="@color/black"
+                android:textSize="20dp"
 
-
-            <Button
-                android:id="@+id/cuadroChat"
-                android:layout_width="128dp"
-                android:layout_height="37dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="35dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/detallesVehiculo"
                 app:layout_constraintTop_toBottomOf="@+id/descripcion" />
 
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="30dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/descripcionCoche"
+                app:layout_constraintTop_toBottomOf="@+id/usuarioTextView">
 
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/userImage"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/anonymo" />
 
-            <com.github.nikartm.button.FitButton
-                android:id="@+id/botonChatPaco"
-                android:layout_width="140dp"
-                android:layout_height="40dp"
-                android:layout_margin="32dp"
-                android:enabled="true"
-                android:gravity="center"
-                app:fb_cornerRadius="12dp"
-                app:fb_shape="rectangle"
-                app:fb_divColor="#fff"
-                app:fb_divHeight="40dp"
-                app:fb_rippleColor="#FBE9E7"
-                app:fb_iconColor="#FFF"
-                app:fb_textColor="#FFF"
-                app:fb_iconWidth="20dp"
-                app:fb_iconHeight="20dp"
-                app:fb_iconPosition="left"
-                app:fb_iconMarginStart="10dp"
-                app:fb_iconMarginEnd="10dp"
-                app:fb_icon="@drawable/iconochat"
-                app:fb_text="Chat"
-                app:fb_backgroundColor="#002196"
-                app:fb_textSize="14dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/descripcion"/>
+                <TextView
+                    android:id="@+id/userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_toEndOf="@id/userImage"
+                    android:maxWidth="150dp"
+                    android:text="Sergio Does"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
 
+                <FrameLayout
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_toEndOf="@id/userName">
 
+                    <ImageView
+                        android:id="@+id/chatIconBackground"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/chat_message_bg" />
+
+                    <ImageView
+                        android:id="@+id/chatIcon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/baseline_chat_24" />
+
+                </FrameLayout>
+
+            </RelativeLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
