@@ -9,17 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/volverAtras"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:src="@drawable/iconovolver"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints" />
-
         <TextView
             android:id="@+id/publicarAnuncioText"
             android:layout_width="wrap_content"
@@ -30,8 +19,9 @@
             android:layout_marginTop="16dp"
             android:textStyle="bold"
             android:text="Publicar anuncio"
-            android:textAppearance="@style/styleAppbar"
-            app:layout_constraintStart_toEndOf="@+id/volverAtras"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -40,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:layout_marginTop="15dp"
-            android:background="#C0C0C0"
+            android:background="@color/black"
             app:layout_constraintTop_toBottomOf="@+id/publicarAnuncioText"
             tools:layout_editor_absoluteX="4dp" />
 

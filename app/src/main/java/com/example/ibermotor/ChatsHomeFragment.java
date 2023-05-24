@@ -58,12 +58,6 @@ public class ChatsHomeFragment extends Fragment implements UsersAdapter.OnUserCl
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
 
-        view.findViewById(R.id.flechaBack).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navController.navigateUp();
-            }
-        });
     }
 
     @Override

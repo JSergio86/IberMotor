@@ -6,45 +6,30 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/upBar"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
+    <TextView
+        android:id="@+id/chatText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="16dp"
+        android:textStyle="bold"
+        android:text="Chat"
+        android:textSize="20sp"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageButton
-            android:id="@+id/flechaBack"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="16dp"
-            android:background="@null"
-            android:scaleType="centerInside"
-            android:src="@drawable/iconovolver"
-            android:backgroundTint="@color/white"/>
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:text="Chats"
-            android:textColor="@color/black"
-            android:textSize="19dp" />
-    </LinearLayout>
 
     <View
-        android:id="@+id/view"
-        android:layout_width="0dp"
-        android:layout_height="1px"
-        android:background="#1f1f1f"
-        app:layout_constraintBottom_toBottomOf="@+id/upBar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:id="@+id/linea"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/black"
+        app:layout_constraintTop_toBottomOf="@+id/chatText"
+        tools:layout_editor_absoluteX="4dp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
@@ -52,7 +37,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/upBar">
+        app:layout_constraintTop_toBottomOf="@+id/linea">
 
         <ProgressBar
             android:id="@+id/loading_chats_progressbar"
