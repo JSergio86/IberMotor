@@ -198,7 +198,9 @@ public class HomeFragment extends Fragment {
         }
         public void navigateToDescripcionCocheFragment(Post post) {
             appViewModel.postSeleccionado.setValue(post);
-            navController.navigate(R.id.descripcionCocheFragment);
+            Bundle args = new Bundle();
+            args.putString("postId", post.postId);
+            navController.navigate(R.id.descripcionCocheFragment, args);
         }
 
         class PostViewHolder extends RecyclerView.ViewHolder {

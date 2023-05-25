@@ -28,6 +28,7 @@ import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.github.nikartm.button.FitButton;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -44,12 +45,11 @@ import java.util.List;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DescripcionCocheFragment extends Fragment {
-
     NavController navController;
-    ImageView volver;
+    ImageView volver, iconoFavorito;
     FitButton botonChatPaco;
     AppViewModel appViewModel;
-    TextView descripcion, nombreText, horasText, precioText, nombreUbicacion, ciudadText, kilometrosText, añosText, combustibleText, puertasText, cambioText, potenciaText, colorText, userName;
+    TextView descripcion, nombreText, horasText, precioText, nombreUbicacion, kilometrosText, añosText, combustibleText, puertasText, cambioText, potenciaText, colorText, userName;
     CircleImageView fotoPerfil;
 
     @Override
@@ -65,7 +65,6 @@ public class DescripcionCocheFragment extends Fragment {
         horasText = view.findViewById(R.id.horasText);
         precioText = view.findViewById(R.id.precioText);
         nombreUbicacion = view.findViewById(R.id.nombreUbicacion);
-        ciudadText = view.findViewById(R.id.ciudadText);
         kilometrosText = view.findViewById(R.id.kilometrosText);
         añosText = view.findViewById(R.id.añosText);
         combustibleText = view.findViewById(R.id.combustibleText);
@@ -75,8 +74,7 @@ public class DescripcionCocheFragment extends Fragment {
         colorText = view.findViewById(R.id.colorText);
         fotoPerfil = view.findViewById(R.id.userImage);
         userName = view.findViewById(R.id.userName);
-
-
+        iconoFavorito = view.findViewById(R.id.iconoFavorito);
 
 
         volver.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +84,9 @@ public class DescripcionCocheFragment extends Fragment {
 
             }
         });
+        String uidPost = getArguments().getString("postId");
+
+        String uidUsuario = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
         appViewModel.postSeleccionado.observe(getViewLifecycleOwner(), new Observer<Post>() {
@@ -99,7 +100,6 @@ public class DescripcionCocheFragment extends Fragment {
                 horasText.setText(fechaHora);
                 precioText.setText(post.precio + "€");
                 nombreUbicacion.setText(post.ciudad);
-                ciudadText.setText(post.ciudad);
                 kilometrosText.setText(post.kilometros + "km");
                 añosText.setText(post.año + "");
                 combustibleText.setText(post.combustible);
@@ -107,6 +107,13 @@ public class DescripcionCocheFragment extends Fragment {
                 cambioText.setText(post.cambioMarchas + "");
                 potenciaText.setText(post.potencia + "CV");
                 colorText.setText(post.color + "");
+
+                List<String> favoritos = post.favoritos;
+                if (favoritos != null && favoritos.contains(uidUsuario)) {
+                    iconoFavorito.setImageResource(R.drawable.baseline_star_24);
+                } else {
+                    iconoFavorito.setImageResource(R.drawable.baseline_star_border_24);
+                }
 
                 List<String> fotos = post.fotoCoche;
                 List<CarouselItem> list = new ArrayList<>();
@@ -126,9 +133,7 @@ public class DescripcionCocheFragment extends Fragment {
                             list.add(new CarouselItem(urlFoto));
                         }
                     }
-
                     carousel.setData(list);
-
                 }
 
                 // Obtener la referencia a la colección "usuarios" y al documento con la UID del post
@@ -159,6 +164,34 @@ public class DescripcionCocheFragment extends Fragment {
                         }
                     }
         });
+                iconoFavorito.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        FirebaseFirestore.getInstance().collection("posts").document(uidPost)
+                                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                        List<String> favoritos = (List<String>) documentSnapshot.get("favoritos");
+                                        if (favoritos != null && favoritos.contains(uidUsuario)) {
+                                            // Si el usuario ya está en la lista de favoritos, lo quitamosfavoritos.remove(uidUsuario);
+                                            iconoFavorito.setImageResource(R.drawable.baseline_star_border_24);
+                                        } else {
+                                            // Si el usuario no está en la lista de favoritos, lo agregamos
+                                            if (favoritos == null) {
+                                                favoritos = new ArrayList<>();
+                                            }
+                                            favoritos.add(uidUsuario);
+                                            iconoFavorito.setImageResource(R.drawable.baseline_star_24);
+                                        }
+
+                                        // Actualizar la lista de favoritos en el documento del post
+                                        FirebaseFirestore.getInstance().collection("posts").document(uidPost)
+                                                .update("favoritos", favoritos);
+                                    }
+                                });
+
+                    }
+                });
             }
         });
 

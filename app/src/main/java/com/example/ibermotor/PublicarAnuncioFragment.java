@@ -344,10 +344,10 @@ public class PublicarAnuncioFragment extends Fragment{
             return;
         }
 
-        LatLng cityLocation = getLocationFromCity(ciudad);
+        LatLng cityLocation = getLocationFromPostalCode(codigoPostal);
 
         if (cityLocation == null) {
-            cityLocation = getLocationFromPostalCode(codigoPostal);
+            cityLocation = getLocationFromCity(ciudad);
         }
         if (cityLocation != null) {
             currentLatitude = cityLocation.latitude;
@@ -389,13 +389,14 @@ public class PublicarAnuncioFragment extends Fragment{
             }
 
             // Llama al método guardarEnFirestore() pasando la lista downloadUrls
-            guardarEnFirestore(marca, modelo, añoInt, combustibe, puertasInt, color, kilometrosInt, tipoDeCambio, potenciaInt, precioInt, descripcion, ciudad, currentLatitude, currentLongitude, date, downloadUrls);
+            guardarEnFirestore(marca, modelo, añoInt, combustibe, puertasInt, color, kilometrosInt, tipoDeCambio, potenciaInt, precioInt, descripcion, ciudad, codigoPostal, currentLatitude, currentLongitude, date, downloadUrls);
         });
     }
 
-    private void guardarEnFirestore(String marca, String modelo, int año, String combustible, int puertas, String color, int kilometros, String tipoDeCambio, int potencia, int precio, String descripcion, String ciudad, double latitude, double longitude, Date date, List<String> downloadUrls) {
+    private void guardarEnFirestore(String marca, String modelo, int año, String combustible, int puertas, String color, int kilometros, String tipoDeCambio, int potencia, int precio, String descripcion, String ciudad, String codigoPostal, double latitude, double longitude, Date date, List<String> downloadUrls) {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        Post post = new Post(user.getUid(), downloadUrls, marca, modelo, año, combustible, puertas, color, kilometros, tipoDeCambio, potencia, precio, descripcion, ciudad, latitude, longitude, date);
+        List<String> favoritos = new ArrayList<>();
+        Post post = new Post(user.getUid(),"", downloadUrls, marca, modelo, año, combustible, puertas, color, kilometros, tipoDeCambio, potencia, precio, descripcion, ciudad, codigoPostal, latitude, longitude, date, favoritos);
         FirebaseFirestore.getInstance().collection("posts")
                 .add(post)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -404,8 +405,8 @@ public class PublicarAnuncioFragment extends Fragment{
                         progressButton.buttonFinished();
                         navController.popBackStack();
                         appViewModel.setMediaSeleccionado(null, null);
-                        documentReference.update("postId", documentReference.getId());
-                    }
+                        String postId = documentReference.getId();
+                        documentReference.update("postId", postId);                    }
                 });
     }
 

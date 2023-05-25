@@ -375,7 +375,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
-                    app:counterMaxLength="7"/>
+                    android:maxLength="7"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -440,7 +440,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
-                    app:counterMaxLength="4"/>
+                    android:maxLength="4"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -472,7 +472,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"
-                    app:counterMaxLength="6"/>
+                    android:maxLength="6"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
