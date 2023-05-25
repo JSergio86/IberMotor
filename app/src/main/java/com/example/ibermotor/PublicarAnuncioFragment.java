@@ -104,7 +104,6 @@ public class PublicarAnuncioFragment extends Fragment{
         photoContainer = view.findViewById(R.id.photoContainer);
         iconoGaleria = view.findViewById(R.id.galleryIcon);
         photoText = view.findViewById(R.id.photoText);
-        subirAnuncio = view.findViewById(R.id.subiranuncio);
         subirFotosBoton = view.findViewById(R.id.subirFotosBoton);
         descripcionEditText = view.findViewById(R.id.descripcionEditText);
         modeloEditText = view.findViewById(R.id.modeloEditText);

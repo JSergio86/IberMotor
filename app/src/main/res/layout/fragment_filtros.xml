@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:scrollbars="none"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".FiltrosFragment">
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -59,10 +60,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="40dp"
                 android:text="Marca"
+                android:layout_marginTop="20dp"
                 android:textColor="@color/black"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/ubicacion"
                 app:layout_constraintTop_toBottomOf="@+id/nombreUbicacion" />
@@ -73,7 +74,10 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
                 android:hint="Marca"
                 app:boxStrokeColor="@color/text_input_layout_stroke_color"
                 app:boxStrokeErrorColor="@color/text_input_layout_stroke_color_error">
@@ -102,10 +106,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="40dp"
-                android:text="Detalles"
+                android:text="Modelo"
                 android:textColor="@color/black"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/ubicacion"
                 app:layout_constraintTop_toBottomOf="@+id/nombreUbicacion" />
@@ -114,8 +117,10 @@
                 android:id="@+id/modeloTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:hint="Modelo"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"                 android:hint="Modelo"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:boxStrokeColor="@color/text_input_layout_stroke_color"
                 app:boxStrokeErrorColor="@color/text_input_layout_stroke_color_error"
@@ -132,167 +137,192 @@
         </LinearLayout>
 
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/añoLinear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/modeloLinear">
 
             <TextView
                 android:id="@+id/añoTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="40dp"
                 android:text="Año"
                 android:textColor="@color/black"
-                android:textSize="20dp"
+                android:textSize="18dp"
                 android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="@+id/ubicacion"
-                app:layout_constraintTop_toBottomOf="@+id/nombreUbicacion" />
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/añoTextInputLayout"
+                android:layout_marginStart="17dp"
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                android:id="@+id/desdeAñoTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Desde"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="17dp"
+                android:layout_below="@id/añoTextView"
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                android:id="@+id/desdeAñoNumeroTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1970"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_toEndOf="@+id/desdeAñoTextView"
+                android:layout_marginStart="4dp"
+                android:layout_below="@id/añoTextView"
+                android:layout_marginTop="8dp" />
+
+            <com.google.android.material.slider.RangeSlider
+                android:id="@+id/lineaAñoSlider"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:hint="Año de matriculación"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:boxStrokeColor="@color/text_input_layout_stroke_color"
-                app:boxStrokeErrorColor="@color/text_input_layout_stroke_color_error"
-                app:counterEnabled="true"
-                app:counterMaxLength="4">
+                android:layout_below="@id/desdeAñoTextView"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="17dp"
+                android:valueFrom="1970"
+                android:valueTo="2023"
+                app:values="@array/initial_slider_values" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/añoEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"/>
+            <TextView
+                android:id="@+id/hastaTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hasta"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:layout_toStartOf="@+id/hastaAñoTextView"
+                android:layout_below="@id/añoTextView"
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                android:id="@+id/hastaAñoTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2023"
+                android:layout_marginStart="4dp"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
+                android:layout_below="@id/añoTextView"
+                android:layout_marginTop="8dp" />
 
 
-            </com.google.android.material.textfield.TextInputLayout>
 
-        </LinearLayout>
+
+        </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/combustibleLinear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="-20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/añoLinear">
+            app:layout_constraintTop_toBottomOf="@id/añoLinear"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:id="@+id/combustibleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Combusitble"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:textStyle="bold" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/combustibleTextInputLayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:hint="Combustible"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"                 android:hint="Combustible"
                 app:boxStrokeColor="@color/text_input_layout_stroke_color"
-                app:boxStrokeErrorColor="@color/text_input_layout_stroke_color_error"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+                app:boxStrokeErrorColor="@color/text_input_layout_stroke_color_error">
 
-                <AutoCompleteTextView
-                    android:id="@+id/combustibleAutoCompleteTextView"
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
-                    android:inputType="none"
-                    />
-
+            <AutoCompleteTextView
+                android:id="@+id/combustibleAutoCompleteTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
-
-        </LinearLayout>
-
+            </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/puertasLinear"
+            android:id="@+id/potenciaLinear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="17dp"
-            android:layout_marginEnd="17dp"
-            android:layout_marginBottom="20dp"
             android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/colorLinear"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/combustibleLinear">
 
-
             <TextView
-                android:id="@+id/puertas"
+                android:id="@+id/potenciaTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:text="Puertas"
+                android:layout_marginStart="16dp"
+                android:text="Potencia"
+                android:textColor="@color/black"
                 android:textSize="18dp"
-                />
+                android:textStyle="bold" />
 
 
-            <GridLayout
-                android:id="@+id/gridLayout"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/potenciaDesdeTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:columnCount="4">
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:hint="Desde"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxStrokeColor="@color/text_input_layout_stroke_color"
+                app:boxStrokeErrorColor="@color/text_input_layout_stroke_color_error">
 
-                <Button
-                    android:id="@+id/button1"
-                    android:layout_width="0dp"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/potenciaDesdeEditText"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_marginStart="-4dp"
-                    android:layout_marginEnd="-2dp"
-                    android:backgroundTint="@color/colorButtonUnselected"
-                    android:text="2"
-                    android:textColor="#000000"
-                    android:textStyle="bold" />
+                    android:inputType="number"/>
 
-                <Button
-                    android:id="@+id/button2"
-                    android:layout_width="0dp"
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/potenciaHastaTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:hint="Hasta"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxStrokeColor="@color/text_input_layout_stroke_color"
+                app:boxStrokeErrorColor="@color/text_input_layout_stroke_color_error">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/potenciaHastaEditText"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_marginStart="-2dp"
-                    android:layout_marginEnd="-2dp"
-                    android:backgroundTint="@color/colorButtonUnselected"
-                    android:text="3"
-                    android:textColor="#000000"
-                    android:textStyle="bold" />
+                    android:inputType="number"/>
 
-                <Button
-                    android:id="@+id/button3"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_marginStart="-2dp"
-                    android:layout_marginEnd="-2dp"
-                    android:backgroundTint="@color/colorButtonUnselected"
-                    android:text="4"
-                    android:textColor="#000000"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/button4"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_columnWeight="1"
-                    android:layout_marginStart="-2dp"
-                    android:layout_marginEnd="-4dp"
-                    android:backgroundTint="@color/colorButtonUnselected"
-                    android:text="5"
-                    android:textColor="#000000"
-                    android:textStyle="bold" />
-
-            </GridLayout>
-
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
+
 
         <LinearLayout
             android:id="@+id/colorLinear"
@@ -301,14 +331,25 @@
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/puertasLinear">
-
+            app:layout_constraintTop_toBottomOf="@id/potenciaLinear"
+            android:layout_marginTop="15dp">
+            <TextView
+                android:id="@+id/colorTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Color"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:textStyle="bold" />
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/colortextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:hint="Color"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"                 android:hint="Color"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 app:boxStrokeColor="@color/text_input_layout_stroke_color"
                 app:boxStrokeErrorColor="@color/text_input_layout_stroke_color_error"
@@ -332,14 +373,43 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/colorLinear">
+            <TextView
+                android:id="@+id/kmTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Kilometros"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:textStyle="bold" />
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/kmDesdeTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:hint="Desde"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxStrokeColor="@color/text_input_layout_stroke_color"
+                app:boxStrokeErrorColor="@color/text_input_layout_stroke_color_error">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/kmDesdeEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/kmHastaTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="-50dp"
-                android:layout_margin="16dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
                 android:hint="Hasta"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:boxStrokeColor="@color/text_input_layout_stroke_color"
@@ -354,6 +424,86 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
+            <RelativeLayout
+                android:id="@+id/puertaLinear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/kilometrajeLinear">
+
+                <TextView
+                    android:id="@+id/puertasTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Puertas"
+                    android:textColor="@color/black"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    android:layout_marginStart="17dp"
+                    android:layout_marginTop="8dp" />
+
+                <TextView
+                    android:id="@+id/desdeTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Desde"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_below="@id/puertasTextView"
+                    android:layout_marginTop="8dp" />
+
+                <TextView
+                    android:id="@+id/desdepuertasTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_toEndOf="@+id/desdeTextView"
+                    android:layout_marginStart="4dp"
+                    android:layout_below="@id/puertasTextView"
+                    android:layout_marginTop="8dp" />
+
+                <com.google.android.material.slider.RangeSlider
+                    android:id="@+id/lineaPuertasSlider"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/desdeTextView"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginStart="16dp"
+                    android:valueFrom="1"
+                    android:valueTo="5"
+                    app:values="@array/initial_slider_values_puertas" />
+
+                <TextView
+                    android:id="@+id/hastaPuertaTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hasta"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:layout_toStartOf="@+id/hastaPuertaNumeroTextView"
+                    android:layout_below="@id/puertasTextView"
+                    android:layout_marginTop="8dp" />
+
+                <TextView
+                    android:id="@+id/hastaPuertaNumeroTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="5"
+                    android:layout_marginStart="4dp"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="20dp"
+                    android:layout_below="@id/puertasTextView"
+                    android:layout_marginTop="8dp" />
+
+            </RelativeLayout>
+
 
         </LinearLayout>
 
@@ -365,14 +515,24 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/kilometrajeLinear">
-
+            <TextView
+                android:id="@+id/cambioTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Cambio"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:textStyle="bold" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/cambioTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:hint="Tipo de cambio"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"                 android:hint="Tipo de cambio"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 app:boxStrokeColor="@color/text_input_layout_stroke_color"
                 app:boxStrokeErrorColor="@color/text_input_layout_stroke_color_error"
@@ -390,35 +550,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/potenciaLinear"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/cambioLinear">
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/potenciaTextInputLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:hint="Potencia(CV)"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:boxStrokeColor="@color/text_input_layout_stroke_color"
-                app:boxStrokeErrorColor="@color/text_input_layout_stroke_color_error">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/potenciaEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/precioLinear"
@@ -427,22 +558,52 @@
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/potenciaLinear">
+            app:layout_constraintTop_toBottomOf="@id/cambioLinear">
+            <TextView
+                android:id="@+id/precioTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Precio"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:textStyle="bold" />
 
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/precioTextInputLayout"
+                android:id="@+id/precioDesdeTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:hint="Precio(€)"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:hint="Desde"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:boxStrokeColor="@color/text_input_layout_stroke_color"
-                app:boxStrokeErrorColor="@color/text_input_layout_stroke_color_error"
-                >
+                app:boxStrokeErrorColor="@color/text_input_layout_stroke_color_error">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/precioEditText"
+                    android:id="@+id/precioDesdeEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/precioHastaTextInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
+                android:hint="Hasta"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:boxStrokeColor="@color/text_input_layout_stroke_color"
+                app:boxStrokeErrorColor="@color/text_input_layout_stroke_color_error">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/precioHastaEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"/>
@@ -453,51 +614,19 @@
 
 
 
-        <LinearLayout
-            android:id="@+id/descripcionLinear"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/precioLinear">
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/descripcionTextInputLayout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:hint="Descripción"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:boxStrokeColor="@color/text_input_layout_stroke_color"
-                app:boxStrokeErrorColor="@color/text_input_layout_stroke_color_error"
-                app:counterEnabled="true"
-                app:counterMaxLength="280">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/descripcionEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-        </LinearLayout>
-
         <TextView
             android:id="@+id/datosUsuarioTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="17dp"
-            android:layout_marginTop="20dp"
-            android:text="Ubicación del anuncio"
+            android:layout_marginTop="10dp"
+            android:text="Ciudad"
             android:textColor="@color/black"
             android:textSize="18dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/ciudadLinear"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/descripcionLinear">
+            app:layout_constraintTop_toBottomOf="@+id/precioLinear">
 
         </TextView>
 
@@ -517,7 +646,10 @@
                 app:boxStrokeErrorColor="@color/text_input_layout_stroke_color_error"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp"
                 android:hint="Ciudad">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -530,39 +662,9 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/codigoPostalLinear"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ciudadLinear">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/codigoPostalTextInputLayout"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:boxStrokeColor="@color/text_input_layout_stroke_color"
-                app:boxStrokeErrorColor="@color/text_input_layout_stroke_color_error"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:hint="Código Postal">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/codigoPostalEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </LinearLayout>
-
-
 
         <com.github.nikartm.button.FitButton
-            android:id="@+id/subiranuncio"
+            android:id="@+id/botonFiltrar"
             android:layout_width="230dp"
             android:layout_height="40dp"
             android:layout_margin="32dp"
@@ -575,12 +677,12 @@
             app:fb_divHeight="40dp"
             app:fb_rippleColor="#FBE9E7"
             app:fb_iconColor="#FFF"
-            app:fb_textColor="#FFF"
-            app:fb_text="Subir anuncio"
-            app:fb_backgroundColor="#002196"
+            app:fb_textColor="@color/white"
+            app:fb_text="Filtrar"
+            app:fb_backgroundColor="@color/black"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/codigoPostalLinear"/>
+            app:layout_constraintTop_toBottomOf="@+id/ciudadLinear"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

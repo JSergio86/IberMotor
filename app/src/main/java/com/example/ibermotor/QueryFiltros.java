@@ -3,14 +3,6 @@ package com.example.ibermotor;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.PopupMenu;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +13,15 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
@@ -34,12 +35,13 @@ import com.google.firebase.firestore.Query;
 import java.util.List;
 
 
-public class HomeFragment extends Fragment {
+public class QueryFiltros extends Fragment {
     NavController navController;
     public AppViewModel appViewModel;
     FirebaseUser user;
     ImageView iconoFiltro, fotoPerfil, menuDrawer;
     String uid;
+    String modelo, potenciaDesde, potenciaHasta, kmDesde, kmHasta, precioDesde, precioHasta, marca, combustible, color, cambio, ciudad, añoDesde, añoHasta, puertaDesde, puertaHasta;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -54,14 +56,14 @@ public class HomeFragment extends Fragment {
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-        if(user != null){
+        if (user != null) {
             Glide.with(requireView())
                     .load(user.getPhotoUrl())
                     .transform(new CircleCrop())
                     .into(fotoPerfil);
         }
 
-        if(user.getPhotoUrl() == null){
+        if (user.getPhotoUrl() == null) {
             Glide.with(requireView())
                     .load(R.drawable.anonymo)
                     .transform(new CircleCrop())
@@ -84,12 +86,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        view.findViewById(R.id.iconoVista).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navController.navigate(R.id.homeFragmentV2);
-            }
-        });
 
         menuDrawer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,46 +114,90 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // Los permisos no están concedidos, solicita los permisos
-            ActivityCompat.requestPermissions(requireActivity(), new String[] {
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-            }, 1); // El número 1 es un código de solicitud que puedes usar para identificar esta solicitud de permisos en el método onRequestPermissionsResult
+
+        RecyclerView postsRecyclerView = view.findViewById(R.id.postsRecyclerView);
+// Construir la consulta base
+        Query baseQuery = FirebaseFirestore.getInstance().collection("posts");
+
+// Aplicar los filtros según los valores de las variables
+        if (!marca.equalsIgnoreCase("Todas")) {
+            baseQuery = baseQuery.whereEqualTo("marca", marca);
+        }
+
+        if (!modelo.equalsIgnoreCase("Todos")) {
+            baseQuery = baseQuery.whereEqualTo("modelo", modelo);
+        }
+
+        if (!combustible.equalsIgnoreCase("Todos")) {
+            baseQuery = baseQuery.whereEqualTo("combustible", combustible);
+        }
+
+        if (!color.equalsIgnoreCase("Todos")) {
+            baseQuery = baseQuery.whereEqualTo("color", color);
+        }
+
+        if (!cambio.equalsIgnoreCase("Todos")) {
+            baseQuery = baseQuery.whereEqualTo("cambioMarchas", cambio);
+        }
+
+        if (!ciudad.equalsIgnoreCase("Todas")) {
+            baseQuery = baseQuery.whereEqualTo("ciudad", ciudad);
         }
 
 
-        RecyclerView postsRecyclerView = view.findViewById(R.id.postsRecyclerView);
+        Query filteredQuery = baseQuery;
 
-        Query query = FirebaseFirestore.getInstance().collection("posts").limit(50).orderBy("date", Query.Direction.DESCENDING);
+        if (!añoDesde.equalsIgnoreCase("Todos") && !añoHasta.equalsIgnoreCase("Todos")) {
+            Query añoQuery = baseQuery.whereGreaterThanOrEqualTo("año", Integer.parseInt(añoDesde))
+                    .whereLessThanOrEqualTo("año", Integer.parseInt(añoHasta));
+            filteredQuery = añoQuery.orderBy("año");
+        }
+
+        if (!potenciaDesde.equalsIgnoreCase("Todos") && !potenciaHasta.equalsIgnoreCase("Todos")) {
+            Query potenciaQuery = baseQuery.whereGreaterThanOrEqualTo("potencia", Integer.parseInt(potenciaDesde))
+                    .whereLessThanOrEqualTo("potencia", Integer.parseInt(potenciaHasta));
+            filteredQuery = potenciaQuery.orderBy("potencia");
+        }
+
+        if (!kmDesde.equalsIgnoreCase("Todos") && !kmHasta.equalsIgnoreCase("Todos")) {
+            Query kmQuery = baseQuery.whereGreaterThanOrEqualTo("kilometros", Integer.parseInt(kmDesde))
+                    .whereLessThanOrEqualTo("kilometros", Integer.parseInt(kmHasta));
+            filteredQuery = kmQuery.orderBy("kilometros");
+        }
+
+        if (!puertaHasta.equalsIgnoreCase("Todos") && !puertaDesde.equalsIgnoreCase("Todos")) {
+            Query puertasQuery = baseQuery.whereGreaterThanOrEqualTo("puertas", Integer.parseInt(puertaDesde))
+                    .whereLessThanOrEqualTo("puertas", Integer.parseInt(puertaHasta));
+            filteredQuery = puertasQuery.orderBy("puertas");
+        }
+
+        if (!precioDesde.equalsIgnoreCase("Todos") && !precioHasta.equalsIgnoreCase("Todos")) {
+            Query precioQuery = baseQuery.whereGreaterThanOrEqualTo("precio", Integer.parseInt(precioDesde))
+                    .whereLessThanOrEqualTo("precio", Integer.parseInt(precioHasta));
+            filteredQuery = precioQuery.orderBy("precio");
+        }
+
+        filteredQuery = filteredQuery.orderBy("date", Query.Direction.DESCENDING)
+                .limit(50);
+
 
         FirestoreRecyclerOptions<Post> options = new FirestoreRecyclerOptions.Builder<Post>()
-                .setQuery(query, Post.class)
+                .setQuery(filteredQuery, Post.class)
                 .setLifecycleOwner(this)
                 .build();
+
+
 
         postsRecyclerView.setAdapter(new PostsAdapter(options));
 
         user = FirebaseAuth.getInstance().getCurrentUser();
 
     }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 1) { // El mismo código de solicitud que se usó al solicitar los permisos
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
-                    && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                // Los permisos fueron concedidos, realiza las acciones necesarias
-            } else {
-                // Los permisos fueron denegados, maneja esta situación de acuerdo a tus necesidades
-                Toast.makeText(requireContext(), "Los permisos de ubicación fueron denegados", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
 
     class PostsAdapter extends FirestoreRecyclerAdapter<Post, PostsAdapter.PostViewHolder> {
-        public PostsAdapter(@NonNull FirestoreRecyclerOptions<Post> options) {super(options);}
+        public PostsAdapter(@NonNull FirestoreRecyclerOptions<Post> options) {
+            super(options);
+        }
 
         @NonNull
         @Override
@@ -167,11 +207,11 @@ public class HomeFragment extends Fragment {
 
         @Override
         protected void onBindViewHolder(@NonNull PostViewHolder holder, int position, @NonNull final Post post) {
-            holder.precioText.setText(post.precio+"€");
-            holder.kilometrosText.setText(post.kilometros+"km -");
-            holder.añosText.setText(post.año+" - ");
-            holder.ciudadText.setText(post.ciudad+" - ");
-            holder.nombreText.setText(post.marca+" "+ post.modelo);
+            holder.precioText.setText(post.precio + "€");
+            holder.kilometrosText.setText(post.kilometros + "km -");
+            holder.añosText.setText(post.año + " - ");
+            holder.ciudadText.setText(post.ciudad + " - ");
+            holder.nombreText.setText(post.marca + " " + post.modelo);
             holder.combustibleText.setText(post.combustible);
 
             // Obtener la lista de fotos del post
@@ -195,6 +235,7 @@ public class HomeFragment extends Fragment {
                 }
             });
         }
+
         public void navigateToDescripcionCocheFragment(Post post) {
             appViewModel.postSeleccionado.setValue(post);
             Bundle args = new Bundle();
@@ -225,7 +266,26 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        Bundle args = getArguments();
+        if (args != null) {
+            modelo = args.getString("modelo");
+            potenciaDesde = args.getString("potenciaDesde");
+            potenciaHasta = args.getString("potenciaHasta");
+            kmDesde = args.getString("kmDesde");
+            kmHasta = args.getString("kmHasta");
+            precioDesde = args.getString("precioDesde");
+            precioHasta = args.getString("precioHasta");
+            marca = args.getString("marca");
+            combustible = args.getString("combustible");
+            color = args.getString("color");
+            cambio = args.getString("cambio");
+            ciudad = args.getString("ciudad");
+            añoDesde = args.getString("añoDesde");
+            añoHasta = args.getString("añoHasta");
+            puertaDesde = args.getString("puertaDesde");
+            puertaHasta = args.getString("puertaHasta");
+        }
+        return inflater.inflate(R.layout.fragment_query_filtros, container, false);
+
     }
 }
