@@ -200,6 +200,7 @@ public class HomeFragment extends Fragment {
             appViewModel.postSeleccionado.setValue(post);
             Bundle args = new Bundle();
             args.putString("postId", post.postId);
+            args.putString("uid", post.uid);
             navController.navigate(R.id.descripcionCocheFragment, args);
         }
 

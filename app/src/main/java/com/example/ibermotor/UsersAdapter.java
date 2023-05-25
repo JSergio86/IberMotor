@@ -82,8 +82,6 @@ public class UsersAdapter extends RecyclerView.Adapter<UsersAdapter.ViewHolder> 
                         .into(profile_image);
             }
 
-
-
         }
 
         @Override

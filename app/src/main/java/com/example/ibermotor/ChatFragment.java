@@ -35,7 +35,6 @@ import java.util.UUID;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatFragment extends Fragment {
-
     private NavController navController;
     private RecyclerView messagesRecyclerView;
     private EditText messageInput;

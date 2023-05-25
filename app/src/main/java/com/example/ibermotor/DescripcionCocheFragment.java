@@ -1,5 +1,6 @@
 package com.example.ibermotor;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -19,26 +20,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
-import com.denzcoskun.imageslider.ImageSlider;
-import com.denzcoskun.imageslider.constants.ScaleTypes;
-import com.denzcoskun.imageslider.models.SlideModel;
-import com.github.nikartm.button.FitButton;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import org.imaginativeworld.whynotimagecarousel.ImageCarousel;
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -46,11 +42,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DescripcionCocheFragment extends Fragment {
     NavController navController;
-    ImageView volver, iconoFavorito;
-    FitButton botonChatPaco;
+    ImageView volver, iconoFavorito, chatIconBackground, iconoCompartir;
     AppViewModel appViewModel;
     TextView descripcion, nombreText, horasText, precioText, nombreUbicacion, kilometrosText, añosText, combustibleText, puertasText, cambioText, potenciaText, colorText, userName;
     CircleImageView fotoPerfil;
+    String uidPost, uidUsuarioPost;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -75,6 +71,8 @@ public class DescripcionCocheFragment extends Fragment {
         fotoPerfil = view.findViewById(R.id.userImage);
         userName = view.findViewById(R.id.userName);
         iconoFavorito = view.findViewById(R.id.iconoFavorito);
+        chatIconBackground = view.findViewById(R.id.chatIconBackground);
+        iconoCompartir = view.findViewById(R.id.iconoCompartir);
 
 
         volver.setOnClickListener(new View.OnClickListener() {
@@ -84,9 +82,12 @@ public class DescripcionCocheFragment extends Fragment {
 
             }
         });
-        String uidPost = getArguments().getString("postId");
 
-        String uidUsuario = FirebaseAuth.getInstance().getCurrentUser().getUid();
+         uidPost = getArguments().getString("postId");
+         uidUsuarioPost = getArguments().getString("uid");
+
+
+        String uidUsuarioActual = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
 
         appViewModel.postSeleccionado.observe(getViewLifecycleOwner(), new Observer<Post>() {
@@ -109,7 +110,7 @@ public class DescripcionCocheFragment extends Fragment {
                 colorText.setText(post.color + "");
 
                 List<String> favoritos = post.favoritos;
-                if (favoritos != null && favoritos.contains(uidUsuario)) {
+                if (favoritos != null && favoritos.contains(uidUsuarioActual)) {
                     iconoFavorito.setImageResource(R.drawable.baseline_star_24);
                 } else {
                     iconoFavorito.setImageResource(R.drawable.baseline_star_border_24);
@@ -172,15 +173,16 @@ public class DescripcionCocheFragment extends Fragment {
                                     @Override
                                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                                         List<String> favoritos = (List<String>) documentSnapshot.get("favoritos");
-                                        if (favoritos != null && favoritos.contains(uidUsuario)) {
-                                            // Si el usuario ya está en la lista de favoritos, lo quitamosfavoritos.remove(uidUsuario);
+                                        if (favoritos != null && favoritos.contains(uidUsuarioActual)) {
+                                            // Si el usuario ya está en la lista de favoritos, lo quitamos
+                                            favoritos.remove(uidUsuarioActual);
                                             iconoFavorito.setImageResource(R.drawable.baseline_star_border_24);
                                         } else {
                                             // Si el usuario no está en la lista de favoritos, lo agregamos
                                             if (favoritos == null) {
                                                 favoritos = new ArrayList<>();
                                             }
-                                            favoritos.add(uidUsuario);
+                                            favoritos.add(uidUsuarioActual);
                                             iconoFavorito.setImageResource(R.drawable.baseline_star_24);
                                         }
 
@@ -189,19 +191,100 @@ public class DescripcionCocheFragment extends Fragment {
                                                 .update("favoritos", favoritos);
                                     }
                                 });
-
                     }
                 });
+            }
+        });
+
+        chatIconBackground.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(uidUsuarioPost.equals(uidUsuarioActual)){
+
+                }
+                else{
+                    checkChatExistence();
+                }
             }
         });
 
     }
 
 
+    private void checkChatExistence() {
+        String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        String postUserId = uidUsuarioPost;
+
+        // Combinar los ID de usuario en orden alfabético
+        String userPair;
+        if (currentUserId.compareTo(postUserId) < 0) {
+            userPair = currentUserId + "_" + postUserId;
+        } else {
+            userPair = postUserId + "_" + currentUserId;
+        }
+
+        // Consulta la colección de chats
+        FirebaseFirestore.getInstance().collection("chats")
+                .whereArrayContains("users", currentUserId)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        List<DocumentSnapshot> documents = task.getResult().getDocuments();
+                        for (DocumentSnapshot document : documents) {
+                            Chat chat = document.toObject(Chat.class);
+                            if (chat != null && chat.getUsers().contains(postUserId)) {
+                                // Si se encuentra un chat existente, navega al ChatFragment
+                                navigateToChatFragment(chat);
+                                return;
+                            }
+                        }
+
+                        // Si no se encuentra un chat existente, crea uno nuevo
+                        createNewChat(postUserId);
+                    } else {
+                        // Maneja el error
+                    }
+                });
+    }
+
+    private void createNewChat(String postUserId) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        // Crear un nuevo documento de chat en Firestore
+        List<String> participants = Arrays.asList(currentUserId, postUserId);
+        long timestamp = System.currentTimeMillis();
+        Chat newChat = new Chat(null, participants, timestamp);
+
+        // Crear un nuevo chat en la colección de chats
+        db.collection("chats")
+                .add(newChat)
+                .addOnSuccessListener(documentReference -> {
+                    String chatId = documentReference.getId();
+                    newChat.setChatId(chatId); // Establece el ID del chat en el objeto Chat
+
+                    // Actualizar el documento de chat con el nuevo chatId
+                    db.collection("chats").document(chatId)
+                            .update("chatId", chatId)
+                            .addOnSuccessListener(aVoid -> {
+                                // Navegar al ChatFragment
+                                navigateToChatFragment(newChat);
+                            })
+                            .addOnFailureListener(e -> Log.e("ChatsHomeFragment", "Error updating chatId", e));
+                })
+                .addOnFailureListener(e -> Log.e("ChatsHomeFragment", "Error creating chat", e));
+    }
+
+    private void navigateToChatFragment(Chat chat) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("selected_chat", chat);
+        navController.navigate(R.id.chatFragment, bundle);
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_descripcion_coche, container, false);
     }
 }

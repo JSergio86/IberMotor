@@ -27,7 +27,7 @@ public class ProgressButton {
 
     void buttonActivated(){
         progressBar.setVisibility(View.VISIBLE);
-        textView.setText("Subiendo anuncio");
+        textView.setText("Subiendo anuncio...");
     }
 
     void buttonFinished(){

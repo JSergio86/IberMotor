@@ -49,11 +49,24 @@
             android:id="@+id/marcaLinear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/linea">
+
+            <TextView
+                android:id="@+id/marcaTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="40dp"
+                android:text="Marca"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/ubicacion"
+                app:layout_constraintTop_toBottomOf="@+id/nombreUbicacion" />
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/marcaTextInputLayout"
@@ -75,14 +88,27 @@
 
         </LinearLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/modeloLinear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/marcaLinear">
 
+            <TextView
+                android:id="@+id/modeloTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="40dp"
+                android:text="Detalles"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/ubicacion"
+                app:layout_constraintTop_toBottomOf="@+id/nombreUbicacion" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/modeloTextInputLayout"
@@ -103,7 +129,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
-        </RelativeLayout>
+        </LinearLayout>
 
 
         <LinearLayout
@@ -115,6 +141,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/modeloLinear">
 
+            <TextView
+                android:id="@+id/añoTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="40dp"
+                android:text="Año"
+                android:textColor="@color/black"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="@+id/ubicacion"
+                app:layout_constraintTop_toBottomOf="@+id/nombreUbicacion" />
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/añoTextInputLayout"
                 android:layout_width="match_parent"
@@ -297,22 +335,24 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/kmTextInputLayout"
+                android:id="@+id/kmHastaTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="-50dp"
                 android:layout_margin="16dp"
-                android:hint="Kilometros"
+                android:hint="Hasta"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 app:boxStrokeColor="@color/text_input_layout_stroke_color"
                 app:boxStrokeErrorColor="@color/text_input_layout_stroke_color_error">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/kmEditText"
+                    android:id="@+id/kmHastaEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="number"/>
 
             </com.google.android.material.textfield.TextInputLayout>
+
 
 
         </LinearLayout>
