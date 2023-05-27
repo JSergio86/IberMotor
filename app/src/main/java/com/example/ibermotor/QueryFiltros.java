@@ -29,6 +29,8 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.Filter;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -116,10 +118,10 @@ public class QueryFiltros extends Fragment {
 
 
         RecyclerView postsRecyclerView = view.findViewById(R.id.postsRecyclerView);
-// Construir la consulta base
+
+
         Query baseQuery = FirebaseFirestore.getInstance().collection("posts");
 
-// Aplicar los filtros según los valores de las variables
         if (!marca.equalsIgnoreCase("Todas")) {
             baseQuery = baseQuery.whereEqualTo("marca", marca);
         }
@@ -144,10 +146,9 @@ public class QueryFiltros extends Fragment {
             baseQuery = baseQuery.whereEqualTo("ciudad", ciudad);
         }
 
-
         Query filteredQuery = baseQuery;
 
-        if (!añoDesde.equalsIgnoreCase("Todos") && !añoHasta.equalsIgnoreCase("Todos")) {
+        if (!añoDesde.equalsIgnoreCase("1970") && !añoHasta.equalsIgnoreCase("2023")) {
             Query añoQuery = baseQuery.whereGreaterThanOrEqualTo("año", Integer.parseInt(añoDesde))
                     .whereLessThanOrEqualTo("año", Integer.parseInt(añoHasta));
             filteredQuery = añoQuery.orderBy("año");
@@ -165,7 +166,7 @@ public class QueryFiltros extends Fragment {
             filteredQuery = kmQuery.orderBy("kilometros");
         }
 
-        if (!puertaHasta.equalsIgnoreCase("Todos") && !puertaDesde.equalsIgnoreCase("Todos")) {
+        if (!puertaHasta.equalsIgnoreCase("1") && !puertaDesde.equalsIgnoreCase("5")) {
             Query puertasQuery = baseQuery.whereGreaterThanOrEqualTo("puertas", Integer.parseInt(puertaDesde))
                     .whereLessThanOrEqualTo("puertas", Integer.parseInt(puertaHasta));
             filteredQuery = puertasQuery.orderBy("puertas");
@@ -177,14 +178,14 @@ public class QueryFiltros extends Fragment {
             filteredQuery = precioQuery.orderBy("precio");
         }
 
-        filteredQuery = filteredQuery.orderBy("date", Query.Direction.DESCENDING)
-                .limit(50);
+        filteredQuery = filteredQuery.limit(50);
 
 
         FirestoreRecyclerOptions<Post> options = new FirestoreRecyclerOptions.Builder<Post>()
                 .setQuery(filteredQuery, Post.class)
                 .setLifecycleOwner(this)
                 .build();
+
 
 
 

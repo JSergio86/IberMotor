@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="339dp"
+    android:layout_height="wrap_content"
+    app:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="339dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/rectangle"
+            android:layout_width="339dp"
+            android:layout_height="329dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="36dp"
+            android:layout_marginEnd="36dp"
+            android:background="@drawable/rectangle_1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.509"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints,NotSibling" />
+
+        <ImageView
+            android:id="@+id/fotoCoche"
+            android:layout_width="340dp"
+            android:layout_height="180dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bmw"
+            app:layout_constraintEnd_toEndOf="@+id/rectangle"
+            app:layout_constraintStart_toStartOf="@+id/rectangle"
+            app:layout_constraintTop_toTopOf="@+id/rectangle"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/precioTotal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="12dp"
+            android:gravity="top"
+            android:lineSpacingExtra="1sp"
+            android:text="Precio total"
+            android:textSize="18dp"
+            android:translationY="-0.45sp"
+            app:layout_constraintStart_toStartOf="@+id/rectangle"
+            app:layout_constraintTop_toBottomOf="@+id/fotoCoche"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/precioText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="14dp"
+            android:gravity="top"
+            android:lineSpacingExtra="-3sp"
+            android:text="23.999€"
+            android:textSize="18dp"
+            android:textColor="#075480"
+            app:layout_constraintStart_toStartOf="@+id/rectangle"
+            app:layout_constraintTop_toBottomOf="@id/precioTotal"
+            tools:ignore="MissingConstraints" />
+
+        <TextView
+            android:id="@+id/nombreText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="14dp"
+            android:gravity="top"
+            android:lineSpacingExtra="-1sp"
+            android:text="BMW Serie 3 M3 E36"
+            android:textColor="@color/black"
+            android:textSize="24dp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="@+id/rectangle"
+            app:layout_constraintTop_toBottomOf="@+id/precioText" />
+
+        <RelativeLayout
+            android:id="@+id/atributosLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="65dp"
+            android:gravity="left|center"
+            app:layout_constraintEnd_toEndOf="@+id/rectangle"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/rectangle"
+            app:layout_constraintTop_toBottomOf="@+id/nombreText">
+
+            <TextView
+                android:id="@+id/ciudadText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="2dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="Barcelona -" />
+
+            <TextView
+                android:id="@+id/kilometrosText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:layout_toRightOf="@id/ciudadText"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="217.000km -" />
+
+            <TextView
+                android:id="@+id/añosText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:layout_toRightOf="@id/kilometrosText"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="1997 -" />
+
+            <TextView
+                android:id="@+id/combustibleText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="2dp"
+                android:layout_toRightOf="@id/añosText"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:text="Gasolina" />
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/borrar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/delete"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    
+</androidx.cardview.widget.CardView>

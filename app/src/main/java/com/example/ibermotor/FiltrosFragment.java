@@ -35,7 +35,7 @@ public class FiltrosFragment extends Fragment {
     AutoCompleteTextView marcaAutoCompleteTextView, combustibleAutoCompleteTextView, colorAutoCompleteTextView, cambioAutoCompleteTextView;
     FitButton botonFiltrar;
     RangeSlider lineaAñoSlider, lineapuertasSlider;
-    int minIntValueAño,maxIntValueAño,minIntValuePuerta,maxIntValuePuerta;
+    int minIntValueAño = 1970,maxIntValueAño = 2023,minIntValuePuerta = 1,maxIntValuePuerta = 5;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

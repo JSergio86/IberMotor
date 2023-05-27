@@ -84,12 +84,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        view.findViewById(R.id.iconoVista).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navController.navigate(R.id.homeFragmentV2);
-            }
-        });
 
         menuDrawer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -205,7 +199,7 @@ public class HomeFragment extends Fragment {
 
         class PostViewHolder extends RecyclerView.ViewHolder {
             ImageView fotoCoche;
-            TextView precioText, nombreText, ciudadText, kilometrosText, añosText, combustibleText, garantia;
+            TextView precioText, nombreText, ciudadText, kilometrosText, añosText, combustibleText;
 
             PostViewHolder(@NonNull View itemView) {
                 super(itemView);
@@ -216,7 +210,6 @@ public class HomeFragment extends Fragment {
                 kilometrosText = itemView.findViewById(R.id.kilometrosText);
                 añosText = itemView.findViewById(R.id.añosText);
                 combustibleText = itemView.findViewById(R.id.combustibleText);
-                garantia = itemView.findViewById(R.id.garantia);
 
             }
         }

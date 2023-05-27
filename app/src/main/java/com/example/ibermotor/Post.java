@@ -34,6 +34,5 @@ public class Post {
         this.longitud = longitud;
         this.date = date;
         this.favoritos = favoritos;
-
     }
 }
