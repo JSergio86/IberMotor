@@ -54,7 +54,7 @@ public class FavoritosFragment extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         uid= user.getUid();
 
-        Query query = FirebaseFirestore.getInstance().collection("posts").whereEqualTo("favoritos",uid).limit(50).orderBy("date", Query.Direction.DESCENDING);
+        Query query = FirebaseFirestore.getInstance().collection("posts").whereArrayContains("favoritos",uid).limit(50).orderBy("date", Query.Direction.DESCENDING);
 
         FirestoreRecyclerOptions<Post> options = new FirestoreRecyclerOptions.Builder<Post>()
                 .setQuery(query, Post.class)

@@ -13,6 +13,10 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="MyButtonStyle" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/lila</item>
+    </style>
+
     <style name="Button.BlueBackground" parent="Widget.MaterialComponents.Button">
         <item name="android:background">@drawable/blue_fill__rounded_color</item>
     </style>

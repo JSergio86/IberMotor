@@ -78,8 +78,7 @@ public class DescripcionCocheFragment extends Fragment {
         volver.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navController.navigate(R.id.homeFragment);
-
+                navController.popBackStack();
             }
         });
 

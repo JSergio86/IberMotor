@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="50dp"
-            android:text="Sergio Jiménez"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="16dp"
             android:textStyle="bold"
@@ -87,7 +87,7 @@
                 android:layout_toEndOf="@id/icon"
                 android:textColor="@color/black"
                 android:textSize="16dp"
-                android:text="Texto de ejemplo" />
+                android:text="" />
 
         </RelativeLayout>
 

@@ -41,13 +41,13 @@ public class PerfilFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        navController = Navigation.findNavController(view);
 
         cerrarSesion = view.findViewById(R.id.cerrarSesion);
         fotoPerfil = view.findViewById(R.id.perfil);
         botonEditarPerfil = view.findViewById(R.id.botonEditarPerfil);
         nombreText = view.findViewById(R.id.nombre);
         correoText = view.findViewById(R.id.correo);
-
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         uid= user.getUid();
@@ -94,6 +94,30 @@ public class PerfilFragment extends Fragment {
                 });
 
 
+        cerrarSesion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController = Navigation.findNavController(view);
+                GoogleSignIn.getClient(requireActivity(), new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestIdToken(getString(R.string.default_web_client_id))
+                        .build()).signOut();
+
+                FirebaseAuth.getInstance().signOut();
+
+                Navigation.findNavController(view).navigate(R.id.signInFragment);
+
+            }
+        });
+
+
+        botonEditarPerfil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(R.id.editarPerfilFragment);
+
+            }
+        });
+
         TabLayout tabLayout = view.findViewById(R.id.tabLayout);
         final FrameLayout fragmentContainer = view.findViewById(R.id.fragmentContainer);
 
@@ -126,30 +150,6 @@ public class PerfilFragment extends Fragment {
                         .replace(fragmentContainer.getId(), selectedFragment)
                         .commit();
 
-
-                cerrarSesion.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        navController = Navigation.findNavController(view);
-                        GoogleSignIn.getClient(requireActivity(), new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                                .requestIdToken(getString(R.string.default_web_client_id))
-                                .build()).signOut();
-
-                        FirebaseAuth.getInstance().signOut();
-
-                        Navigation.findNavController(view).navigate(R.id.signInFragment);
-
-                    }
-                });
-
-
-                botonEditarPerfil.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        navController.navigate(R.id.editarPerfilFragment);
-
-                    }
-                });
 
             }
 

@@ -78,7 +78,6 @@ public class PublicarAnuncioFragment extends Fragment{
     List<RelativeLayout> photoViews;
     ImageView iconoGaleria;
     TextView photoText,puertasText;
-    ;
     int maxPhotos = 6;
     FitButton subirAnuncio;
     Button subirFotosBoton, button2;
