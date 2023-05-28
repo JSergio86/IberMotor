@@ -14,6 +14,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -79,7 +81,6 @@ public class AnunciosFragment extends Fragment {
             holder.precioText.setText(post.precio+"€");
             holder.kilometrosText.setText(post.kilometros+"km -");
             holder.añosText.setText(post.año+" - ");
-            holder.ciudadText.setText(post.ciudad+" - ");
             holder.nombreText.setText(post.marca+" "+ post.modelo);
             holder.combustibleText.setText(post.combustible);
 
@@ -95,6 +96,37 @@ public class AnunciosFragment extends Fragment {
                 Glide.with(holder.itemView)
                         .load(urlPrimeraFoto)
                         .into(holder.fotoCoche);
+            }
+
+            // Obtener el ancho máximo en dp para el TextView ciudadText
+            int maxCityWidthDp = 100;
+
+            // Convertir el ancho máximo de dp a píxeles
+            float maxCityWidthPx = TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP,
+                    maxCityWidthDp,
+                    holder.itemView.getResources().getDisplayMetrics()
+            );
+
+            // Obtener la ciudad del post
+            String postCity = post.ciudad;
+
+            // Obtener el ancho del texto de la ciudad actual
+            float currentCityWidthPx = holder.ciudadText.getPaint().measureText(postCity);
+
+            // Verificar si el ancho actual excede el ancho máximo
+            if (currentCityWidthPx > maxCityWidthPx) {
+                // Obtener la subcadena del texto que se ajuste al ancho máximo
+                String truncatedCityText = TextUtils.ellipsize(postCity, holder.ciudadText.getPaint(), maxCityWidthPx, TextUtils.TruncateAt.END).toString();
+
+                // Agregar puntos suspensivos al final de la subcadena truncada
+                String finalCityText = truncatedCityText + ".. -";
+
+                // Establecer el texto final en el TextView ciudadText
+                holder.ciudadText.setText(finalCityText);
+            } else {
+                // Establecer la ciudad del post directamente en el TextView ciudadText
+                holder.ciudadText.setText(postCity+ " - ");
             }
 
             final String postKey = getSnapshots().getSnapshot(position).getId();

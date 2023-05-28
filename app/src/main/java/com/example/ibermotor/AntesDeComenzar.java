@@ -4,7 +4,11 @@ import static android.content.ContentValues.TAG;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.BitmapShader;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -29,6 +33,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
@@ -117,9 +122,13 @@ public class AntesDeComenzar extends Fragment implements OnMapReadyCallback {
             currentLongitude = location.getLongitude();
         }
 
-        LatLng currentLocation = new LatLng(currentLatitude, currentLongitude);
-
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15)); // mueve la cámara a la ubicación actual
+        if (currentLatitude != 0 && currentLongitude != 0) {
+            LatLng currentLocation = new LatLng(currentLatitude, currentLongitude);
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 15));
+        } else {
+            LatLng spainLocation = new LatLng(40.4637, -3.7492); // Coordenadas de España
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(spainLocation, 5));
+        }
 
         // establece la variable cameraMoved a true cuando la cámara se mueve manualmente
         mMap.setOnCameraMoveListener(() -> {
@@ -161,7 +170,7 @@ public class AntesDeComenzar extends Fragment implements OnMapReadyCallback {
         Glide.with(requireContext())
                 .asBitmap()
                 .load(url)
-                .apply(new RequestOptions().override(100, 100))
+                .apply(new RequestOptions().override(100, 100).transform(new CircleCrop()))
                 .into(new CustomTarget<Bitmap>() {
                     @Override
                     public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
@@ -180,13 +189,21 @@ public class AntesDeComenzar extends Fragment implements OnMapReadyCallback {
 
     private void addMarkerToMap(LatLng postLocation) {
         if (markerIcon != null) {
+            Bitmap circularIcon = Bitmap.createBitmap(markerIcon.getWidth(), markerIcon.getHeight(), Bitmap.Config.ARGB_8888);
+            Canvas canvas = new Canvas(circularIcon);
+            Paint paint = new Paint();
+            paint.setAntiAlias(true);
+            paint.setShader(new BitmapShader(markerIcon, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP));
+            canvas.drawCircle(markerIcon.getWidth() / 2, markerIcon.getHeight() / 2, markerIcon.getWidth() / 2, paint);
+
             MarkerOptions markerOptions = new MarkerOptions()
                     .position(postLocation)
-                    .icon(BitmapDescriptorFactory.fromBitmap(markerIcon));
+                    .icon(BitmapDescriptorFactory.fromBitmap(circularIcon));
 
             mMap.addMarker(markerOptions);
         }
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {

@@ -27,6 +27,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -36,9 +37,12 @@ import com.pranavpandey.android.dynamic.toasts.DynamicToast;
 import java.util.HashMap;
 import java.util.Map;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class EditarPerfilFragment extends Fragment {
     NavController navController;
-    ImageView volver, foto;
+    ImageView volver;
+    CircleImageView foto;
     Button actualizar;
     TextInputEditText nombreText;
     String uid;
@@ -59,26 +63,33 @@ public class EditarPerfilFragment extends Fragment {
         foto = view.findViewById(R.id.perfil);
         nombreText = view.findViewById(R.id.nombreEditText);
 
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        uid= user.getUid();
         db = FirebaseFirestore.getInstance();
         storage = FirebaseStorage.getInstance();
         storageRef = storage.getReference();
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        uid= user.getUid();
+        DocumentReference userRef = FirebaseFirestore.getInstance().collection("usuarios").document(uid);
+        userRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
+                    String fotoPerfilUrl = documentSnapshot.getString("fotoPerfil");
+                    if (fotoPerfilUrl != null) {
+                        Glide.with(requireView())
+                                .load(fotoPerfilUrl)
+                                .transform(new CircleCrop())
+                                .into(foto);
+                    } else {
+                        Glide.with(requireView())
+                                .load(R.drawable.anonymo)
+                                .transform(new CircleCrop())
+                                .into(foto);
+                    }
+                }
+            }
+        });
 
-        if (user != null) {
-            Glide.with(requireView())
-                    .load(user.getPhotoUrl())
-                    .transform(new CircleCrop())
-                    .into(foto);
-        }
-
-        if (user.getPhotoUrl() == null) {
-            Glide.with(requireView())
-                    .load(R.drawable.anonymo)
-                    .transform(new CircleCrop())
-                    .into(foto);
-        }
 
         volver.setOnClickListener(new View.OnClickListener() {
             @Override

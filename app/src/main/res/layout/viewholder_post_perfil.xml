@@ -82,6 +82,8 @@
             android:text="BMW Serie 3 M3 E36"
             android:textColor="@color/black"
             android:textSize="24dp"
+            android:maxWidth="330dp"
+            android:maxLines="2"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="@+id/rectangle"
             app:layout_constraintTop_toBottomOf="@+id/precioText" />

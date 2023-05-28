@@ -79,7 +79,6 @@ public class PublicarAnuncioFragment extends Fragment{
     ImageView iconoGaleria;
     TextView photoText,puertasText;
     int maxPhotos = 6;
-    FitButton subirAnuncio;
     Button subirFotosBoton, button2;
     AutoCompleteTextView marcaAutoCompleteTextView, combustibleAutoCompleteTextView, colorAutoCompleteTextView, cambioAutoCompleteTextView;
     TextInputEditText modeloEditText, añoEditText, kmEditText, potenciaEditText,precioEditText,descripcionEditText, ciudadEditText, codigoPostalEditText;

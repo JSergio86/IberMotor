@@ -3,10 +3,15 @@ package com.example.ibermotor;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -37,9 +42,11 @@ import java.util.List;
 public class HomeFragment extends Fragment {
     NavController navController;
     public AppViewModel appViewModel;
-    FirebaseUser user;
     ImageView iconoFiltro, fotoPerfil, menuDrawer;
+    EditText barraBusqueda;
     String uid;
+    FirestoreRecyclerAdapter<Post, PostsAdapter.PostViewHolder> postsAdapter;
+    Query postsQuery;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -51,23 +58,25 @@ public class HomeFragment extends Fragment {
         iconoFiltro = view.findViewById(R.id.iconoFiltro);
         fotoPerfil = view.findViewById(R.id.perfil);
         menuDrawer = view.findViewById(R.id.menuDrawer);
+        barraBusqueda = view.findViewById(R.id.barraBusqueda);
+
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        uid = user.getUid();
 
-        if(user != null){
+        if (user != null) {
             Glide.with(requireView())
                     .load(user.getPhotoUrl())
                     .transform(new CircleCrop())
                     .into(fotoPerfil);
         }
 
-        if(user.getPhotoUrl() == null){
+        if (user.getPhotoUrl() == null) {
             Glide.with(requireView())
                     .load(R.drawable.anonymo)
                     .transform(new CircleCrop())
                     .into(fotoPerfil);
         }
-        uid = user.getUid();
 
 
         fotoPerfil.setOnClickListener(new View.OnClickListener() {
@@ -115,7 +124,7 @@ public class HomeFragment extends Fragment {
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // Los permisos no están concedidos, solicita los permisos
-            ActivityCompat.requestPermissions(requireActivity(), new String[] {
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION
             }, 1); // El número 1 es un código de solicitud que puedes usar para identificar esta solicitud de permisos en el método onRequestPermissionsResult
@@ -124,17 +133,43 @@ public class HomeFragment extends Fragment {
 
         RecyclerView postsRecyclerView = view.findViewById(R.id.postsRecyclerView);
 
-        Query query = FirebaseFirestore.getInstance().collection("posts").limit(50).orderBy("date", Query.Direction.DESCENDING);
-
+        postsQuery = FirebaseFirestore.getInstance().collection("posts").limit(50).orderBy("date", Query.Direction.DESCENDING);
         FirestoreRecyclerOptions<Post> options = new FirestoreRecyclerOptions.Builder<Post>()
-                .setQuery(query, Post.class)
+                .setQuery(postsQuery, Post.class)
                 .setLifecycleOwner(this)
                 .build();
 
-        postsRecyclerView.setAdapter(new PostsAdapter(options));
+        postsAdapter = new PostsAdapter(options);
+        postsRecyclerView.setAdapter(postsAdapter);
 
-        user = FirebaseAuth.getInstance().getCurrentUser();
+        barraBusqueda.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String searchText = s.toString().trim();
+
+                // Actualizar la consulta para buscar por marca y modelo
+                postsQuery = FirebaseFirestore.getInstance().collection("posts")
+                        .whereEqualTo("marca", searchText)
+                        .orderBy("date", Query.Direction.DESCENDING)
+                        .limit(50);
+
+                FirestoreRecyclerOptions<Post> searchOptions = new FirestoreRecyclerOptions.Builder<Post>()
+                        .setQuery(postsQuery, Post.class)
+                        .setLifecycleOwner(HomeFragment.this)
+                        .build();
+
+                postsAdapter.updateOptions(searchOptions);
+
+            }
+        });
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -151,7 +186,17 @@ public class HomeFragment extends Fragment {
     }
 
     class PostsAdapter extends FirestoreRecyclerAdapter<Post, PostsAdapter.PostViewHolder> {
-        public PostsAdapter(@NonNull FirestoreRecyclerOptions<Post> options) {super(options);}
+        private FirestoreRecyclerOptions<Post> options;
+
+        public PostsAdapter(@NonNull FirestoreRecyclerOptions<Post> options) {
+            super(options);
+            this.options = options;
+        }
+
+        public void updateOptions(@NonNull FirestoreRecyclerOptions<Post> options) {
+            this.options = options;
+            notifyDataSetChanged();
+        }
 
         @NonNull
         @Override
@@ -162,9 +207,8 @@ public class HomeFragment extends Fragment {
         @Override
         protected void onBindViewHolder(@NonNull PostViewHolder holder, int position, @NonNull final Post post) {
             holder.precioText.setText(post.precio+"€");
-            holder.kilometrosText.setText(post.kilometros+"km -");
-            holder.añosText.setText(post.año+" - ");
-            holder.ciudadText.setText(post.ciudad+" - ");
+            holder.kilometrosText.setText(post.kilometros+" km -");
+            holder.añosText.setText(post.año+" -");
             holder.nombreText.setText(post.marca+" "+ post.modelo);
             holder.combustibleText.setText(post.combustible);
 
@@ -182,12 +226,45 @@ public class HomeFragment extends Fragment {
                         .into(holder.fotoCoche);
             }
 
+            // Obtener el ancho máximo en dp para el TextView ciudadText
+            int maxCityWidthDp = 100;
+
+            // Convertir el ancho máximo de dp a píxeles
+            float maxCityWidthPx = TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP,
+                    maxCityWidthDp,
+                    holder.itemView.getResources().getDisplayMetrics()
+            );
+
+            // Obtener la ciudad del post
+            String postCity = post.ciudad;
+
+            // Obtener el ancho del texto de la ciudad actual
+            float currentCityWidthPx = holder.ciudadText.getPaint().measureText(postCity);
+
+            // Verificar si el ancho actual excede el ancho máximo
+            if (currentCityWidthPx > maxCityWidthPx) {
+                // Obtener la subcadena del texto que se ajuste al ancho máximo
+                String truncatedCityText = TextUtils.ellipsize(postCity, holder.ciudadText.getPaint(), maxCityWidthPx, TextUtils.TruncateAt.END).toString();
+
+                // Agregar puntos suspensivos al final de la subcadena truncada
+                String finalCityText = truncatedCityText + ".. -";
+
+                // Establecer el texto final en el TextView ciudadText
+                holder.ciudadText.setText(finalCityText);
+            } else {
+                // Establecer la ciudad del post directamente en el TextView ciudadText
+                holder.ciudadText.setText(postCity+ " -");
+            }
+
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     navigateToDescripcionCocheFragment(post);
                 }
             });
+
+
         }
         public void navigateToDescripcionCocheFragment(Post post) {
             appViewModel.postSeleccionado.setValue(post);
