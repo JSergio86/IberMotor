@@ -167,7 +167,6 @@ public class HomeFragment extends Fragment {
                         .build();
 
                 postsAdapter.updateOptions(searchOptions);
-
             }
         });
     }
@@ -195,7 +194,10 @@ public class HomeFragment extends Fragment {
 
         public void updateOptions(@NonNull FirestoreRecyclerOptions<Post> options) {
             this.options = options;
-            notifyDataSetChanged();
+            super.updateOptions(options);
+            startListening(); // Reiniciar la escucha de cambios en la base de datos
+
+
         }
 
         @NonNull
