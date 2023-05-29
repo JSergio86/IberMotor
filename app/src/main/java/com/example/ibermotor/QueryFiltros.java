@@ -143,38 +143,31 @@ public class QueryFiltros extends Fragment {
             baseQuery = baseQuery.whereEqualTo("ciudad", ciudad);
         }
 
-        Query filteredQuery = baseQuery;
-
         if (!año.equalsIgnoreCase("0")) {
-            Query añoQuery = baseQuery.whereEqualTo("año", Integer.parseInt(año));
-            filteredQuery = añoQuery.orderBy("año");
+            baseQuery = baseQuery.whereEqualTo("año", Integer.parseInt(año));
         }
 
         if (!potencia.equalsIgnoreCase("Todos")) {
-            Query potenciaQuery = baseQuery.whereEqualTo("potencia", Integer.parseInt(potencia));
-            filteredQuery = potenciaQuery.orderBy("potencia");
+             baseQuery = baseQuery.whereEqualTo("potencia", Integer.parseInt(potencia));
         }
 
         if (!km.equalsIgnoreCase("Todos")) {
-            Query kmQuery = baseQuery.whereEqualTo("kilometros", Integer.parseInt(km));
-            filteredQuery = kmQuery.orderBy("kilometros");
+            baseQuery = baseQuery.whereEqualTo("kilometros", Integer.parseInt(km));
         }
 
         if (!puertas.equalsIgnoreCase("0")) {
-            Query puertasQuery = baseQuery.whereGreaterThanOrEqualTo("puertas", Integer.parseInt(puertas));
-            filteredQuery = puertasQuery.orderBy("puertas");
+             baseQuery = baseQuery.whereEqualTo("puertas", Integer.parseInt(puertas));
         }
 
         if (!precioDesde.equalsIgnoreCase("Todos") && !precioHasta.equalsIgnoreCase("Todos")) {
-            Query precioQuery = baseQuery.whereGreaterThanOrEqualTo("precio", Integer.parseInt(precioDesde))
+             baseQuery = baseQuery.whereGreaterThanOrEqualTo("precio", Integer.parseInt(precioDesde))
                     .whereLessThanOrEqualTo("precio", Integer.parseInt(precioHasta));
-            filteredQuery = precioQuery.orderBy("precio");
         }
 
-        filteredQuery = filteredQuery.limit(50);
+        baseQuery = baseQuery.limit(50);
 
         FirestoreRecyclerOptions<Post> options = new FirestoreRecyclerOptions.Builder<Post>()
-                .setQuery(filteredQuery, Post.class)
+                .setQuery(baseQuery, Post.class)
                 .setLifecycleOwner(this)
                 .build();
 
