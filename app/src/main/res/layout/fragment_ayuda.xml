@@ -60,8 +60,8 @@
 
         <View
             android:id="@+id/fondoTelefono"
-            android:layout_width="211dp"
-            android:layout_height="37dp"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginTop="30dp"
@@ -86,7 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="35dp"
-            android:text="634657853"
+            android:text="622383826"
             android:textAppearance="@style/styleBlanco"
             app:layout_constraintBottom_toBottomOf="@+id/fondoTelefono"
             app:layout_constraintEnd_toEndOf="@+id/fondoTelefono"
@@ -96,8 +96,8 @@
 
         <View
             android:id="@+id/fondoGmail"
-            android:layout_width="211dp"
-            android:layout_height="37dp"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_marginTop="10dp"
