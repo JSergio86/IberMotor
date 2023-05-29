@@ -123,9 +123,6 @@ public class HomeFragment extends Fragment {
                     public boolean onMenuItemClick(MenuItem item) {
                         int id = item.getItemId();
                         switch (id) {
-                            case R.id.privacidad:
-                                navController.navigate(R.id.privacidadFragment);
-                                return true;
                             case R.id.ayuda:
                                 navController.navigate(R.id.ayudaFragment);
                                 return true;

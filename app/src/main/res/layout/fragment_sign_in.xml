@@ -13,7 +13,8 @@
             android:id="@+id/linearBoton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent">
 
 
             <FrameLayout

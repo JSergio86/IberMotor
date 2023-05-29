@@ -4,6 +4,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -113,7 +114,11 @@ public class PublicarAnuncioFragment extends Fragment{
 
         photoViews = new ArrayList<RelativeLayout>();
 
+        Log.e("PhotoContainer", String.valueOf(photoContainer.getChildCount()));
+
         subirFotosBoton.setEnabled(photoViews.size() < maxPhotos);
+
+
 
         appViewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
 
@@ -223,11 +228,15 @@ public class PublicarAnuncioFragment extends Fragment{
         ciudad = ciudadEditText.getText().toString();
         codigoPostal = codigoPostalEditText.getText().toString();
 
+        if(!año.equals("")){
+            añoInt = Integer.parseInt(año);
+        }
         // Validar si al menos un campo está en blanco
-        boolean camposVacios = marca.isEmpty() || modelo.isEmpty() || año.isEmpty() ||
+        boolean camposVacios = marca.isEmpty() || modelo.isEmpty() || año.isEmpty() || añoInt <= 1970 || añoInt > 2023 ||
                 combustibe.isEmpty() || puertas == null || color.isEmpty() || tipoDeCambio.isEmpty() ||
                 kilometros.isEmpty() || potencia.isEmpty() || precio.isEmpty() ||
                 descripcion.length() < 100 || descripcion.length() > 280 || ciudad.isEmpty() || codigoPostal.isEmpty();
+
 
         if (camposVacios) {
             // Mostrar un mensaje de error o realizar alguna acción apropiada
@@ -241,8 +250,8 @@ public class PublicarAnuncioFragment extends Fragment{
             }else{
                 modeloTextInputLayout.setError(null);
             }
-            if (año.isEmpty()) {
-                añoTextInputLayout.setError("Campo obligatorio");
+            if (año.isEmpty() || añoInt <= 1970  || añoInt > 2023 ) {
+                añoTextInputLayout.setError("Introduce una fecha valida");
             }else{
                 añoTextInputLayout.setError(null);
             }
@@ -300,7 +309,6 @@ public class PublicarAnuncioFragment extends Fragment{
             return; // Salir del método si al menos un campo está en blanco
         }
 
-        añoInt = Integer.parseInt(año);
         puertasInt = Integer.parseInt(puertas);
         kilometrosInt = Integer.parseInt(kilometros);
         potenciaInt = Integer.parseInt(potencia);
@@ -450,6 +458,7 @@ public class PublicarAnuncioFragment extends Fragment{
             return; // Si no se seleccionó ninguna foto, no se agrega una nueva
         }
 
+
         LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                 getResources().getDimensionPixelSize(R.dimen.photo_size),
                 getResources().getDimensionPixelSize(R.dimen.photo_size)
@@ -534,7 +543,7 @@ public class PublicarAnuncioFragment extends Fragment{
         }
 
         if (photoViews.size() < maxPhotos) {
-            subirFotosBoton.setEnabled(true);
+             subirFotosBoton.setEnabled(true);
         }
     }
 

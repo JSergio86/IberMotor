@@ -2,9 +2,6 @@
 <menu xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
     tools:ignore="MissingDefaultResource">
-    <item
-        android:id="@+id/privacidad"
-        android:title="Privacidad" />
 
     <item
         android:id="@+id/ayuda"
