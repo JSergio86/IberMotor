@@ -132,13 +132,17 @@ public class RegisterFragment extends Fragment {
     private boolean validarFormulario() {
         boolean valid = true;
 
-        // Validar nombre
-        String nombre = nombreEditText.getText().toString().trim();
-        if (TextUtils.isEmpty(nombre)) {
-            Snackbar.make(requireView(), "Nombre requerido.", Snackbar.LENGTH_LONG).show();
+
+        // Validar contraseña
+        String password = passwordEditText.getText().toString().trim();
+        if (TextUtils.isEmpty(password)) {
+            Snackbar.make(requireView(), "Contraseña requerida.", Snackbar.LENGTH_LONG).show();
+            valid = false;
+        } else if (password.length() < 8) {
+            Snackbar.make(requireView(), "La contraseña debe tener al menos 8 caracteres.", Snackbar.LENGTH_LONG).show();
             valid = false;
         } else {
-            nombreEditText.setError(null);
+            passwordEditText.setError(null);
         }
 
         // Validar correo electrónico
@@ -152,17 +156,13 @@ public class RegisterFragment extends Fragment {
         } else {
             emailEditText.setError(null);
         }
-
-        // Validar contraseña
-        String password = passwordEditText.getText().toString().trim();
-        if (TextUtils.isEmpty(password)) {
-            Snackbar.make(requireView(), "Contraseña requerida.", Snackbar.LENGTH_LONG).show();
-            valid = false;
-        } else if (password.length() < 8) {
-            Snackbar.make(requireView(), "La contraseña debe tener al menos 8 caracteres.", Snackbar.LENGTH_LONG).show();
+        // Validar nombre
+        String nombre = nombreEditText.getText().toString().trim();
+        if (TextUtils.isEmpty(nombre)) {
+            Snackbar.make(requireView(), "Nombre requerido.", Snackbar.LENGTH_LONG).show();
             valid = false;
         } else {
-            passwordEditText.setError(null);
+            nombreEditText.setError(null);
         }
         return valid;
     }

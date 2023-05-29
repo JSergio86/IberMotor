@@ -26,21 +26,12 @@
         android:name="com.example.ibermotor.AyudaFragment"
         android:label="fragment_ayuda"
         tools:layout="@layout/fragment_ayuda" />
-    <fragment
-        android:id="@+id/notificacionesFragment"
-        android:name="com.example.ibermotor.NotificacionesFragment"
-        android:label="fragment_notificaciones"
-        tools:layout="@layout/fragment_notificaciones" />
+
     <fragment
         android:id="@+id/descripcionCocheFragment"
         android:name="com.example.ibermotor.DescripcionCocheFragment"
         android:label="fragment_descripcion_coche"
         tools:layout="@layout/fragment_descripcion_coche" />
-    <fragment
-        android:id="@+id/privacidadFragment"
-        android:name="com.example.ibermotor.PrivacidadFragment"
-        android:label="fragment_privacidad"
-        tools:layout="@layout/fragment_privacidad" />
     <fragment
         android:id="@+id/perfilFragment"
         android:name="com.example.ibermotor.PerfilFragment"

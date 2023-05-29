@@ -21,18 +21,25 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class QueryFiltros extends Fragment {
     NavController navController;
     public AppViewModel appViewModel;
-    ImageView iconoFiltro, fotoPerfil, menuDrawer;
+    ImageView iconoFiltro, menuDrawer;
+    CircleImageView fotoPerfil;
     String uid;
     String modelo, potencia, km, precioDesde, precioHasta, marca, combustible, color, cambio, ciudad, año, puertas;
 
@@ -48,35 +55,40 @@ public class QueryFiltros extends Fragment {
         menuDrawer = view.findViewById(R.id.menuDrawer);
 
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        if (user != null) {
-            Glide.with(requireView())
-                    .load(user.getPhotoUrl())
-                    .transform(new CircleCrop())
-                    .into(fotoPerfil);
-        }
-
-        if (user.getPhotoUrl() == null) {
-            Glide.with(requireView())
-                    .load(R.drawable.anonymo)
-                    .transform(new CircleCrop())
-                    .into(fotoPerfil);
-        }
         uid = user.getUid();
+
+        // Obtener la referencia a la colección "usuarios" y al documento con la UID del post
+        CollectionReference usuariosRef = FirebaseFirestore.getInstance().collection("usuarios");
+        DocumentReference usuarioDocRef = usuariosRef.document(uid);
+
+        // Consultar los datos del usuario
+        usuarioDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
+                    // Obtener la foto de perfil y el nombre del usuario del documento
+                    String fotoPerfilFirebase = documentSnapshot.getString("fotoPerfil");
+
+                    if (fotoPerfilFirebase != null) {
+                        Glide.with(requireActivity())
+                                .load(fotoPerfilFirebase)
+                                .into(fotoPerfil);
+                    } else {
+                        Glide.with(requireActivity())
+                                .load(R.drawable.anonymo)
+                                .into(fotoPerfil);
+                    }
+
+                }
+            }
+        });
+
 
 
         fotoPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 navController.navigate(R.id.perfilFragment);
-            }
-        });
-
-
-        iconoFiltro.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navController.navigate(R.id.filtrosFragment);
             }
         });
 
@@ -91,12 +103,6 @@ public class QueryFiltros extends Fragment {
                     public boolean onMenuItemClick(MenuItem item) {
                         int id = item.getItemId();
                         switch (id) {
-                            case R.id.notificaciones:
-                                navController.navigate(R.id.notificacionesFragment);
-                                return true;
-                            case R.id.privacidad:
-                                navController.navigate(R.id.privacidadFragment);
-                                return true;
                             case R.id.ayuda:
                                 navController.navigate(R.id.ayudaFragment);
                                 return true;
