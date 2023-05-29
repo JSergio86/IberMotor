@@ -59,7 +59,7 @@
             app:layout_constraintTop_toBottomOf="@id/linea" />
 
         <View
-            android:id="@+id/fondo"
+            android:id="@+id/fondoTelefono"
             android:layout_width="211dp"
             android:layout_height="37dp"
             android:layout_alignParentLeft="true"
@@ -76,9 +76,9 @@
             android:layout_height="20dp"
             android:layout_marginStart="20dp"
             android:src="@drawable/iconollamada"
-            app:layout_constraintBottom_toBottomOf="@id/fondo"
-            app:layout_constraintStart_toStartOf="@+id/fondo"
-            app:layout_constraintTop_toTopOf="@+id/fondo"
+            app:layout_constraintBottom_toBottomOf="@id/fondoTelefono"
+            app:layout_constraintStart_toStartOf="@+id/fondoTelefono"
+            app:layout_constraintTop_toTopOf="@+id/fondoTelefono"
             tools:ignore="MissingConstraints" />
 
         <TextView
@@ -88,15 +88,14 @@
             android:layout_marginEnd="35dp"
             android:text="634657853"
             android:textAppearance="@style/styleBlanco"
-            app:layout_constraintBottom_toBottomOf="@+id/fondo"
-            app:layout_constraintEnd_toEndOf="@+id/fondo"
-            app:layout_constraintHorizontal_bias="0.454"
+            app:layout_constraintBottom_toBottomOf="@+id/fondoTelefono"
+            app:layout_constraintEnd_toEndOf="@+id/fondoTelefono"
             app:layout_constraintStart_toEndOf="@+id/iconoLlamar"
-            app:layout_constraintTop_toTopOf="@+id/fondo"
+            app:layout_constraintTop_toTopOf="@+id/fondoTelefono"
             tools:ignore="MissingConstraints" />
 
         <View
-            android:id="@+id/fondo2"
+            android:id="@+id/fondoGmail"
             android:layout_width="211dp"
             android:layout_height="37dp"
             android:layout_alignParentLeft="true"
@@ -105,7 +104,7 @@
             android:background="@drawable/fondorojo"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/fondo" />
+            app:layout_constraintTop_toBottomOf="@id/fondoTelefono" />
 
         <ImageView
             android:id="@+id/iconoEmail"
@@ -113,21 +112,21 @@
             android:layout_height="20dp"
             android:layout_marginStart="20dp"
             android:src="@drawable/iconoemail"
-            app:layout_constraintBottom_toBottomOf="@id/fondo2"
-            app:layout_constraintStart_toStartOf="@+id/fondo2"
-            app:layout_constraintTop_toTopOf="@+id/fondo2"
+            app:layout_constraintBottom_toBottomOf="@id/fondoGmail"
+            app:layout_constraintStart_toStartOf="@+id/fondoGmail"
+            app:layout_constraintTop_toTopOf="@+id/fondoGmail"
             tools:ignore="MissingConstraints" />
 
         <TextView
             android:id="@+id/email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="salescars@gmail.com"
+            android:text="ibermotor@gmail.com"
             android:textAppearance="@style/styleBlanco"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/fondo2"
+            app:layout_constraintEnd_toEndOf="@+id/fondoGmail"
             app:layout_constraintStart_toEndOf="@+id/iconoEmail"
-            app:layout_constraintTop_toTopOf="@+id/fondo2"
+            app:layout_constraintTop_toTopOf="@+id/fondoGmail"
             tools:ignore="MissingConstraints" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

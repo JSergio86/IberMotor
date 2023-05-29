@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResult;
@@ -22,6 +23,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -49,7 +51,7 @@ public class SignInFragment extends Fragment {
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private EditText emailEditText, passwordEditText;
     private Button emailSignInButton;
-    private RelativeLayout signInForm;
+    private ScrollView signInForm;
     private FirebaseAuth mAuth;
     private TextView registrateTextView;
     @Override

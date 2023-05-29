@@ -1,32 +1,23 @@
 package com.example.ibermotor;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.text.TextUtils;
-import android.util.TypedValue;
-import android.view.LayoutInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.PopupMenu;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -99,7 +90,7 @@ public class AnunciosFragment extends Fragment {
             }
 
             // Obtener el ancho máximo en dp para el TextView ciudadText
-            int maxCityWidthDp = 100;
+            int maxCityWidthDp = 80;
 
             // Convertir el ancho máximo de dp a píxeles
             float maxCityWidthPx = TypedValue.applyDimension(

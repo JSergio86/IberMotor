@@ -17,16 +17,6 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
-    <ImageView
-        android:id="@+id/iconoCompartir"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="20dp"
-        android:src="@drawable/iconocompartir"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/iconoFavorito"
@@ -35,7 +25,7 @@
         android:layout_marginTop="15dp"
         android:layout_marginEnd="20dp"
         android:src="@drawable/baseline_star_border_24"
-        app:layout_constraintEnd_toStartOf="@+id/iconoCompartir"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 

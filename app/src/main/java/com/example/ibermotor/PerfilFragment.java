@@ -1,14 +1,6 @@
 package com.example.ibermotor;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.viewpager.widget.ViewPager;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +9,12 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
@@ -31,9 +29,12 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class PerfilFragment extends Fragment {
     NavController navController;
-    ImageView cerrarSesion, fotoPerfil;
+    ImageView cerrarSesion;
+    CircleImageView fotoPerfil;
     TextView nombreText, correoText;
     Button botonEditarPerfil;
     String uid;
@@ -52,19 +53,6 @@ public class PerfilFragment extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         uid= user.getUid();
 
-        if (user != null) {
-            Glide.with(requireView())
-                    .load(user.getPhotoUrl())
-                    .transform(new CircleCrop())
-                    .into(fotoPerfil);
-        }
-
-        if (user.getPhotoUrl() == null) {
-            Glide.with(requireView())
-                    .load(R.drawable.anonymo)
-                    .transform(new CircleCrop())
-                    .into(fotoPerfil);
-        }
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference usuariosRef = db.collection("usuarios");
@@ -76,6 +64,16 @@ public class PerfilFragment extends Fragment {
                         if (documentSnapshot.exists()) {
                             String nombre = documentSnapshot.getString("nombre");
                             String correo = documentSnapshot.getString("correo");
+                            String fotoperfil = documentSnapshot.getString("fotoPerfil");
+                            if (fotoperfil != null) {
+                                Glide.with(requireActivity())
+                                        .load(fotoperfil)
+                                        .into(fotoPerfil);
+                            } else {
+                                Glide.with(requireActivity())
+                                        .load(R.drawable.anonymo)
+                                        .into(fotoPerfil);
+                            }
                             nombreText.setText(nombre);
                             correoText.setText(correo);
 
@@ -127,7 +125,7 @@ public class PerfilFragment extends Fragment {
 
         // Configura el TabLayout y asigna los fragments a los tabs
         tabLayout.addTab(tabLayout.newTab().setText("Anuncios Activos"));
-        tabLayout.addTab(tabLayout.newTab().setText("Valoraciones"));
+        tabLayout.addTab(tabLayout.newTab().setText("Favoritos"));
 
         // Maneja el evento de selección de tab en el TabLayout
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

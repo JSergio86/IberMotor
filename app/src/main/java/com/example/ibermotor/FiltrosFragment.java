@@ -1,14 +1,6 @@
 package com.example.ibermotor;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,26 +8,28 @@ import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+
 import com.github.nikartm.button.FitButton;
 import com.google.android.material.slider.LabelFormatter;
-import com.google.android.material.slider.RangeSlider;
 import com.google.android.material.slider.Slider;
 import com.google.android.material.textfield.TextInputEditText;
-import com.jaredrummler.materialspinner.MaterialSpinner;
-
-import java.util.List;
 
 
 public class FiltrosFragment extends Fragment {
 
     NavController navController;
-    TextView desdeAñoTextView, hastaAñoTextView, desdePuertasTextView, hastaPuertasTextView;
+    TextView desdeAñoTextView, desdePuertasTextView;
     ImageView volver;
-    TextInputEditText modeloEditText, potenciaDesdeEditText, potenciaHastaEditText, kmDesdeEditText, kmHastaEditText, precioDesdeEditText, precioHastaEditText, ciudadEditText;
+    TextInputEditText modeloEditText, potenciaEditText, kmEditText, precioDesdeEditText, precioHastaEditText, ciudadEditText;
     AutoCompleteTextView marcaAutoCompleteTextView, combustibleAutoCompleteTextView, colorAutoCompleteTextView, cambioAutoCompleteTextView;
     FitButton botonFiltrar;
-    RangeSlider lineaAñoSlider, lineapuertasSlider;
-    int minIntValueAño = 1970,maxIntValueAño = 2023,minIntValuePuerta = 1,maxIntValuePuerta = 5;
+    Slider lineaAñoSlider, lineapuertasSlider;
+    int intValueAño,intValuePuerta;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -47,14 +41,10 @@ public class FiltrosFragment extends Fragment {
         lineaAñoSlider = view.findViewById(R.id.lineaAñoSlider);
         lineapuertasSlider = view.findViewById(R.id.lineaPuertasSlider);
         desdeAñoTextView = view.findViewById(R.id.desdeAñoNumeroTextView);
-        hastaAñoTextView = view.findViewById(R.id.hastaAñoTextView);
         desdePuertasTextView = view.findViewById(R.id.desdepuertasTextView);
-        hastaPuertasTextView = view.findViewById(R.id.hastaPuertaNumeroTextView);
         modeloEditText = view.findViewById(R.id.modeloEditText);
-        potenciaDesdeEditText = view.findViewById(R.id.potenciaDesdeEditText);
-        potenciaHastaEditText = view.findViewById(R.id.potenciaHastaEditText);
-        kmDesdeEditText = view.findViewById(R.id.kmDesdeEditText);
-        kmHastaEditText = view.findViewById(R.id.kmHastaEditText);
+        potenciaEditText = view.findViewById(R.id.potenciaEditText);
+        kmEditText = view.findViewById(R.id.kmEditText);
         precioDesdeEditText = view.findViewById(R.id.precioDesdeEditText);
         precioHastaEditText = view.findViewById(R.id.precioHastaEditText);
         ciudadEditText = view.findViewById(R.id.ciudadEditText);
@@ -67,10 +57,8 @@ public class FiltrosFragment extends Fragment {
         cambioAutoCompleteTextView = view.findViewById(R.id.cambioAutoCompleteTextView);
 
         modeloEditText.setText("Todos");
-        potenciaDesdeEditText.setText("Todos");
-        potenciaHastaEditText.setText("Todos");
-        kmDesdeEditText.setText("Todos");
-        kmHastaEditText.setText("Todos");
+        potenciaEditText.setText("Todos");
+        kmEditText.setText("Todos");
         precioDesdeEditText.setText("Todos");
         precioHastaEditText.setText("Todos");
         marcaAutoCompleteTextView.setText("Todas");
@@ -78,6 +66,7 @@ public class FiltrosFragment extends Fragment {
         colorAutoCompleteTextView.setText("Todos");
         cambioAutoCompleteTextView.setText("Todos");
         ciudadEditText.setText("Todas");
+
 
         marcaAutoCompleteTextView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,34 +98,26 @@ public class FiltrosFragment extends Fragment {
 
 
 
-        lineaAñoSlider.addOnChangeListener(new RangeSlider.OnChangeListener() {
+        lineaAñoSlider.addOnChangeListener(new Slider.OnChangeListener() {
             @Override
-            public void onValueChange(@NonNull RangeSlider slider, float value, boolean fromUser) {
-                List<Float> selectedValues = lineaAñoSlider.getValues();
+            public void onValueChange(@NonNull Slider slider, float value, boolean fromUser) {
+                float selectedValues = lineaAñoSlider.getValue();
                 lineaAñoSlider.setLabelBehavior(LabelFormatter.LABEL_GONE);
 
-                float minValue = selectedValues.get(0);
-                float maxValue = selectedValues.get(1);
-
-                minIntValueAño = (int) minValue;
-                maxIntValueAño = (int) maxValue;
-                desdeAñoTextView.setText(minIntValueAño+"");
-                hastaAñoTextView.setText(maxIntValueAño+"");
+                intValueAño = (int) selectedValues;
+                desdeAñoTextView.setText(intValueAño+"");
             }
         });
-        lineapuertasSlider.addOnChangeListener(new RangeSlider.OnChangeListener() {
+
+        lineapuertasSlider.addOnChangeListener(new Slider.OnChangeListener() {
             @Override
-            public void onValueChange(@NonNull RangeSlider slider, float value, boolean fromUser) {
-                List<Float> selectedValues = lineapuertasSlider.getValues();
+            public void onValueChange(@NonNull Slider slider, float value, boolean fromUser) {
+                float selectedValues = lineapuertasSlider.getValue();
                 lineapuertasSlider.setLabelBehavior(LabelFormatter.LABEL_GONE);
 
-                float minValue = selectedValues.get(0);
-                float maxValue = selectedValues.get(1);
+                intValuePuerta = (int) selectedValues;
 
-                minIntValuePuerta = (int) minValue;
-                maxIntValuePuerta = (int) maxValue;
-                desdePuertasTextView.setText(minIntValuePuerta+"");
-                hastaPuertasTextView.setText(maxIntValuePuerta+"");
+                desdePuertasTextView.setText(intValuePuerta+"");
             }
         });
         volver.setOnClickListener(new View.OnClickListener() {
@@ -153,10 +134,8 @@ public class FiltrosFragment extends Fragment {
                 // Crear un objeto Bundle y agregar los valores
                 Bundle bundle = new Bundle();
                 bundle.putString("modelo", modeloEditText.getText().toString());
-                bundle.putString("potenciaDesde", potenciaDesdeEditText.getText().toString());
-                bundle.putString("potenciaHasta", potenciaHastaEditText.getText().toString());
-                bundle.putString("kmDesde", kmDesdeEditText.getText().toString());
-                bundle.putString("kmHasta", kmHastaEditText.getText().toString());
+                bundle.putString("potencia", potenciaEditText.getText().toString());
+                bundle.putString("km", kmEditText.getText().toString());
                 bundle.putString("precioDesde", precioDesdeEditText.getText().toString());
                 bundle.putString("precioHasta", precioHastaEditText.getText().toString());
                 bundle.putString("marca",  marcaAutoCompleteTextView.getText().toString());
@@ -164,10 +143,8 @@ public class FiltrosFragment extends Fragment {
                 bundle.putString("color", colorAutoCompleteTextView.getText().toString());
                 bundle.putString("cambio", cambioAutoCompleteTextView.getText().toString());
                 bundle.putString("ciudad", ciudadEditText.getText().toString());
-                bundle.putString("añoDesde", String.valueOf(minIntValueAño));
-                bundle.putString("añoHasta", String.valueOf(maxIntValueAño));
-                bundle.putString("puertaDesde", String.valueOf(minIntValuePuerta));
-                bundle.putString("puertaHasta", String.valueOf(maxIntValuePuerta));
+                bundle.putString("año", String.valueOf(intValueAño));
+                bundle.putString("puertas", String.valueOf(intValuePuerta));
 
 
                 // Navegar al fragmento de destino y pasar los argumentos

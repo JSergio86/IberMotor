@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,21 +29,28 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class HomeFragment extends Fragment {
     NavController navController;
     public AppViewModel appViewModel;
-    ImageView iconoFiltro, fotoPerfil, menuDrawer;
+    ImageView menuDrawer;
+    RelativeLayout filtroLayout;
+    CircleImageView fotoPerfil;
     EditText barraBusqueda;
     String uid;
     FirestoreRecyclerAdapter<Post, PostsAdapter.PostViewHolder> postsAdapter;
@@ -55,7 +63,7 @@ public class HomeFragment extends Fragment {
         navController = Navigation.findNavController(view);
 
         appViewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
-        iconoFiltro = view.findViewById(R.id.iconoFiltro);
+        filtroLayout = view.findViewById(R.id.filtroLayout);
         fotoPerfil = view.findViewById(R.id.perfil);
         menuDrawer = view.findViewById(R.id.menuDrawer);
         barraBusqueda = view.findViewById(R.id.barraBusqueda);
@@ -64,20 +72,31 @@ public class HomeFragment extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         uid = user.getUid();
 
-        if (user != null) {
-            Glide.with(requireView())
-                    .load(user.getPhotoUrl())
-                    .transform(new CircleCrop())
-                    .into(fotoPerfil);
-        }
+        // Obtener la referencia a la colección "usuarios" y al documento con la UID del post
+        CollectionReference usuariosRef = FirebaseFirestore.getInstance().collection("usuarios");
+        DocumentReference usuarioDocRef = usuariosRef.document(uid);
 
-        if (user.getPhotoUrl() == null) {
-            Glide.with(requireView())
-                    .load(R.drawable.anonymo)
-                    .transform(new CircleCrop())
-                    .into(fotoPerfil);
-        }
+        // Consultar los datos del usuario
+        usuarioDocRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
+                    // Obtener la foto de perfil y el nombre del usuario del documento
+                    String fotoPerfilFirebase = documentSnapshot.getString("fotoPerfil");
 
+                    if (fotoPerfilFirebase != null) {
+                        Glide.with(requireActivity())
+                                .load(fotoPerfilFirebase)
+                                .into(fotoPerfil);
+                    } else {
+                        Glide.with(requireActivity())
+                                .load(R.drawable.anonymo)
+                                .into(fotoPerfil);
+                    }
+
+                }
+            }
+        });
 
         fotoPerfil.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +105,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        iconoFiltro.setOnClickListener(new View.OnClickListener() {
+        filtroLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 navController.navigate(R.id.filtrosFragment);
@@ -104,9 +123,6 @@ public class HomeFragment extends Fragment {
                     public boolean onMenuItemClick(MenuItem item) {
                         int id = item.getItemId();
                         switch (id) {
-                            case R.id.notificaciones:
-                                navController.navigate(R.id.notificacionesFragment);
-                                return true;
                             case R.id.privacidad:
                                 navController.navigate(R.id.privacidadFragment);
                                 return true;
@@ -142,33 +158,7 @@ public class HomeFragment extends Fragment {
         postsAdapter = new PostsAdapter(options);
         postsRecyclerView.setAdapter(postsAdapter);
 
-        barraBusqueda.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String searchText = s.toString().trim();
-
-                // Actualizar la consulta para buscar por marca y modelo
-                postsQuery = FirebaseFirestore.getInstance().collection("posts")
-                        .whereEqualTo("marca", searchText)
-                        .orderBy("date", Query.Direction.DESCENDING)
-                        .limit(50);
-
-                FirestoreRecyclerOptions<Post> searchOptions = new FirestoreRecyclerOptions.Builder<Post>()
-                        .setQuery(postsQuery, Post.class)
-                        .setLifecycleOwner(HomeFragment.this)
-                        .build();
-
-                postsAdapter.updateOptions(searchOptions);
-            }
-        });
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -185,19 +175,9 @@ public class HomeFragment extends Fragment {
     }
 
     class PostsAdapter extends FirestoreRecyclerAdapter<Post, PostsAdapter.PostViewHolder> {
-        private FirestoreRecyclerOptions<Post> options;
 
         public PostsAdapter(@NonNull FirestoreRecyclerOptions<Post> options) {
             super(options);
-            this.options = options;
-        }
-
-        public void updateOptions(@NonNull FirestoreRecyclerOptions<Post> options) {
-            this.options = options;
-            super.updateOptions(options);
-            startListening(); // Reiniciar la escucha de cambios en la base de datos
-
-
         }
 
         @NonNull
@@ -229,7 +209,7 @@ public class HomeFragment extends Fragment {
             }
 
             // Obtener el ancho máximo en dp para el TextView ciudadText
-            int maxCityWidthDp = 100;
+            int maxCityWidthDp = 80;
 
             // Convertir el ancho máximo de dp a píxeles
             float maxCityWidthPx = TypedValue.applyDimension(

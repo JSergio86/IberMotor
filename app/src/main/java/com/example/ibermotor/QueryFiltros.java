@@ -1,19 +1,6 @@
 package com.example.ibermotor;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +8,14 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
@@ -29,8 +23,6 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.Filter;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -40,10 +32,9 @@ import java.util.List;
 public class QueryFiltros extends Fragment {
     NavController navController;
     public AppViewModel appViewModel;
-    FirebaseUser user;
     ImageView iconoFiltro, fotoPerfil, menuDrawer;
     String uid;
-    String modelo, potenciaDesde, potenciaHasta, kmDesde, kmHasta, precioDesde, precioHasta, marca, combustible, color, cambio, ciudad, añoDesde, añoHasta, puertaDesde, puertaHasta;
+    String modelo, potencia, km, precioDesde, precioHasta, marca, combustible, color, cambio, ciudad, año, puertas;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -80,6 +71,7 @@ public class QueryFiltros extends Fragment {
                 navController.navigate(R.id.perfilFragment);
             }
         });
+
 
         iconoFiltro.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,7 +111,6 @@ public class QueryFiltros extends Fragment {
 
         RecyclerView postsRecyclerView = view.findViewById(R.id.postsRecyclerView);
 
-
         Query baseQuery = FirebaseFirestore.getInstance().collection("posts");
 
         if (!marca.equalsIgnoreCase("Todas")) {
@@ -148,27 +139,23 @@ public class QueryFiltros extends Fragment {
 
         Query filteredQuery = baseQuery;
 
-        if (!añoDesde.equalsIgnoreCase("1970") && !añoHasta.equalsIgnoreCase("2023")) {
-            Query añoQuery = baseQuery.whereGreaterThanOrEqualTo("año", Integer.parseInt(añoDesde))
-                    .whereLessThanOrEqualTo("año", Integer.parseInt(añoHasta));
+        if (!año.equalsIgnoreCase("0")) {
+            Query añoQuery = baseQuery.whereEqualTo("año", Integer.parseInt(año));
             filteredQuery = añoQuery.orderBy("año");
         }
 
-        if (!potenciaDesde.equalsIgnoreCase("Todos") && !potenciaHasta.equalsIgnoreCase("Todos")) {
-            Query potenciaQuery = baseQuery.whereGreaterThanOrEqualTo("potencia", Integer.parseInt(potenciaDesde))
-                    .whereLessThanOrEqualTo("potencia", Integer.parseInt(potenciaHasta));
+        if (!potencia.equalsIgnoreCase("Todos")) {
+            Query potenciaQuery = baseQuery.whereEqualTo("potencia", Integer.parseInt(potencia));
             filteredQuery = potenciaQuery.orderBy("potencia");
         }
 
-        if (!kmDesde.equalsIgnoreCase("Todos") && !kmHasta.equalsIgnoreCase("Todos")) {
-            Query kmQuery = baseQuery.whereGreaterThanOrEqualTo("kilometros", Integer.parseInt(kmDesde))
-                    .whereLessThanOrEqualTo("kilometros", Integer.parseInt(kmHasta));
+        if (!km.equalsIgnoreCase("Todos")) {
+            Query kmQuery = baseQuery.whereEqualTo("kilometros", Integer.parseInt(km));
             filteredQuery = kmQuery.orderBy("kilometros");
         }
 
-        if (!puertaHasta.equalsIgnoreCase("1") && !puertaDesde.equalsIgnoreCase("5")) {
-            Query puertasQuery = baseQuery.whereGreaterThanOrEqualTo("puertas", Integer.parseInt(puertaDesde))
-                    .whereLessThanOrEqualTo("puertas", Integer.parseInt(puertaHasta));
+        if (!puertas.equalsIgnoreCase("0")) {
+            Query puertasQuery = baseQuery.whereGreaterThanOrEqualTo("puertas", Integer.parseInt(puertas));
             filteredQuery = puertasQuery.orderBy("puertas");
         }
 
@@ -180,18 +167,12 @@ public class QueryFiltros extends Fragment {
 
         filteredQuery = filteredQuery.limit(50);
 
-
         FirestoreRecyclerOptions<Post> options = new FirestoreRecyclerOptions.Builder<Post>()
                 .setQuery(filteredQuery, Post.class)
                 .setLifecycleOwner(this)
                 .build();
 
-
-
-
         postsRecyclerView.setAdapter(new PostsAdapter(options));
-
-        user = FirebaseAuth.getInstance().getCurrentUser();
 
     }
 
@@ -258,7 +239,6 @@ public class QueryFiltros extends Fragment {
                 kilometrosText = itemView.findViewById(R.id.kilometrosText);
                 añosText = itemView.findViewById(R.id.añosText);
                 combustibleText = itemView.findViewById(R.id.combustibleText);
-                garantia = itemView.findViewById(R.id.garantia);
 
             }
         }
@@ -270,10 +250,8 @@ public class QueryFiltros extends Fragment {
         Bundle args = getArguments();
         if (args != null) {
             modelo = args.getString("modelo");
-            potenciaDesde = args.getString("potenciaDesde");
-            potenciaHasta = args.getString("potenciaHasta");
-            kmDesde = args.getString("kmDesde");
-            kmHasta = args.getString("kmHasta");
+            potencia = args.getString("potencia");
+            km = args.getString("km");
             precioDesde = args.getString("precioDesde");
             precioHasta = args.getString("precioHasta");
             marca = args.getString("marca");
@@ -281,10 +259,8 @@ public class QueryFiltros extends Fragment {
             color = args.getString("color");
             cambio = args.getString("cambio");
             ciudad = args.getString("ciudad");
-            añoDesde = args.getString("añoDesde");
-            añoHasta = args.getString("añoHasta");
-            puertaDesde = args.getString("puertaDesde");
-            puertaHasta = args.getString("puertaHasta");
+            año = args.getString("año");
+            puertas = args.getString("puertas");
         }
         return inflater.inflate(R.layout.fragment_query_filtros, container, false);
 

@@ -13,14 +13,13 @@
         android:layout_height="match_parent"
         android:layout_marginBottom="20dp">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/perfil"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/perfil"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="MissingConstraints" />

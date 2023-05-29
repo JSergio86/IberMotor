@@ -1,8 +1,12 @@
 package com.example.ibermotor;
 
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,22 +16,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import org.imaginativeworld.whynotimagecarousel.ImageCarousel;
 import org.imaginativeworld.whynotimagecarousel.model.CarouselItem;
@@ -42,7 +37,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class DescripcionCocheFragment extends Fragment {
     NavController navController;
-    ImageView volver, iconoFavorito, chatIconBackground, iconoCompartir;
+    ImageView volver, iconoFavorito, chatIconBackground;
     AppViewModel appViewModel;
     TextView descripcion, nombreText, horasText, precioText, nombreUbicacion, kilometrosText, añosText, combustibleText, puertasText, cambioText, potenciaText, colorText, userName;
     CircleImageView fotoPerfil;
@@ -72,7 +67,6 @@ public class DescripcionCocheFragment extends Fragment {
         userName = view.findViewById(R.id.userName);
         iconoFavorito = view.findViewById(R.id.iconoFavorito);
         chatIconBackground = view.findViewById(R.id.chatIconBackground);
-        iconoCompartir = view.findViewById(R.id.iconoCompartir);
 
 
         volver.setOnClickListener(new View.OnClickListener() {

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/signInFragment">
     <fragment
         android:id="@+id/signInFragment"
         android:name="com.example.ibermotor.SignInFragment"
@@ -46,11 +46,6 @@
         android:name="com.example.ibermotor.PerfilFragment"
         android:label="fragment_perfil"
         tools:layout="@layout/fragment_perfil" />
-    <fragment
-        android:id="@+id/homeFragmentV2"
-        android:name="com.example.ibermotor.HomeFragmentV2"
-        android:label="fragment_home_v2"
-        tools:layout="@layout/fragment_home_v2" />
     <fragment
         android:id="@+id/conversacionesFragment"
         android:name="com.example.ibermotor.ConversacionesFragment"
